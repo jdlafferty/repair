@@ -1,0 +1,88 @@
+\documentclass[12pt,pdftex,noinfoline]{imsart}
+
+\RequirePackage[OT1]{fontenc}
+\usepackage{amsthm,amsmath,amsfonts,natbib,mathtools,amssymb}
+\RequirePackage{hypernat}
+\usepackage[ruled,section]{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{times}
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\hypersetup{citecolor=MidnightBlue}
+\hypersetup{linkcolor=MidnightBlue}
+\hypersetup{urlcolor=MidnightBlue}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage[margin=1in,footskip=.40in]{geometry}
+
+
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\E}{\operatorname{\mathbb E}}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\DeclareMathOperator*{\argmin}{\arg\min}
+\DeclareMathOperator*{\argmax}{\arg\max}
+
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{prop}{Proposition}[section]
+\theoremstyle{remark}
+\newtheorem{example}{Example}[section]
+\newtheorem{remark}{Remark}[section]
+
+\def\given{\,|\,}
+\def\P{\mathbb{P}}
+\def\E{\mathbb{E}}
+\def\reals{\mathbb{R}}
+\def\argmin{\mathop{\text{arg\,min}}}
+\def\ones{\mathds{1}}
+\def\indicator{}
+\let\hat\widehat
+\let\what\widehat
+\let\tilde\widetilde
+
+
+\begin{document}
+
+\setlength{\parskip}{0.5em}
+
+\begin{frontmatter}
+\runtitle{Model Repair}
+\title{Model Repair: Robust Recovery of Over-Parameterized Statistical Models}
+%\affiliation{Department of Statistics, University of Pennsylvania}
+%\affil[**]{Department of Statistics and Data Science, Yale University}
+\begin{aug}
+\vskip15pt
+\address{
+\begin{tabular}{ccc}
+{\normalsize\rm\bfseries Chao Gao} && {\normalsize\rm\bfseries John Lafferty}\\[5pt]
+Department of Statistics && Department of Statistics and Data Science\\
+University of Chicago && Yale University\\[10pt]
+\end{tabular}
+\\[10pt]
+\today\\[5pt]
+\vskip10pt
+}
+\end{aug}
+\input{abstract}
+\end{frontmatter}
+
+\input{intro}
+\input{overview}
+\input{experiments}
+\input{discuss}
+
+\setlength{\bibsep}{8pt plus 0.3ex}
+\bibliographystyle{apalike}
+\bibliography{repair}
+
+%\end{document}
+\newpage
+
+
+\end{document}

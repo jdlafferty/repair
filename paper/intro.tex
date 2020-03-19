@@ -1,0 +1,23 @@
+% !TEX root = ./repair.tex
+
+\section{Introduction}
+\label{sec:intro}
+
+In this paper we introduce a new type of robust estimation problem---how to recover a statistical
+model that has been corrupted after estimation. Traditional robust estimation assumes that the data are corrupted, and studies methods of estimation that are immune to these corruptions or outliers in the data.
+In contrast, we explore the setting where the data are ``clean'' but a statistical model is corrupted after it has been estimated using the data. We study methods for recovering the model that do not require re-estimation from scratch, using only the design and not the original response values.
+
+The problem of model repair is motivated from several different perspectives. First, it can be formulated as a well-defined statistical problem that is closely related to, but different from, traditional robust estimation, and that deserves study in its own right. From a more practical perspective, modern machine learning practice is increasingly working with very large statistical models. For example, artificial neural networks having several million parameters are now routinely estimated. It is anticipated that neural networks having trillions of parameters will be built in the coming years, and that large models will be increasingly embedded in systems, where they may be subject to errors and corruption of the parameter values. In this setting, the maintenance of models in a fault tolerant manner becomes a concern.  A different perspective takes inspiration from plasticity in brain function, with the human brain in particular having a remarkable ability to repair itself after trauma. The framework for model repair that we introduce in this paper can be viewed as a crude but mathematically rigorous formulation of this ability in neural networks.
+
+At a high level, our findings reveal that two important ingredients are necessary for model repair. First, the statistical model must be over-parameterized, meaning that there should be many more parameters than observations.
+While over-parameterization leads to issues of identifiability from traditional perspectives, here it is seen as a necessary property of the model. Second, the estimator must incorporate redundancy in some form; for instance, sparse estimators of over-parameterized models will not in general be repairable. Notably, we show that estimators based on gradient descent and stochastic gradient descent are well suited to model repair.
+
+At its core, our formulation and analysis of model repair rests upon representing an estimator in
+terms of the row space of functions of the data design matrix. This leads to a view of model repair
+as a form of robust estimation. The recovery algorithms that we propose are based on solving a linear program that is equivalent to median regression. Our key technical lemma, which may be of independent interest, gives sharp bounds on the probability that this linear program successfully recovers the model, which in turn determines the level of over-parameterization that is required. An interesting facet of this formulation is that the response vector is not required by the repair process. Because the model is over-parameterized, the estimator effectively encodes the response. This phenomenon can be viewed from the perspective of communication theory, where the corruption process is seen as a noisy channel, and the design matrix is seen as a linear error-correcting code for communication over this channel.
+
+After formulating the problem  and establishing the key technical lemma, we present a series of results for
+repair of over-parameterized linear models, random feature models, and artificial neural networks. These form the main technical contributions of this paper. We also explain how the concepts of over-paramaterization and redundancy apply to repair of nonparametric models, including Gaussian sequence models for Sobolev spaces and isotonic regression.
+A series of simulation experiments are presented that corroborate and illustrate our theoretical results.
+
+In the following section we give a more detailed overview of our results, including the precise formulation of the model repair problem, its connection to robust estimation and error correcting codes, and an example of the repair algorithm in simulation. We then present the key lemma, followed by detailed analysis of model repair for specific model classes. Section~\ref{sec:experiments} presents  further simulation results that confirm the theory. In Section~\ref{sec:discuss} we discuss directions for further research and potential implications of our findings for applications.

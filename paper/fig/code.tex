@@ -1,0 +1,48 @@
+
+\documentclass[tikz,border=3.14mm,pdftex]{standalone}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows,patterns}
+\usepackage{times}
+
+\def\reals{{\mathbb R}}
+\def\argmin{\mathop{\rm arg\,min}}
+
+\begin{document}
+\def\n{2}
+\def\p{4}
+\def\w{.15}
+\def\sep{8}
+\def\sp{1}
+\def\caption{5}
+\let\hat\widehat
+
+\begin{tikzpicture}
+  \draw[line width=1, pattern=horizontal lines] (0, -\n) rectangle (\w,\n);
+  \draw[line width=1, pattern=horizontal lines] (\sep, -\p) rectangle (\sep+\w,\p);
+  \draw[line width=1, pattern=horizontal lines] (\sep+\sep, -\p) rectangle (\sep+\sep+\w,\p);
+  \draw[line width=1, pattern=horizontal lines] (\sep+\sep+\sep, -\n) rectangle (\sep+\sep+\sep+\w,\n);
+
+  \node (message) at (\sp, 0) {};
+  \node (codeword_in) at (\sep-\sp, 0) {};
+  \node (codeword_out) at (\sep+\w+\sp, 0) {};
+  \node (received_in) at (\sep+\sep-\sp, 0) {};
+  \node (received_out) at (\sep+\sep+\w+\sp, 0) {};
+  \node (decoded) at (\sep+\sep+\sep+\w-\sp, 0) {};
+
+  % arrows
+  \draw[->, line width=1]
+    (message) edge (codeword_in) (codeword_out) edge (received_in) (received_out) edge (decoded);
+
+\node at (0, -\caption) {\LARGE message $u\in\reals^n$};
+\node at (\sep, -\caption) {\LARGE codeword $X^T u\in\reals^p$};
+\node at (\sep+\sep, -\caption) {\LARGE received vector $\eta = \hat \theta + z $};
+\node at (\sep+\sep+\sep, -\caption) {\LARGE decoded message $\hat u$};
+
+\node at (\sep/2, .7) {\LARGE encoder};
+\node at (\sep/2+\sep/2+\sep/2, .7) {\LARGE noisy channel};
+\node at (\sep/2+\sep/2+\sep/2+\sep/2+\sep/2, .7) {\LARGE decoder};
+
+\end{tikzpicture}
+
+\end{document}

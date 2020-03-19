@@ -1,0 +1,43 @@
+\begin{thebibliography}{}
+
+\bibitem[Boyd and Vandenberghe, 2004]{boyd:04}
+Boyd, S. and Vandenberghe, L. (2004).
+\newblock {\em Convex Optimization}.
+\newblock Cambridge University Press, New York, NY, USA.
+
+\bibitem[Chen et~al., 2016]{chen2016}
+Chen, M., Gao, C., and Ren, Z. (2016).
+\newblock A general decision theory for {H}uber’s $\epsilon$-contamination
+  model.
+\newblock {\em Electron. J. Statist.}, 10(2):3752--3774.
+
+\bibitem[Gao, 2020]{gao2020}
+Gao, C. (2020).
+\newblock Robust regression via mutivariate regression depth.
+\newblock {\em Bernoulli}, 26(2):1139--1170.
+
+\bibitem[Huber, 1964]{huber:64}
+Huber, P.~J. (1964).
+\newblock Robust estimation of a location parameter.
+\newblock {\em Ann. Math. Statist.}, 35(1):73--101.
+
+\bibitem[Joseph and Barron, 2012]{joseph2012}
+Joseph, A. and Barron, A.~R. (2012).
+\newblock Least squares superposition codes of moderate dictionary size are
+  reliable at rates up to capacity.
+\newblock {\em IEEE Transactions on Information Theory}, 58(5):2541--2557.
+
+\bibitem[Rahimi and Recht, 2008]{rahimi2008}
+Rahimi, A. and Recht, B. (2008).
+\newblock Random features for large-scale kernel machines.
+\newblock In Platt, J.~C., Koller, D., Singer, Y., and Roweis, S.~T., editors,
+  {\em Advances in Neural Information Processing Systems 20}, pages 1177--1184.
+  Curran Associates, Inc.
+
+\bibitem[Rush et~al., 2017]{rush2017}
+Rush, C., Greig, A., and Venkataramanan, R. (2017).
+\newblock Capacity-achieving sparse superposition codes via approximate message
+  passing decoding.
+\newblock {\em IEEE Trans. Info. Theory}, 63(3):1476--1500.
+
+\end{thebibliography}
