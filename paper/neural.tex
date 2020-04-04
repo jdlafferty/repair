@@ -1,0 +1,80 @@
+% !TEX root = ./repair.tex
+
+
+
+\section{Repair of neural networks}
+\label{sec:neural}
+
+In this section, we show how to use robust regression to repair neural networks.
+We consider a neural network function with one hidden layer,
+$$f(x)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j\psi(W_j^Tx).$$
+The factor $p^{-1/2}$ in the definition above is convenient for our theoretical analysis.
+Consider the loss function
+$$L(\beta,W)=\frac{1}{2}\sum_{i=1}^n\left(y_i - \frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j\psi(W_j^Tx_i)\right)^2,$$
+and we train the neural network model via a standard gradient descent algorithm (Algorithm \ref{alg:GD}).
+\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\Input{The data $(y, X)$ and the number of iterations $t_{\max}$.}
+\Output{The trained parameters $\beta(t_{\max})$ and $W(t_{\max})$.} 
+\nl Initialization: $W_j(0)\sim N(0,d^{-1}I_d)$ and $\beta_j(0)\sim N(0,1)$ independently for all $j\in[p]$. \\
+\nl For $t$ in $1:t_{\max}$, compute 
+\begin{eqnarray*}
+W_j(t) &=& W_j(t-1) - \frac{\gamma}{d}\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=(\beta(t-1),W(t-1))}, \quad j\in[p], \\
+\beta_j(t) &=& \beta_j(t-1) - \gamma\frac{\partial L(\beta,W)}{\partial \beta_j}|_{(\beta,W)=(\beta(t-1),W(t-1))}, \quad j\in[p].
+\end{eqnarray*}
+ \caption{Gradient descent for neural nets}\label{alg:GD}
+\end{algorithm}
+Based on Algorithm \ref{alg:GD}, we consider two variations of $(\wh{\beta},\wh{W})$:
+\begin{enumerate}
+\item Implement Algorithm \ref{alg:GD}, and set $\wh{\beta}=\beta(t_{\max})$ and $\wh{W}=W(t_{\max})$;
+\item Implement Algorithm \ref{alg:GD}, and set $\wh{W}=W(t_{\max})$. Retrain $\beta$ using the learned feature $\psi(X\wh{W})$. That is, take $\wh{\beta}$ to be minimal $\ell_2$ norm solution of $\|y-\psi(X\wh{W})\beta\|^2$, compute $\wh{\beta}$ using a gradient based algorithm initialized at $0$ for the objective $\|y-\psi(X\wh{W})\beta\|^2$.
+\end{enumerate}
+Both variations of $(\wh{\beta},\wh{W})$ are widely used in practice. The second option can be viewed as a linear model that uses features extracted from the data by the neural network.
+
+Now consider the contaminated model $\eta=\wh{\beta}+z$ and $\Theta_j=\wh{W}_j+Z_j$, where each entry of $z$ and $Z_j$ is $0$ with probability $1-\epsilon$ and follows an arbitrary distribution with the other probability $1-\epsilon$. We present the following algorithm that repairs the model.
+
+\begin{algorithm}[H]
+\DontPrintSemicolon
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\Input{Contaminated model $(\eta,\Theta)$, design matrix $X$, and initialization $(\beta(0),W(0))$.}
+\Output{The rapaired parameters $\wt{\beta}$ and $\wt{W}$.} 
+\nl Repair of the hidden layer: for $j\in[p]$, compute
+$$\wh{v}_j=\argmin_v\|\Theta_j-W_j(0)-X^Tv_j\|_1,$$
+and set $\wt{W}_j=W_j(0)+X^T\wh{v}_j$. \\
+\nl Repair of the output layer: compute
+$$\wh{u}=\argmin_u\|\eta-\beta(0)-\psi(\wt{W}^TX^T)u\|_1,$$
+and set $\wt{\beta}=\beta(0)+\psi(\wt{W}^TX^T)\wh{u}$.
+ \caption{Model repair for neural nets}\label{alg:MR}
+\end{algorithm}
+Algorithm \ref{alg:MR} adopts a layerwise repair strategy. It is important to note that the repair of neural networks not only require information of $X$, but also that of the initialization $(\beta(0),W(0))$. It is thus crucial for practitioners to always store $(\beta(0),W(0))$ after training in case model repair is needed later.
+
+Since the gradient $\frac{\partial L(\beta,W)}{\partial W_j}$ lies in the row space of $X$, the vector $\wh{W}_j-W_j(0)$ also lies in the row space of $X$. Thus, the theoretical guarantee of the hidden layer repair directly follows Corollary \ref{cor:repair-linear}. On the other hand, the repair of the output layer is more complicated, because the gradient $\frac{\partial L(\beta,W)}{\partial \beta_j}|_{(\beta,W)=(\beta(t-1),W(t-1))}$ lies in the row space of $\psi(XW(t-1))$, which changes over time. Thus, we cannot directly apply the result of Corollary \ref{cor:repair-rf} for the random feature model. However, when the neural network is overparametrized, it can be shown that the gradient descent algorithm (Algorithm \ref{alg:GD}) leads to $W(t)$ that is close to the initialization $W(0)$ for all $t\geq 0$. We establish this result in the following theorem by assume that $x_i$ is i.i.d. $N(0,I_d)$ and $|y_i|\leq 1$ for all $i\in[n]$.
+\begin{thm}\label{thm:nn-grad}
+Assume $\frac{n}{d}$, $\frac{n^3(\log p)^2}{p}$, and $\gamma\left(1+\frac{n^4(\log p)^2}{p}\right)$ are all sufficiently small. Then, we have
+\begin{equation}
+\|y-u(t)\|^2 \leq \left(1-\frac{\gamma}{8}\right)^t\|y-u(0)\|^2, \label{eq:iter-function}
+\end{equation}
+and
+\begin{equation}
+\max_{1\leq j\leq p}\left(\frac{\|W_j(t)-W_j(0)\|}{R_1}\vee\frac{|\beta_j(t)-\beta_j(0)|}{R_2}\right) \leq 1, \label{eq:iter-parameter}
+\end{equation}
+for all $t\geq 1$ with high probability, where $R_1=\frac{100n\log p}{\sqrt{pd}}$ and $R_2=32\sqrt{\frac{n^2\log p}{p}}$.
+\end{thm}
+Theorem \ref{thm:nn-grad} assumes that the width of the neural network to be wide compared with the sample size in the sense that $\frac{p}{(\log p)^2}\gg n^3$. For a fixed $n$, the limit of the neural network when $p\rightarrow\infty$ is known as the neural tangent kernel (NTK), and the behavior of the gradient descent under this limit has been studied by \cite{jacot2018neural}. The result of Theorem \ref{thm:nn-grad} follows the explicit calculation in \cite{du2018gradient}, and we are able to sharpen some of the asymptotic conditions in \cite{du2018gradient}.
+
+The theorem has two conclusions. The first conclusion shows the gradient descent algorithm has global convergence in the sense of (\ref{eq:iter-parameter}) even though the loss $L(\beta,W)$ is nonconvex. The second conclusion shows that the trajectory of the algorithm $(W(t),\beta(t))$ is bounded within some radius of the initialization. This allows us to characterize the repaired model $\wt{\beta}$ for the output layer.
+
+Let us first consider the case $\wh{\beta}=\beta(t_{\max})$ and $\wh{W}=W(t_{\max})$. Since the vector $\beta(t)-\beta(t-1)$ lies in the row space of $\psi(XW(t-1))$ for every $t$, one can show that $\wh{\beta}-\beta(0)$ approximately lies in the row space of $\psi(XW(0))$ by Theorem \ref{thm:nn-grad}. Therefore, by extending the result of Corollary \ref{cor:repair-rf} that includes the bias induced by the row space approximation, we are able to obtain the following guarantee for the model repair.
+\begin{thm}\label{thm:repair-nn-1}
+Under the conditions of Theorem \ref{thm:nn-grad}, additionally assume that $\frac{\log p}{d}$, $\frac{\sqrt{\frac{n}{d}\log\left(\frac{ed}{n}\right)}}{1-\epsilon}$ and $\frac{n^2\log p}{p(1-\epsilon)}$ are sufficiently small. We then have $\wt{W}=\wh{W}$ and $\frac{1}{p}\|\wt{\beta}-\wh{\beta}\|^2 \lesssim \frac{n^2\log p}{p(1-\epsilon)}$ with high probability.
+\end{thm}
+
+We also consider the case where $\wh{W}=W(t_{\max})$ and $\wh{\beta}$ is obtained by retraining $\beta$ using the feature $\psi(X\wh{W})$. In this case, the vector $\wh{\beta}-\beta(0)$ exactly lies in the row space of $\psi(X\wh{W})$. This allows us to extend the result of Lemma \ref{lem:design-rf} to the matrix $\psi(\wh{W}^TX^T)$ with the help of Theorem \ref{thm:nn-grad}. Then, we can directly apply Corollary \ref{cor:repair-rf}. Compared with Theorem \ref{thm:repair-nn-1}, we are able to obtain exact recover of both $\wh{\beta}$ and $\wh{W}$ in this case.
+\begin{thm}\label{thm:repair-nn-2}
+Under the conditions of Theorem \ref{thm:nn-grad}, additionally assume that $\frac{\log p}{d}$, $\frac{\sqrt{\frac{n}{d}\log\left(\frac{ed}{n}\right)}}{1-\epsilon}$, $\frac{n\log p}{p(1-\epsilon)}$ and $\frac{n}{p}\left(\frac{\log p}{1-\epsilon}\right)^{4/3}$ are sufficiently small. We then have $\wt{W}=\wh{W}$ and $\wt{\beta}=\wh{\beta}$ with high probability.
+\end{thm}
+
+\begin{remark}
+When $1-\epsilon$ is a constant, the conditions of Theorem \ref{thm:repair-nn-1} and Theorem \ref{thm:repair-nn-2} can be simplified to $p\gg n^3$ and $d\gg n$ by ignoring the logarithmic factors. The condition $p\gg n^3$ ensures the good property of gradient descent in the NTK regime, but our experimental results show that it can potentially be weakened by an improved analysis.
+\end{remark}

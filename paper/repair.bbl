@@ -11,21 +11,68 @@ Chen, M., Gao, C., and Ren, Z. (2016).
   model.
 \newblock {\em Electron. J. Statist.}, 10(2):3752--3774.
 
+\bibitem[Cirel'son et~al., 1976]{cirel1976norms}
+Cirel'son, B.~S., Ibragimov, I.~A., and Sudakov, V. (1976).
+\newblock Norms of gaussian sample functions.
+\newblock In {\em Proceedings of the Third Japan—USSR Symposium on
+  Probability Theory}, pages 20--41. Springer.
+
+\bibitem[Davidson and Szarek, 2001]{davidson2001local}
+Davidson, K.~R. and Szarek, S.~J. (2001).
+\newblock Local operator theory, random matrices and banach spaces.
+\newblock {\em Handbook of the geometry of Banach spaces}, 1(317-366):131.
+
+\bibitem[Du et~al., 2018]{du2018gradient}
+Du, S.~S., Zhai, X., Poczos, B., and Singh, A. (2018).
+\newblock Gradient descent provably optimizes over-parameterized neural
+  networks.
+\newblock {\em arXiv preprint arXiv:1810.02054}.
+
 \bibitem[Gao, 2020]{gao2020}
 Gao, C. (2020).
 \newblock Robust regression via mutivariate regression depth.
 \newblock {\em Bernoulli}, 26(2):1139--1170.
+
+\bibitem[Hoeffding, 1963]{hoeffding1963probability}
+Hoeffding, W. (1963).
+\newblock Probability inequalities for sums of bounded random variables.
+\newblock {\em Journal of the American Statistical Association},
+  58(301):13--30.
 
 \bibitem[Huber, 1964]{huber:64}
 Huber, P.~J. (1964).
 \newblock Robust estimation of a location parameter.
 \newblock {\em Ann. Math. Statist.}, 35(1):73--101.
 
+\bibitem[Jacot et~al., 2018]{jacot2018neural}
+Jacot, A., Gabriel, F., and Hongler, C. (2018).
+\newblock Neural tangent kernel: Convergence and generalization in neural
+  networks.
+\newblock In {\em Advances in neural information processing systems}, pages
+  8571--8580.
+
 \bibitem[Joseph and Barron, 2012]{joseph2012}
 Joseph, A. and Barron, A.~R. (2012).
 \newblock Least squares superposition codes of moderate dictionary size are
   reliable at rates up to capacity.
 \newblock {\em IEEE Transactions on Information Theory}, 58(5):2541--2557.
+
+\bibitem[Laurent and Massart, 2000]{laurent2000adaptive}
+Laurent, B. and Massart, P. (2000).
+\newblock Adaptive estimation of a quadratic functional by model selection.
+\newblock {\em The Annals of Statistics}, 28(5):1302--1338.
+
+\bibitem[Mei and Montanari, 2019]{mei2019generalization}
+Mei, S. and Montanari, A. (2019).
+\newblock The generalization error of random features regression: Precise
+  asymptotics and double descent curve.
+\newblock {\em arXiv preprint arXiv:1908.05355}.
+
+\bibitem[Neyshabur et~al., 2014]{neyshabur2014search}
+Neyshabur, B., Tomioka, R., and Srebro, N. (2014).
+\newblock In search of the real inductive bias: On the role of implicit
+  regularization in deep learning.
+\newblock {\em arXiv preprint arXiv:1412.6614}.
 
 \bibitem[Rahimi and Recht, 2008]{rahimi2008}
 Rahimi, A. and Recht, B. (2008).
@@ -34,10 +81,20 @@ Rahimi, A. and Recht, B. (2008).
   {\em Advances in Neural Information Processing Systems 20}, pages 1177--1184.
   Curran Associates, Inc.
 
+\bibitem[Ross and Pek{\"o}z, 2007]{ross2007second}
+Ross, S.~M. and Pek{\"o}z, E.~A. (2007).
+\newblock {\em A second course in probability}.
+\newblock www. ProbabilityBookstore. com.
+
 \bibitem[Rush et~al., 2017]{rush2017}
 Rush, C., Greig, A., and Venkataramanan, R. (2017).
 \newblock Capacity-achieving sparse superposition codes via approximate message
   passing decoding.
 \newblock {\em IEEE Trans. Info. Theory}, 63(3):1476--1500.
+
+\bibitem[Vershynin, 2010]{vershynin2010introduction}
+Vershynin, R. (2010).
+\newblock Introduction to the non-asymptotic analysis of random matrices.
+\newblock {\em arXiv preprint arXiv:1011.3027}.
 
 \end{thebibliography}

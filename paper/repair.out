@@ -1,0 +1,16 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Problem formulation and overview of results}{}% 2
+\BOOKMARK [1][-]{section.3}{Background on robust regression}{}% 3
+\BOOKMARK [1][-]{section.4}{Repair of linear and random feature models}{}% 4
+\BOOKMARK [1][-]{section.5}{Repair of neural networks}{}% 5
+\BOOKMARK [1][-]{section.6}{Simulation studies}{}% 6
+\BOOKMARK [2][-]{subsection.6.1}{Over-parameterized linear models}{section.6}% 7
+\BOOKMARK [2][-]{subsection.6.2}{Random features models trained with gradient descent}{section.6}% 8
+\BOOKMARK [1][-]{section.7}{Discussion}{}% 9
+\BOOKMARK [1][-]{section.8}{Proofs}{}% 10
+\BOOKMARK [2][-]{subsection.8.1}{Technical Lemmas}{section.8}% 11
+\BOOKMARK [2][-]{subsection.8.2}{Proof of Theorem 3.1}{section.8}% 12
+\BOOKMARK [2][-]{subsection.8.3}{Proofs of Lemma 4.1, Corollary 4.1, Lemma 4.2 and Corollary 4.2}{section.8}% 13
+\BOOKMARK [2][-]{subsection.8.4}{Proof of Theorem 5.1}{section.8}% 14
+\BOOKMARK [2][-]{subsection.8.5}{Proofs of Theorem 5.2 and Theorem 5.3}{section.8}% 15
+\BOOKMARK [1][-]{section*.7}{References}{}% 16

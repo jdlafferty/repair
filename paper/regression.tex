@@ -1,0 +1,37 @@
+% !TEX root = ./repair.tex
+
+
+
+\section{Background on robust regression}
+\label{sec:regression}
+
+Consider a regression model $\eta=Au^*+z\in\mathbb{R}^m$, where $A^T=(a_1,a_2,...,a_m)^T\in\mathbb{R}^{m\times k}$ is a design matrix and $u^*\in\mathbb{R}^k$ is a vector of regression coefficients to be recovered. We consider a random design setting, and the distribution of $A$ will be specified later. For the noise vector $z\in\mathbb{R}^m$, we assume it is independent of the design matrix $A$, and
+\begin{equation}
+z_i\sim (1-\epsilon)\delta_0 + \epsilon Q_i, \label{eq:noise-add-con}
+\end{equation}
+independently for all $i\in[m]$. In other words, there is an $\epsilon$-proportion of $\eta_i$'s that are contaminated by $z_i$'s that are drawn from some arbitrary unknown distributions. To robustly recover $u^*$, we propose the estimator
+$$\wh{u}=\argmin_{u\in\mathbb{R}^k}\|\eta-Au\|_1.$$
+It can be computed using a standard linear programming.
+In order that $\wh{u}$ successfully recovers the true regression coefficients $u^*$, we need to impose the following conditions on the design matrix $A$.
+\begin{con1}
+Given i.i.d. Rademacher random variables $\delta_1,...,\delta_m$, the distribution of
+$$\wt{A}^T=(\delta_1a_1,\delta_2a_2,...,\delta_ma_m)^T$$ 
+is identical to that of $A^T$.
+\end{con1}
+\begin{con2}
+There exist $\underline{\lambda}$ and $\overline{\lambda}$, such that
+\begin{eqnarray}
+\label{eq:l1-upper-A} \inf_{\|\Delta\|=1}\frac{1}{m}\sum_{i=1}^m|a_i^T\Delta| &\geq& \underline{\lambda}, \\
+\label{eq:l2-upper-A} \sup_{\|\Delta\|=1}\frac{1}{m}\sum_{i=1}^m|a_i^T\Delta|^2 &\leq& \overline{\lambda}^2,
+\end{eqnarray}
+with high probability.
+\end{con2}
+\begin{thm}\label{thm:robust-reg}
+Assume the design matrix $A$ satisfies Condition A and Condition B. Then, as long as $\frac{\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}}{\underline{\lambda}(1-\epsilon)}$ is sufficiently small, we have $\wh{u}=u^*$ with high probability.
+\end{thm}
+
+The theorem gives a sufficient condition on the exact recovery of the regression coefficient. When both $\overline{\lambda}/\underline{\lambda}$ and $1-\epsilon$ are constants, the condition becomes $k/m$ sufficiently small. One remarkable feature of this theorem is that it even allows the situation $\epsilon\rightarrow 1$. This is in contrast to robust regression with both response and design contaminated. To be specific, consider independent observations $(a_i,\eta_i)\sim (1-\epsilon)P_{u^*}+\epsilon Q_i$, where the probability distribution $P_{u^*}$ encodes the linear model $\eta_i=a_i^Tu_i$, and for each $i\in[m]$, there is an $\epsilon$-probability that the pair $(a_i,\eta_i)$ is drawn from some arbitrary distribution $Q_i$. In this setting, consistent or exact recovery of the regression coefficient is only possible when $\epsilon<c$ for some small constant $c>0$ \citep{gao2020}. The reason why Theorem \ref{thm:robust-reg} allows $\epsilon\rightarrow 1$ is because there is no contamination for the design matrix $A$.
+
+Another distinguished feature of Theorem \ref{thm:robust-reg} is that there is no assumption imposed on the contamination distribution $Q_i$, even though the median regression procedure naturally requires the noise to be symmetric around zero. To understand this phenomenon, note that with the help of the independent Rademacher random variables, we can write the data generating process as $\delta_i\eta_i=\delta_ia_i^Tu^*+\delta_iz_i$. With this new representation, we can also view $\delta_i\eta_i$, $\delta_ia_i$ and $\delta_iz_i$ as the response, covariate, and noise. Now the noise $\delta_iz_i$ is symmetric around zero, and it can be shown that $\delta_ia_i$ and $\delta_iz_i$ are still independent because of Condition A. Since for any $u\in\mathbb{R}^k$,
+$$\sum_{i=1}^m|\delta_i\eta_i- \delta_ia_i^Tu|=\sum_{i=1}^m|\eta_i-a_i^Tu|,$$
+we obtain equivalent median regression after symmetrization, which explains why Theorem \ref{thm:robust-reg} does not require any assumption on $Q_i$.

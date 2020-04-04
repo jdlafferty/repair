@@ -1,0 +1,173 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\gdef\hy@title{Model Repair: Robust Recovery of Over-Parameterized Statistical Models}
+\gdef\hy@author{}
+\gdef\hy@subject{}
+\gdef\hy@keywords{}
+\gdef\author@num{0}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}}
+\newlabel{sec:intro}{{1}{1}{Introduction}{section.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Problem formulation and overview of results}{2}{section.2}}
+\newlabel{sec:overview}{{2}{2}{Problem formulation and overview of results}{section.2}{}}
+\citation{boyd:04}
+\citation{huber:64}
+\citation{chen2016,gao2020}
+\citation{joseph2012,rush2017}
+\newlabel{eq:min-norm-solution}{{2.2}{3}{Problem formulation and overview of results}{equation.2.2}{}}
+\newlabel{eq:keylp}{{2.3}{3}{Problem formulation and overview of results}{equation.2.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Left: Empirical probability of exact repair as a function of $\epsilon $. The sample size is $n=50$ and the model dimension $p$ varies as $p_j/n = 200 /j^2$, for $j=1,\ldots  , 6$; each point is an average over 500 trials. The plot on the right shows the repair probability as a function of the adjusted value $\epsilon _j = \epsilon + c' \cdot j - \frac  {1}{2}$ for dimension $p_j$, where the constant is $c'=\frac  {\sqrt  {2}}{20 c}=0.085$.}}{4}{figure.1}}
+\newlabel{fig:exp}{{1}{4}{Left: Empirical probability of exact repair as a function of $\epsilon $. The sample size is $n=50$ and the model dimension $p$ varies as $p_j/n = 200 /j^2$, for $j=1,\ldots , 6$; each point is an average over 500 trials. The plot on the right shows the repair probability as a function of the adjusted value $\epsilon _j = \epsilon + c' \cdot j - \frac {1}{2}$ for dimension $p_j$, where the constant is $c'=\frac {\sqrt {2}}{20 c}=0.085$}{figure.1}{}}
+\newlabel{eq:gen-obj}{{2.4}{4}{Problem formulation and overview of results}{equation.2.4}{}}
+\citation{rahimi2008}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Model repair viewed in terms of error-correcting codes. The model $\setbox \z@ \hbox {\frozen@everymath \@emptytoks \mathsurround \z@ $\textstyle \theta $}\mathaccent "0362{\theta }= X^T u\in \mathbb  {R}^p$ is in the row-space of the design matrix, which gives a redundant representation of the ``message'' $u\in \mathbb  {R}^n$ for $n < p$. The model is received as a noisy version $\eta $ with each entry corrupted with probability $\epsilon $. The received vector is decoded by solving a linear program.}}{5}{figure.2}}
+\newlabel{fig:code}{{2}{5}{Model repair viewed in terms of error-correcting codes. The model $\hat \theta = X^T u\in \reals ^p$ is in the row-space of the design matrix, which gives a redundant representation of the ``message'' $u\in \reals ^n$ for $n < p$. The model is received as a noisy version $\eta $ with each entry corrupted with probability $\epsilon $. The received vector is decoded by solving a linear program}{figure.2}{}}
+\citation{gao2020}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Background on robust regression}{6}{section.3}}
+\newlabel{sec:regression}{{3}{6}{Background on robust regression}{section.3}{}}
+\newlabel{eq:noise-add-con}{{3.1}{6}{Background on robust regression}{equation.3.1}{}}
+\newlabel{eq:l1-upper-A}{{3.2}{6}{}{equation.3.2}{}}
+\newlabel{eq:l2-upper-A}{{3.3}{6}{}{equation.3.2}{}}
+\newlabel{thm:robust-reg}{{3.1}{6}{}{thm.3.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Repair of linear and random feature models}{7}{section.4}}
+\newlabel{sec:linear}{{4}{7}{Repair of linear and random feature models}{section.4}{}}
+\newlabel{lem:design-linear}{{4.1}{7}{}{lemma.4.1}{}}
+\newlabel{cor:repair-linear}{{4.1}{7}{}{corollary.4.1}{}}
+\citation{neyshabur2014search}
+\citation{mei2019generalization}
+\newlabel{lem:design-rf}{{4.2}{8}{}{lemma.4.2}{}}
+\newlabel{cor:repair-rf}{{4.2}{8}{}{corollary.4.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Repair of neural networks}{8}{section.5}}
+\newlabel{sec:neural}{{5}{8}{Repair of neural networks}{section.5}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {1}{\ignorespaces Gradient descent for neural nets}}{9}{algocf.1}}
+\newlabel{alg:GD}{{1}{9}{Repair of neural networks}{algocf.1}{}}
+\@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces Model repair for neural nets}}{9}{algocf.2}}
+\newlabel{alg:MR}{{2}{9}{Repair of neural networks}{algocf.2}{}}
+\citation{jacot2018neural}
+\citation{du2018gradient}
+\citation{du2018gradient}
+\newlabel{thm:nn-grad}{{5.1}{10}{}{thm.5.1}{}}
+\newlabel{eq:iter-function}{{5.1}{10}{}{equation.5.1}{}}
+\newlabel{eq:iter-parameter}{{5.2}{10}{}{equation.5.2}{}}
+\newlabel{thm:repair-nn-1}{{5.2}{10}{}{thm.5.2}{}}
+\newlabel{thm:repair-nn-2}{{5.3}{11}{}{thm.5.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Simulation studies}{11}{section.6}}
+\newlabel{sec:experiments}{{6}{11}{Simulation studies}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Over-parameterized linear models}{11}{subsection.6.1}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Random features models trained with gradient descent}{11}{subsection.6.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Model repair for underdetermined linear models $y=X^T\theta + w$ with $p>n$. The left plot shows the empirical probability of successful model repair for $n=100$ with the model dimension $p$ varying as $p/n = 200 /j^2$, for $j=1,\ldots  , 7$. Each point is an average over 500 random trials. The covariates are sampled as $N(0,1)$ and the corruption distribution is $Q=N(1,1)$. The right plot shows the repair probablity as a function of the adjusted corruption probability $\setbox \z@ \hbox {\frozen@everymath \@emptytoks \mathsurround \z@ $\textstyle \epsilon $}\mathaccent "0365{\epsilon }_j = \epsilon + c'\cdot j - \frac  {1}{2}$.}}{12}{figure.3}}
+\newlabel{fig:exp1}{{3}{12}{Model repair for underdetermined linear models $y=X^T\theta + w$ with $p>n$. The left plot shows the empirical probability of successful model repair for $n=100$ with the model dimension $p$ varying as $p/n = 200 /j^2$, for $j=1,\ldots , 7$. Each point is an average over 500 random trials. The covariates are sampled as $N(0,1)$ and the corruption distribution is $Q=N(1,1)$. The right plot shows the repair probablity as a function of the adjusted corruption probability $\tilde \epsilon _j = \epsilon + c'\cdot j - \frac {1}{2}$}{figure.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Model repair for random feature models $y=\psi (XW)\theta + w$ with $p>n$, where $\psi (\cdot ) = \qopname  \relax o{tanh}(\cdot )$ for $n=50$ (left) and $n=100$ (right). For each value of $p$, three values of $d$ are evaluated, $d=p$, $d=\delimiter "4264306 2p/3\delimiter "5265307 $, and $d=\delimiter "4264306 p/2\delimiter "5265307 $; the results are effectively the same for each $d$.}}{12}{figure.4}}
+\newlabel{fig:rf}{{4}{12}{Model repair for random feature models $y=\psi (XW)\theta + w$ with $p>n$, where $\psi (\cdot ) = \tanh (\cdot )$ for $n=50$ (left) and $n=100$ (right). For each value of $p$, three values of $d$ are evaluated, $d=p$, $d=\lceil 2p/3\rceil $, and $d=\lceil p/2\rceil $; the results are effectively the same for each $d$}{figure.4}{}}
+\citation{hoeffding1963probability}
+\citation{ross2007second}
+\citation{cirel1976norms}
+\citation{laurent2000adaptive}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{13}{section.7}}
+\newlabel{sec:discuss}{{7}{13}{Discussion}{section.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Proofs}{13}{section.8}}
+\newlabel{sec:proof}{{8}{13}{Proofs}{section.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}Technical Lemmas}{13}{subsection.8.1}}
+\newlabel{lem:hoeffding}{{8.1}{13}{\cite {hoeffding1963probability}}{lemma.8.1}{}}
+\newlabel{lem:stein}{{8.2}{13}{}{lemma.8.2}{}}
+\newlabel{lem:talagrand}{{8.3}{13}{\cite {cirel1976norms}}{lemma.8.3}{}}
+\newlabel{lem:chi-squared}{{8.4}{13}{\cite {laurent2000adaptive}}{lemma.8.4}{}}
+\newlabel{lem:inner-prod}{{8.5}{13}{}{lemma.8.5}{}}
+\citation{vershynin2010introduction}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}Proof of Theorem \ref  {thm:robust-reg}}{14}{subsection.8.2}}
+\newlabel{thm:robust-reg-b}{{8.1}{14}{}{thm.8.1}{}}
+\newlabel{lem:EP}{{8.6}{14}{}{lemma.8.6}{}}
+\newlabel{eq:disc-not-good}{{8.1}{15}{Proof of Theorem \ref {thm:robust-reg}}{equation.8.1}{}}
+\newlabel{eq:double-ub}{{8.2}{15}{Proof of Theorem \ref {thm:robust-reg}}{equation.8.2}{}}
+\newlabel{eq:K-L-b}{{8.3}{16}{Proof of Theorem \ref {thm:robust-reg}}{equation.8.3}{}}
+\newlabel{eq:basic-L}{{8.4}{17}{Proof of Theorem \ref {thm:robust-reg}}{equation.8.4}{}}
+\newlabel{eq:larger-t-prob}{{8.5}{17}{Proof of Theorem \ref {thm:robust-reg}}{equation.8.5}{}}
+\citation{vershynin2010introduction}
+\citation{davidson2001local}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}Proofs of Lemma \ref  {lem:design-linear}, Corollary \ref  {cor:repair-linear}, Lemma \ref  {lem:design-rf} and Corollary \ref  {cor:repair-rf}}{18}{subsection.8.3}}
+\newlabel{eq:exp-f-inf}{{8.6}{19}{Proofs of Lemma \ref {lem:design-linear}, Corollary \ref {cor:repair-linear}, Lemma \ref {lem:design-rf} and Corollary \ref {cor:repair-rf}}{equation.8.6}{}}
+\newlabel{eq:ep-f}{{8.7}{19}{Proofs of Lemma \ref {lem:design-linear}, Corollary \ref {cor:repair-linear}, Lemma \ref {lem:design-rf} and Corollary \ref {cor:repair-rf}}{equation.8.6}{}}
+\newlabel{eq:ep-g}{{8.8}{19}{Proofs of Lemma \ref {lem:design-linear}, Corollary \ref {cor:repair-linear}, Lemma \ref {lem:design-rf} and Corollary \ref {cor:repair-rf}}{equation.8.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Analysis of (\ref  {eq:exp-f-inf}).}{19}{section*.1}}
+\newlabel{eq:l1-1-2}{{8.9}{20}{Analysis of (\ref {eq:exp-f-inf})}{equation.8.9}{}}
+\citation{vershynin2010introduction}
+\newlabel{eq:l1-1-3}{{8.10}{21}{Analysis of (\ref {eq:exp-f-inf})}{equation.8.10}{}}
+\@writefile{toc}{\contentsline {paragraph}{Analysis of (\ref  {eq:ep-f}).}{21}{section*.2}}
+\newlabel{eq:mgf-b}{{8.11}{21}{Analysis of (\ref {eq:ep-f})}{equation.8.11}{}}
+\citation{vershynin2010introduction}
+\newlabel{eq:tala-mgf1}{{8.12}{22}{Analysis of (\ref {eq:ep-f})}{equation.8.12}{}}
+\newlabel{eq:tala-mgf2}{{8.13}{22}{Analysis of (\ref {eq:ep-f})}{equation.8.12}{}}
+\citation{vershynin2010introduction}
+\citation{vershynin2010introduction}
+\@writefile{toc}{\contentsline {paragraph}{Analysis of (\ref  {eq:ep-g}).}{23}{section*.3}}
+\newlabel{eq:union-tala-g}{{8.14}{24}{Analysis of (\ref {eq:ep-g})}{equation.8.14}{}}
+\newlabel{eq:small-exp}{{8.15}{24}{Analysis of (\ref {eq:ep-g})}{equation.8.14}{}}
+\newlabel{lem:lim-G}{{8.7}{25}{}{lemma.8.7}{}}
+\newlabel{eq:spectrum-G-bound}{{8.16}{25}{}{equation.8.16}{}}
+\newlabel{eq:G-G-tilde}{{8.17}{25}{Proofs of Lemma \ref {lem:design-linear}, Corollary \ref {cor:repair-linear}, Lemma \ref {lem:design-rf} and Corollary \ref {cor:repair-rf}}{equation.8.17}{}}
+\newlabel{eq:G-diag}{{8.18}{26}{Proofs of Lemma \ref {lem:design-linear}, Corollary \ref {cor:repair-linear}, Lemma \ref {lem:design-rf} and Corollary \ref {cor:repair-rf}}{equation.8.18}{}}
+\newlabel{eq:G-tilde-1}{{8.19}{26}{Proofs of Lemma \ref {lem:design-linear}, Corollary \ref {cor:repair-linear}, Lemma \ref {lem:design-rf} and Corollary \ref {cor:repair-rf}}{equation.8.19}{}}
+\newlabel{eq:G-tilde-2}{{8.20}{26}{Proofs of Lemma \ref {lem:design-linear}, Corollary \ref {cor:repair-linear}, Lemma \ref {lem:design-rf} and Corollary \ref {cor:repair-rf}}{equation.8.19}{}}
+\newlabel{eq:G-tilde-3}{{8.21}{26}{Proofs of Lemma \ref {lem:design-linear}, Corollary \ref {cor:repair-linear}, Lemma \ref {lem:design-rf} and Corollary \ref {cor:repair-rf}}{equation.8.19}{}}
+\newlabel{eq:G-tilde-4}{{8.22}{26}{Proofs of Lemma \ref {lem:design-linear}, Corollary \ref {cor:repair-linear}, Lemma \ref {lem:design-rf} and Corollary \ref {cor:repair-rf}}{equation.8.19}{}}
+\newlabel{eq:G-H}{{8.23}{26}{Proofs of Lemma \ref {lem:design-linear}, Corollary \ref {cor:repair-linear}, Lemma \ref {lem:design-rf} and Corollary \ref {cor:repair-rf}}{equation.8.23}{}}
+\newlabel{eq:second-order-G-1}{{8.24}{27}{Proofs of Lemma \ref {lem:design-linear}, Corollary \ref {cor:repair-linear}, Lemma \ref {lem:design-rf} and Corollary \ref {cor:repair-rf}}{equation.8.24}{}}
+\newlabel{eq:second-order-G-2}{{8.25}{27}{Proofs of Lemma \ref {lem:design-linear}, Corollary \ref {cor:repair-linear}, Lemma \ref {lem:design-rf} and Corollary \ref {cor:repair-rf}}{equation.8.24}{}}
+\newlabel{eq:G-H-mixed}{{8.26}{27}{Proofs of Lemma \ref {lem:design-linear}, Corollary \ref {cor:repair-linear}, Lemma \ref {lem:design-rf} and Corollary \ref {cor:repair-rf}}{equation.8.26}{}}
+\citation{davidson2001local}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.4}Proof of Theorem \ref  {thm:nn-grad}}{28}{subsection.8.4}}
+\newlabel{lem:lim-H}{{8.8}{28}{}{lemma.8.8}{}}
+\newlabel{eq:spectrum-H-bound}{{8.27}{29}{}{equation.8.27}{}}
+\newlabel{eq:H-H-tilde}{{8.28}{29}{Proof of Theorem \ref {thm:nn-grad}}{equation.8.28}{}}
+\newlabel{eq:H-diag}{{8.29}{29}{Proof of Theorem \ref {thm:nn-grad}}{equation.8.29}{}}
+\newlabel{eq:H-tilde-1}{{8.30}{29}{Proof of Theorem \ref {thm:nn-grad}}{equation.8.30}{}}
+\newlabel{eq:H-tilde-2}{{8.31}{29}{Proof of Theorem \ref {thm:nn-grad}}{equation.8.30}{}}
+\newlabel{eq:H-tilde-3}{{8.32}{29}{Proof of Theorem \ref {thm:nn-grad}}{equation.8.30}{}}
+\newlabel{eq:p1e1}{{8.33}{31}{Proof of Theorem \ref {thm:nn-grad}}{equation.8.33}{}}
+\newlabel{eq:p1e1.5}{{8.34}{31}{Proof of Theorem \ref {thm:nn-grad}}{equation.8.33}{}}
+\newlabel{eq:p1e2}{{8.35}{31}{Proof of Theorem \ref {thm:nn-grad}}{equation.8.33}{}}
+\newlabel{eq:max-norm-x}{{8.36}{31}{Proof of Theorem \ref {thm:nn-grad}}{equation.8.33}{}}
+\newlabel{eq:p1e2.5}{{8.37}{31}{Proof of Theorem \ref {thm:nn-grad}}{equation.8.33}{}}
+\newlabel{eq:p1e3}{{8.38}{31}{Proof of Theorem \ref {thm:nn-grad}}{equation.8.33}{}}
+\@writefile{toc}{\contentsline {paragraph}{Proof of Claim A.}{32}{section*.4}}
+\@writefile{toc}{\contentsline {paragraph}{Proof of Claim B.}{33}{section*.5}}
+\newlabel{eq:G-last-op}{{8.39}{34}{Proof of Claim B}{equation.8.39}{}}
+\newlabel{eq:H-time-stable}{{8.40}{35}{Proof of Claim B}{equation.8.40}{}}
+\newlabel{eq:bound-res-k}{{8.41}{36}{Proof of Claim B}{equation.8.41}{}}
+\newlabel{eq:main-inner}{{8.42}{36}{Proof of Claim B}{equation.8.42}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.5}Proofs of Theorem \ref  {thm:repair-nn-1} and Theorem \ref  {thm:repair-nn-2}}{36}{subsection.8.5}}
+\bibstyle{apalike}
+\bibdata{repair}
+\bibcite{boyd:04}{{1}{2004}{{Boyd and Vandenberghe}}{{}}}
+\bibcite{chen2016}{{2}{2016}{{Chen et~al.}}{{}}}
+\bibcite{cirel1976norms}{{3}{1976}{{Cirel'son et~al.}}{{}}}
+\bibcite{davidson2001local}{{4}{2001}{{Davidson and Szarek}}{{}}}
+\bibcite{du2018gradient}{{5}{2018}{{Du et~al.}}{{}}}
+\@writefile{toc}{\contentsline {section}{References}{39}{section*.7}}
+\bibcite{gao2020}{{6}{2020}{{Gao}}{{}}}
+\bibcite{hoeffding1963probability}{{7}{1963}{{Hoeffding}}{{}}}
+\bibcite{huber:64}{{8}{1964}{{Huber}}{{}}}
+\bibcite{jacot2018neural}{{9}{2018}{{Jacot et~al.}}{{}}}
+\bibcite{joseph2012}{{10}{2012}{{Joseph and Barron}}{{}}}
+\bibcite{laurent2000adaptive}{{11}{2000}{{Laurent and Massart}}{{}}}
+\bibcite{mei2019generalization}{{12}{2019}{{Mei and Montanari}}{{}}}
+\bibcite{neyshabur2014search}{{13}{2014}{{Neyshabur et~al.}}{{}}}
+\bibcite{rahimi2008}{{14}{2008}{{Rahimi and Recht}}{{}}}
+\bibcite{ross2007second}{{15}{2007}{{Ross and Pek{\"o}z}}{{}}}
+\bibcite{rush2017}{{16}{2017}{{Rush et~al.}}{{}}}
+\bibcite{vershynin2010introduction}{{17}{2010}{{Vershynin}}{{}}}

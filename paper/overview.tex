@@ -15,7 +15,7 @@ where $z_j \sim (1-\epsilon) \delta_0 + \epsilon Q$ and $Q$ is an arbitrary dist
 \point{Overparameterized linear models}
 To explain the main ideas, let us first consider the setting of under-determined linear regression. Let $X\in\reals^{n\times p}$ be the design matrix and $y\in\reals^n$ a vector of response values, and suppose that we wish to minimize the squared error  $\|y-X\theta\|_2^2$. If $n > p$ then this is an under-determined optimization problem. Among all solutions to the linear system $y = X\theta$, the solution of minimal norm $\|\theta\|_2$ is given by
 \begin{equation}
-  \hat \theta = X^T (X X^T)^{-1} y
+  \hat \theta = X^T (X X^T)^{-1} y \label{eq:min-norm-solution}
 \end{equation}
 assuming that $X$ has full rank $n$ \citep{boyd:04}. Thus, $\hat\theta$ lies in the row space of the $n\times p$ design matrix $X$.
 
@@ -66,7 +66,7 @@ encodes $y$ since $p > n$ (see Figure~\ref{fig:code}). The decoding algorithm $\
 \point{Estimators based on gradient descent}
 The observations made above carry over to estimators of linear models based on gradient descent. Consider objective functions of the form
 \begin{equation}
-  \ell(\theta) = \frac{1}{n} \sum_{i=1}^n \L(y_i, x_i^T \theta)
+  \ell(\theta) = \frac{1}{n} \sum_{i=1}^n \L(y_i, x_i^T \theta)\label{eq:gen-obj}
 \end{equation}
 where $\L(y,f)$ is a general loss function; this includes
 a broad range of estimators for problems such as linear least squares and logistic regression, robust regression, support vector machines, and others. The gradient descent update rule is
