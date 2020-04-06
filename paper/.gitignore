@@ -4,6 +4,9 @@ repair.pdf
 *.log
 *.aux
 *.out
+*.bbl
+*.fls
+*.blg
 .gitignore
 *~
 
