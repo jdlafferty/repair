@@ -1,0 +1,10 @@
+*.fdb_latexmk
+repair.pdf
+*.synctex.gz
+*.log
+*.aux
+*.out
+.gitignore
+*~
+
+
