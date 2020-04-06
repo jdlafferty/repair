@@ -102,16 +102,3 @@ Typically the training takes place in ``epochs'' where all $n$ data points are v
 
 \point{Random features and neural networks} Our theory extends to random features models \citep{rahimi2008}, where the covariates are $\tilde X = \psi(X W)\in \reals^{n\times p}$ where $X\in\reals^{n\times d}$, the matrix $W\in\reals^{d\times p}$ is a random Gaussian matrix that is not trained, and $\psi$ is a threshold function such as the hyperbolic tangent function or rectified linear unit. In particular, when the model is trained using gradient descent, the parameters $\hat\theta$ lie in the row
 space of the matrix $\tilde X$. We also show how the ideas can be extended to neural networks, where the weights $W$ are trained. This requires modifications to the training and recovery algorithms that we detail below.
-
-%\point{Proof techniques}
-
-%\begin{itemize}
-%\itemsep10pt
-  %\item Minimal norm least squares
-  %\item Main lemma
-  %\item Proof idea of main lemma
-  %\item Error-correcting code perspective
-  %\item Sample plot with alignment
-  %\item Gradient descent estimators
-  %\item Overview of random features and neural networks---row space of $\psi(XW)\in\reals^{n\times p}$.
-%\end{itemize}
