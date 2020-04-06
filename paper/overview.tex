@@ -10,7 +10,7 @@ In this section we formulate the problem of model repair, and give an overview o
 \begin{equation}
   \eta = \hat\theta + z
 \end{equation}
-where $z_j \sim (1-\epsilon) \delta_0 + \epsilon Q$ and $Q$ is an arbitrary distribution. In other words, each component $\hat\theta_j$ of $\hat\theta$ is corrupted by additive noise from an arbitrary distribution $Q$ with probability $\epsilon$, where $0\leq \epsilon \leq 1$, and is uncorrupted with probability $1-\epsilon$. We discuss alternative error models later in the paper. The goal is to recover $\hat\theta$ from $\eta$, without reestimating the model using the response values $\{y_i\}$.
+where $z_j \sim (1-\epsilon) \delta_0 + \epsilon Q_j$ and $Q_j$ is an arbitrary distribution. In other words, each component $\hat\theta_j$ of $\hat\theta$ is corrupted by additive noise from an arbitrary distribution $Q_j$ with probability $\epsilon$, where $0\leq \epsilon \leq 1$, and is uncorrupted with probability $1-\epsilon$. We discuss alternative error models later in the paper. The goal is to recover $\hat\theta$ from $\eta$, without reestimating the model using the response values $\{y_i\}$.
 
 \point{Overparameterized linear models}
 To explain the main ideas, let us first consider the setting of under-determined linear regression. Let $X\in\reals^{n\times p}$ be the design matrix and $y\in\reals^n$ a vector of response values, and suppose that we wish to minimize the squared error  $\|y-X\theta\|_2^2$. If $n > p$ then this is an under-determined optimization problem. Among all solutions to the linear system $y = X\theta$, the solution of minimal norm $\|\theta\|_2$ is given by
@@ -19,7 +19,7 @@ To explain the main ideas, let us first consider the setting of under-determined
 \end{equation}
 assuming that $X$ has full rank $n$ \citep{boyd:04}. Thus, $\hat\theta$ lies in the row space of the $n\times p$ design matrix $X$.
 
-Now suppose that $\eta = \hat\theta + z$ where $z_j \sim (1-\epsilon) \delta_0 + \epsilon Q$. The method we propose to recover $\hat\theta$ from $\eta$ is to let $\tilde u\in\reals^n$ be the solution to the optimization
+Now suppose that $\eta = \hat\theta + z$ where $z_j \sim (1-\epsilon) \delta_0 + \epsilon Q_j$. The method we propose to recover $\hat\theta$ from $\eta$ is to let $\tilde u\in\reals^n$ be the solution to the optimization
 \begin{equation}
   \tilde u = \argmin_u \| \eta  - X^T u\|_1
   \label{eq:keylp}
@@ -29,9 +29,9 @@ The linear program defined in \eqref{eq:keylp} can be thought of as performing m
 Our analysis shows that, under appropriate assumptions, the model is repaired with high probability, so that $\tilde \theta = \hat\theta$, as long as $n/p \leq c(1-\epsilon)^2$ for some sufficiently small constant $c$.
 
 Figure~\ref{fig:exp} shows the performance of
-the repair algorithm in simulation. The design is sampled as $X_{ij} \sim N(0,1)$ and the corruption distribution is $Q = N(1,1)$. With the sample size fixed at $n=50$, the dimension $p$ is varied according to $p_j/n=200/j^2$ with
-$j$ ranging from 1 to 6. The plots show the empirical probability of exact repair $\tilde\theta = \hat\theta$ as a function of $\epsilon$. The roughly equal spacing of the curves agrees with our theory, which indicates that $\sqrt{n/p}/(1-\epsilon)$ should be sufficiently small for successful repair. The theory indicates that the repair probability for dimension $p_j$ as a function of the adjusted value $\epsilon_j = \epsilon + c'\cdot j - \frac{1}{2}$ should exhibit a threshold at
-$\epsilon_j = 1/2$ for the constant $c' = \frac{\sqrt{2}}{20 c}$; this is seen in the right plot of Figure~\ref{fig:exp}.
+the repair algorithm in simulation. The design is sampled as $X_{ij} \sim N(0,1)$ and the corruption distribution is $Q_j = N(1,1)$ for each $j$. With the sample size fixed at $n=50$, the dimension $p$ is varied according to $p_k/n=200/k^2$ with
+$k$ ranging from 1 to 6. The plots show the empirical probability of exact repair $\tilde\theta = \hat\theta$ as a function of $\epsilon$. The roughly equal spacing of the curves agrees with our theory, which indicates that $\sqrt{n/p}/(1-\epsilon)$ should be sufficiently small for successful repair. The theory indicates that the repair probability for dimension $p_k$ as a function of the adjusted value $\epsilon_k = \epsilon + c'\cdot k - \frac{1}{2}$ should exhibit a threshold at
+$\epsilon_k = 1/2$ for the constant $c' = \frac{\sqrt{2}}{20 c}$; this is seen in the right plot of Figure~\ref{fig:exp}.
 
 
 
@@ -47,15 +47,17 @@ In particular, we show that model repair is possible even if $\epsilon \to 1$, s
   \end{tabular}
 \caption{Left: Empirical probability of exact repair as a function of $\epsilon$.
 The sample size is $n=50$ and the model dimension $p$
-varies as $p_j/n = 200 /j^2$, for $j=1,\ldots, 6$; each point is an average over 500 trials. The plot on the right
-shows the repair probability as a function of the adjusted value $\epsilon_j = \epsilon + c' \cdot j - \frac{1}{2}$
-for dimension $p_j$, where the constant is $c'=\frac{\sqrt{2}}{20 c}=0.085$.}
+varies as $p_k/n = 200 /k^2$, for $k=1,\ldots, 6$; each point is an average over 500 trials. The plot on the right
+shows the repair probability as a function of the adjusted value $\epsilon_k = \epsilon + c' \cdot k - \frac{1}{2}$
+for dimension $p_k$, where the constant is $c'=\frac{\sqrt{2}}{20 c}=0.085$.}
 \label{fig:exp}
 \end{figure}
 
 \point{Error-correcting codes}
 Model repair can also be viewed in terms of error-correcting codes. Specifically, viewing the response vector $y\in\reals^n$  as a ``message'' to be communicated over a noisy channel, the minimum norm model $\hat\theta = X^T u = X^T (X X^T)^{-1} y$ redundantly
-encodes $y$ since $p > n$ (see Figure~\ref{fig:code}). The decoding algorithm $\tilde u = \argmin_u \|\eta - X^T u\|$ then recovers the data $y$ according to $y = (XX^T) \tilde u$. The inequality $n/p < c(1-\epsilon)^2$ gives a condition on the rate of the code, that is, the level of redundancy that is sufficient for this decoding procedure to recover the message with high probability.  When $X$ is a random Gaussian matrix, the mapping $u \to X^T u = \sum_{i=1}^n u_i X_i^T$ can be viewed as a superposition of random codewords in $\reals^p$ \citep{joseph2012,rush2017}. The fundamental difference with channel coding is that in our regression setting, the design matrix $X$ is fixed, and is not chosen for optimal channel coding. Indeed, the noise model $w \to w + z$ that we consider corresponds to a channel having infinite capacity, and a simple repetition code would suffice for identifying components that are uncorrupted.
+encodes $y$ since $p > n$ (see Figure~\ref{fig:code}). The decoding algorithm $\tilde u = \argmin_u \|\eta - X^T u\|$ then recovers the data $y$ according to $y = (XX^T) \tilde u$. The inequality $n/p < c(1-\epsilon)^2$ gives a condition on the rate of the code, that is, the level of redundancy that is sufficient for this decoding procedure to recover the message with high probability.
+
+When $X$ is a random Gaussian matrix, the mapping $u \to X^T u = \sum_{i=1}^n u_i X_i^T$ can be viewed as a superposition of random codewords in $\reals^p$ \citep{joseph2012,rush2017}. The fundamental difference with channel coding is that in our regression setting the design matrix $X$ is fixed, and is not chosen for optimal channel coding. Indeed, the noise model $w \to w + z$ that we consider corresponds to a channel having infinite capacity, and a simple repetition code would suffice for identifying components that are uncorrupted \citep{CoverThomas}.
 
 \begin{figure}[t]
   \includegraphics[width=1.0\textwidth]{fig/code}
@@ -64,7 +66,7 @@ encodes $y$ since $p > n$ (see Figure~\ref{fig:code}). The decoding algorithm $\
 \end{figure}
 
 \point{Estimators based on gradient descent}
-The observations made above carry over to estimators of linear models based on gradient descent. Consider objective functions of the form
+The observations made above carry over to estimators of linear models based on gradient descent and stochastic gradient descent for arbitrary loss functions. Consider objective functions of the form
 \begin{equation}
   \ell(\theta) = \frac{1}{n} \sum_{i=1}^n \L(y_i, x_i^T \theta)\label{eq:gen-obj}
 \end{equation}
@@ -83,7 +85,7 @@ for some $u^{(t)}\in \reals^n$. After contamination, we have $\eta = X^T u^{(t)}
 by computing  $\tilde\theta = X^T \tilde u$ where $\tilde u$ is the solution to \eqref{eq:keylp}.
 
 
-The same conclusion holds for estimators based on stochastic gradient descent. Let $B_t$ be the set of samples used in the mini-batch of the $t$th iteration. Then, we can write
+The same conclusion holds for estimators based on stochastic gradient descent. With $B_t$ denoting the set of samples used in the mini-batch of the $t$th iteration, we can write
 \begin{equation}
   \theta^{(t)} = \sum_{i\in B_1\cup\cdots\cup B_t} u_i^{(t)} x_i.
 \end{equation}
@@ -91,7 +93,7 @@ We can recover $\theta^{(t)}$ from a corrupted model $\eta$ by computing $\tilde
 \begin{equation}
   \tilde u = \argmin_u \| \eta - X^T_{B_1\cup \cdots B_t} u\|_1
 \end{equation}
-where the submatrix $X_{B_1\cup\cdots B_t}$ only takes rows of $X$ for indices that were visited during some stochastic
+where the submatrix $X_{B_1\cup\cdots B_t}$ only includes rows of $X$ for indices that were visited during some stochastic
 gradient descent step. Our theory then establishes that the model is recovered with high probability in case
 \begin{equation}
   \frac{\sqrt{{|B_1 \cup \cdots B_t|}/{p}}}{1-\epsilon} < c.
