@@ -2,7 +2,7 @@
 
 
 
-\section{Background on robust regression}
+\section{Key lemma: Robust regression with uncorrupted design}
 \label{sec:regression}
 
 Consider a regression model $\eta=Au^*+z\in\mathbb{R}^m$, where $A^T=(a_1,a_2,...,a_m)^T\in\mathbb{R}^{m\times k}$ is a design matrix and $u^*\in\mathbb{R}^k$ is a vector of regression coefficients to be recovered. We consider a random design setting, and the distribution of $A$ will be specified later. For the noise vector $z\in\mathbb{R}^m$, we assume it is independent of the design matrix $A$, and
@@ -15,7 +15,7 @@ It can be computed using a standard linear programming.
 In order that $\wh{u}$ successfully recovers the true regression coefficients $u^*$, we need to impose the following conditions on the design matrix $A$.
 \begin{con1}
 Given i.i.d. Rademacher random variables $\delta_1,...,\delta_m$, the distribution of
-$$\wt{A}^T=(\delta_1a_1,\delta_2a_2,...,\delta_ma_m)^T$$ 
+$$\wt{A}^T=(\delta_1a_1,\delta_2a_2,...,\delta_ma_m)^T$$
 is identical to that of $A^T$.
 \end{con1}
 \begin{con2}
