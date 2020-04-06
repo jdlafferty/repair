@@ -1,2 +1,0 @@
-
-* explain how to handle intercept in all models
