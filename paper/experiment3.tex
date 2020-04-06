@@ -1,0 +1,100 @@
+\documentclass[12pt,pdftex,noinfoline]{imsart}
+
+\RequirePackage[OT1]{fontenc}
+\usepackage{amsthm,amsmath,amsfonts,natbib,mathtools,amssymb}
+\RequirePackage{hypernat}
+\usepackage[ruled,section]{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage{times}
+\usepackage{hyperref}
+\hypersetup{citecolor=MidnightBlue}
+\hypersetup{linkcolor=MidnightBlue}
+\hypersetup{urlcolor=MidnightBlue}
+\usepackage{enumerate}
+\usepackage{fullpage}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bbm}
+
+
+\renewcommand{\d}{\mathrm{d}}
+\newcommand{\E}{\operatorname{\mathbb E}}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+\DeclareMathOperator*{\argmin}{\arg\min}
+\DeclareMathOperator*{\argmax}{\arg\max}
+
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{prop}{Proposition}[section]
+\theoremstyle{remark}
+\newtheorem{example}{Example}[section]
+\newtheorem{remark}{Remark}[section]
+
+\def\given{\,|\,}
+\def\P{\mathbb{P}}
+\def\E{\mathbb{E}}
+\def\reals{\mathbb{R}}
+\def\argmin{\mathop{\text{arg\,min}}}
+\def\ones{\mathds{1}}
+\def\indicator{}
+\let\hat\widehat
+\let\what\widehat
+\let\tilde\widetilde
+\let\epsilon\varepsilon
+
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+\def\sfrac#1#2{#1/#2}
+
+\begin{document}
+\let\epsilon\varepsilon
+
+\stepcounter{section}
+{\large\bf Experiment: Random features models trained with gradient descent}
+\vskip10pt
+
+In this experiment we simulate over-parameterized random features models.
+We generate $n$ data points $(X_i, y_i)$ where
+$y_i = X_i^T \beta^* + w_i$ with $w_i$ an additive noise term. The covariates are generated
+as a layer of a random neural network, with $X_i = \tanh(WZ_i)$ where $Z_i \in\reals^d$ with $Z_{ij} \sim N(0,1)$
+and $W\in\reals^{p\times d}$ with $W_{ij} \sim N(0, 1/d)$. We then approximate the least squares
+solution using gradient descent intialized at zero, with updates
+\begin{equation}
+  \hat\beta^{(t)} = \hat\beta^{(t-1)} + \frac{\eta}{n} X^T R^{(t-1)}
+\end{equation}
+where the residual vector $R^{(t-1)}\in\reals^n$ is given by $R_i = (y_i - X_i^ T\hat\beta^{(t-1)})$.
+The step size $\eta$ is selected empirically to insure convergence in under $1{,}000$ iterations.
+
+The estimated model is corrupted to
+\begin{equation}
+  \eta = \hat\beta + \xi
+\end{equation}
+where $\xi_j \sim (1-\epsilon) \delta_0 +\epsilon Q$. The corrupted estimator is then repaired by solving
+\begin{align}
+  \tilde u &= \argmin \|\eta - X^T u\|_1 \\
+  \tilde \beta &= X^T \tilde u
+\end{align}
+
+In the experiments shown below we take $\beta_j^* \sim N(0,1)$ and $Q = N(1,1)$. We take $n=50$ and $n=100$ and vary $p$ according to $p/n=200/j^2$ with
+$j$ ranging from 1 to 6. The dimension $d$ is set to $\lceil p/2\rceil$. The recovery success curves for gradient descent are similar to those obtained for the minimal norm solution.
+
+\begin{figure}[ht]
+  \begin{center}
+    \begin{tabular}{cc}
+      $n=50$ & $n=100$\\[-20pt]
+      \includegraphics[width=.47\textwidth]{repair-rf-n50-3d} &
+      \includegraphics[width=.47\textwidth]{repair-rf-n100-3d}\\[-10pt]
+    \end{tabular}
+  \end{center}
+\caption{Model repair for linear models with features generated according to a single layer neural
+network with random weights. The plots show the probability of successful model repair for $n=50$ (left) and $n=100$ (right) with the model dimension $p$ varying as $p/n = 200 /j^2$, for $j=1,\ldots, 6$. Each point is an average over 200 trials.}
+\end{figure}
+
+
+\end{document}
