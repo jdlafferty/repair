@@ -1,0 +1,444 @@
+% !TEX root = ./repair.tex
+
+\appendix
+
+\section{Results with hyperbolic tangent activation}
+
+
+\subsection{Repair of random feature model and neural nets} \label{app:results}
+
+\nb{need to add text to this section}
+
+\begin{lemma}\label{lem:design-rf}
+Assume $n/p^2$ and $n/d$ are sufficiently small. Then, Condition A' and Condition B hold for $A=\wt{X}^T$, $m=p$ and $k=n$ with some constants $\underline{\lambda}$ and $\overline{\lambda}$.
+\end{lemma}
+
+
+\begin{corollary}\label{cor:repair-rf}
+Assume $\frac{\sqrt{\frac{n}{p}}\log\left(\frac{ep}{n}\right)}{1-\epsilon}$, $n/p^2$ and $n/d$ are sufficiently small. We then have $\wt{\theta}=\wh{\theta}$ with high probability.
+\end{corollary}
+
+\begin{thm}\label{thm:nn-grad}
+Assume $\frac{n}{d}$, $\frac{n^3(\log p)^2}{p}$, and $\gamma\left(1+\frac{n^4(\log p)^2}{p}\right)$ are all sufficiently small. Then, we have
+\begin{eqnarray}
+\label{eq:iter-parameter} \max_{1\leq j\leq p}\|W_j(t)-W_j(0)\| &\leq& R_1, \\
+\label{eq:iter-parameter-beta} \max_{1\leq j\leq p}|\beta_j(t)-\beta_j(0)| &\leq& R_2,
+\end{eqnarray}
+and
+\begin{equation}
+\|y-u(t)\|^2 \leq \left(1-\frac{\gamma}{8}\right)^t\|y-u(0)\|^2, \label{eq:iter-function}
+\end{equation}
+for all $t\geq 1$ with high probability, where $R_1=\frac{100n\log p}{\sqrt{pd}}$ and $R_2=32\sqrt{\frac{n^2\log p}{p}}$.
+\end{thm}
+
+\begin{thm}\label{thm:repair-nn-1}
+Under the conditions of Theorem \ref{thm:nn-grad}, additionally assume that $\frac{\log p}{d}$, $\frac{\sqrt{\frac{n}{d}\log\left(\frac{ed}{n}\right)}}{1-\epsilon}$ and $\frac{n^2\log p}{p(1-\epsilon)}$ are sufficiently small. We then have $\wt{W}=\wh{W}$ and $\frac{1}{p}\|\wt{\beta}-\wh{\beta}\|^2 \lesssim \frac{n^2\log p}{p(1-\epsilon)}$ with high probability.
+\end{thm}
+
+\begin{thm}\label{thm:repair-nn-2}
+Under the conditions of Theorem \ref{thm:nn-grad}, additionally assume that $\frac{\log p}{d}$, $\frac{\sqrt{\frac{n}{d}\log\left(\frac{ed}{n}\right)}}{1-\epsilon}$, $\frac{n\log p}{p(1-\epsilon)}$ and $\frac{n}{p}\left(\frac{\log p}{1-\epsilon}\right)^{4/3}$ are sufficiently small. We then have $\wt{W}=\wh{W}$ and $\wt{\beta}=\wh{\beta}$ with high probability.
+\end{thm}
+
+
+\subsection{Proofs of Lemma \ref{lem:design-rf} and Corollary \ref{cor:repair-rf}}
+
+We first state the proof of Lemma \ref{lem:design-rf}. Note that Condition A' is obvious, and we only need to prove Condition B. We present the proofs of (\ref{eq:l1-upper-A}) and (\ref{eq:l2-upper-A}) separately.
+\begin{proof}[Proof of (\ref{eq:l1-upper-A}) of Lemma \ref{lem:design-rf}]
+We adopt a similar strategy to the proof of Lemma \ref{lem:design-rf-relu}. Define
+$$f(W,X,\Delta)=\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(W_j^Tx_i)\Delta_i\right|,$$
+and $g(X,\Delta)=\mathbb{E}(f(W,X,\Delta)|X)$.
+We then have
+\begin{eqnarray}
+\nonumber \inf_{\|\Delta\|=1}f(W,X,\Delta) &\geq& \inf_{\|\Delta\|=1}\mathbb{E}f(W,X,\Delta) - \sup_{\|\Delta\|=1}\left|f(W,X,\Delta)-\mathbb{E}f(W,X,\Delta)\right| \\
+\label{eq:exp-f-inf} &\geq& \inf_{\|\Delta\|=1}\mathbb{E}f(W,X,\Delta) \\
+\label{eq:ep-f} && - \sup_{\|\Delta\|=1}\left|f(W,X,\Delta)-\mathbb{E}(f(W,X,\Delta)|X)\right| \\
+\label{eq:ep-g} && - \sup_{\|\Delta\|=1}\left|g(X,\Delta)-\mathbb{\mathbb{E}}g(X,\Delta)\right|.
+\end{eqnarray}
+We will analyze the three terms above separately.
+
+\paragraph{Analysis of (\ref{eq:exp-f-inf}).} For any $\Delta$ such that $\|\Delta\|=1$, we have
+\begin{eqnarray}
+\nonumber \mathbb{E}f(W,X,\Delta) &=& \mathbb{E}\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right| \\
+\nonumber &\geq& \mathbb{E}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\mathbb{I}\left\{\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1, 1/2\leq \|W\|^2\leq 2\right\}\right) \\
+\nonumber &\geq& \mathbb{P}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1, 1/2\leq \|W\|^2\leq 2\right) \\
+\nonumber &=& \mathbb{P}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1\Big|1/2\leq \|W\|^2\leq 2\right)\mathbb{P}\left(1/2\leq \|W\|^2\leq 2\right) \\
+\nonumber &\geq& \mathbb{P}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1\Big|1/2\leq \|W\|^2\leq 2\right)\left(1-2\exp(-d/16)\right),
+\end{eqnarray}
+where the last inequality is by Lemma \ref{lem:chi-squared}. It is easy to see that $\Var\left(\psi(W^Tx)|W\right)\leq \mathbb{E}(|\psi(W^Tx)|^2|W)\leq 1$. Moreover, for any $W$ such that $1/2\leq \|W\|^2\leq 2$, 
+$$\Var\left(\psi(W^Tx)|W\right)= \mathbb{E}(|\psi(W^Tx)|^2|W) \geq \frac{1}{5}\mathbb{P}\left(|W^Tx|>1/2|W\right)\geq \frac{1}{5}\mathbb{P}(|N(0,1)|\geq 1/\sqrt{2}),$$
+which is at least $1/20$. In summary, we have
+$$1/20 \leq \Var\left(\psi(W^Tx)|W\right) \leq 1,$$
+for any $W$ such that $1/2\leq \|W\|^2\leq 2$.
+By Lemma \ref{lem:stein}, we have
+\begin{eqnarray}
+\nonumber && \mathbb{P}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1\Big|1/2\leq \|W\|^2\leq 2\right) \\
+\nonumber &\geq& \mathbb{P}\left(\frac{\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|}{\sqrt{\Var\left(\psi(W^Tx)|W\right)}}\geq \sqrt{20}\Bigg|1/2\leq \|W\|^2\leq 2\right) \\
+\nonumber &\geq& \mathbb{P}\left(N(0,1)>\sqrt{20}\right) - \sup_{1/2\leq \|W\|^2\leq 2} 2\sqrt{3\sum_{i=1}^n|\Delta_i|^3\frac{\mathbb{E}\left(|\psi(W^Tx_i)|^3|W\right)}{\left(\Var\left(\psi(W^Tx)|W\right)\right)^{3/2}}} \\
+\nonumber &\geq& \mathbb{P}\left(N(0,1)>\sqrt{20}\right) - 35\sqrt{\sum_{i=1}^n|\Delta_i|^3} \\
+\nonumber &\geq& \mathbb{P}\left(N(0,1)>\sqrt{20}\right) - 35\max_{1\leq i\leq n}|\Delta_i|^{3/2}.
+\end{eqnarray}
+Hence, when $\max_{1\leq i\leq n}|\Delta_i|^{3/2}\leq \delta_0^{3/2}:=\mathbb{P}\left(N(0,1)>\sqrt{20}\right)/70$, we can lower bound $\mathbb{E}f(W,X,\Delta)$ by an absolute constant, and we conclude that
+\begin{equation}
+\inf_{\|\Delta\|=1, \max_{1\leq i\leq n}|\Delta_i|\leq\delta_0}\mathbb{E}f(W,X,\Delta) \gtrsim 1.\label{eq:l1-1-2}
+\end{equation}
+
+We also need to consider the case when $\max_{1\leq i\leq n}|\Delta_i|> \delta_0$. Without loss of generality, we can assume $\Delta_1>\delta_0$.
+We then lower bound $\mathbb{E}f(W,X,\Delta)$ by
+\begin{eqnarray*}
+&& \mathbb{E}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\mathbb{I}\left\{\sum_{i=1}^n\psi(W^Tx_i)\Delta_i \geq \delta_0/2, 1/2\leq \|W\|^2\leq 2\right\}\right) \\
+&\geq& \frac{\delta_0}{2} \mathbb{P}\left(\sum_{i=1}^n\psi(W^Tx_i)\Delta_i \geq \delta_0/2\Big| 1/2\leq \|W\|^2\leq 2\right)\mathbb{P}\left(1/2\leq \|W\|^2\leq 2\right) \\
+&\geq& \frac{\delta_0}{2} \mathbb{P}\left(\psi(W^Tx_1)\Delta_1 \geq \delta_0/2\Big|1/2\leq \|W\|^2\leq 2\right) \\
+&& \times \mathbb{P}\left(\sum_{i=2}^n\psi(W^Tx_i)\Delta_i \geq 0\Big|1/2\leq \|W\|^2\leq 2\right)\left(1-2\exp(-d/16)\right) \\
+&=& \frac{\delta_0}{4} \mathbb{P}\left(\psi(W^Tx_1)\Delta_1 \geq \delta_0/2\Big|1/2\leq \|W\|^2\leq 2\right)\left(1-2\exp(-d/16)\right).
+\end{eqnarray*}
+For any $W$ that satisfies $1/2\leq \|W\|^2\leq 2$, we have
+\begin{eqnarray*}
+\mathbb{P}\left(\psi(W^Tx_1)\Delta_1 \geq \delta_0/2\Big|W\right) &\geq& \mathbb{P}\left(\psi(W^Tx_1)\geq 1/2\Big|W\right) \\
+&\geq&  \mathbb{P}\left(W^Tx_1\geq 1\Big|W\right) \\
+&\geq& \mathbb{P}\left(N(0,1)\geq \sqrt{2}\right),
+\end{eqnarray*}
+which is a constant.
+Therefore, we have
+$$\mathbb{E}f(W,X,\Delta)\geq \frac{\delta_0}{4}\left(1-2\exp(-d/16)\right)\mathbb{P}\left(N(0,1)\geq \sqrt{2}\right)\gtrsim 1,$$
+and we can conclude that
+\begin{equation}
+\inf_{\|\Delta\|=1, \max_{1\leq i\leq n}|\Delta_i|\geq\delta_0}\mathbb{E}f(W,X,\Delta) \gtrsim 1.\label{eq:l1-1-3}
+\end{equation}
+
+In the end, we combine the two cases (\ref{eq:l1-1-2}) and (\ref{eq:l1-1-3}),  and we obtain the conclusion that $\inf_{\|\Delta\|=1}\mathbb{E}f(W,X,\Delta)\gtrsim 1$.
+
+
+\paragraph{Analysis of (\ref{eq:ep-f}).} This step follows the same analysis of (\ref{eq:ep-f-relu}) in the proof of Lemma \ref{lem:design-rf-relu}, and we have
+$$\sup_{\|\Delta\|=1}\left|f(W,X,\Delta)-\mathbb{E}(f(W,X,\Delta)|X)\right|\lesssim \sqrt{\frac{n^2}{p}},$$
+with high probability.
+
+\paragraph{Analysis of (\ref{eq:ep-g}).} This step follows a similar analysis of (\ref{eq:ep-g-relu}) in the proof of Lemma \ref{lem:design-rf-relu}. The only difference is that the bound $\mathbb{E}g(X,\Delta)\leq \sqrt{n}$ there can be replaced by $\mathbb{E}g(X,\Delta)\leq 1$, because
+$$\mathbb{E}g(X,\Delta)\leq \sqrt{\mathbb{E}\Var\left(\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\Big|W\right)}\leq \sqrt{\mathbb{E}|\psi(W^Tx)|^2}\leq 1.$$
+Therefore,
+$$\sup_{\|\Delta\|=1}|g(X,\Delta) - \mathbb{E}g(X,\Delta)|\lesssim \sqrt{\frac{n\log(1+2/\zeta)}{d}} + \zeta,$$
+with high probability as long as $\zeta\leq 1/2$. We choose $\zeta=\sqrt{n/d}$, and thus the bound is sufficiently small as long as $n/d$ is sufficiently small.
+
+Finally, combine results for (\ref{eq:exp-f-inf}), (\ref{eq:ep-f}) and (\ref{eq:ep-g}), and we obtain the desired conclusion as long as $n^2/p$ and $n/d$ are sufficiently small.
+\end{proof}
+
+To prove (\ref{eq:l2-upper-A}) of Lemma \ref{lem:design-rf}, we establish the following stronger result.
+\begin{lemma}\label{lem:lim-G}
+Consider independent $W_1,...,W_p\sim N(0,d^{-1}I_d)$ and $x_1,...,x_n\sim N(0,I_d)$. We define the matrices $G,\bar{G}\in\mathbb{R}^{n\times n}$ by
+\begin{eqnarray*}
+G_{il} &=& \frac{1}{p}\sum_{j=1}^p\psi(W^T_jx_i)\psi(W_j^Tx_l), \\
+\bar{G}_{il} &=& |\mathbb{E}\psi'(Z)|^2\frac{x_i^Tx_l}{\|x_i\|\|x_l\|} + \left(\mathbb{E}|\psi(Z)|^2-|\mathbb{E}\psi'(Z)|^2\right)\mathbb{I}\{i=l\},
+\end{eqnarray*}
+where $Z\sim N(0,1)$.
+Assume $d/\log n$ is sufficiently large, and then
+$$\opnorm{G-\bar{G}}^2\lesssim \frac{n^2}{p} + \frac{\log n}{d} + \frac{n^2}{d^2},$$
+with high probability. Therefore, if we assume $n^2/p$ and $n/d$ are sufficiently small, we also have
+\begin{equation}
+1\lesssim\lambda_{\min}(G)\leq \lambda_{\max}(G)\lesssim 1, \label{eq:spectrum-G-bound}
+\end{equation}
+with high probability.
+\end{lemma}
+\begin{proof}
+Define $\wt{G}\in\mathbb{R}^{n\times n}$ with entries $\wt{G}_{il}=\mathbb{E}\left(\psi(W^Tx_i)\psi(W^Tx_l)|X\right)$, and we first bound the difference between $G$ and $\wt{G}$. Note that
+$$\mathbb{E}(G_{il}-\wt{G}_{il})^2 = \mathbb{E}\Var(G_{il}|X) \leq \frac{1}{p}\mathbb{E}|\psi(W^Tx_i)\psi(W^Tx_l)|^2 \leq p^{-1}.$$
+We then have
+$$
+\mathbb{E}\opnorm{G-\wt{G}}^2 \leq \mathbb{E}\fnorm{G-\wt{G}}^2 \leq \frac{n^2}{p}.
+$$
+By Markov's inequality,
+\begin{equation}
+\opnorm{G-\wt{G}}^2 \lesssim \frac{n^2}{p}, \label{eq:G-G-tilde}
+\end{equation}
+with high probability.
+
+Next, we study the diagonal entries of $\wt{G}$. For any $i\in[n]$, 
+$$\wt{G}_{ii}=\mathbb{E}(|\psi(W^Tx_i)|^2|X)=\mathbb{E}_{U\sim N(0,\|x_i\|^2/d)}|\psi(U)|^2.$$
+Therefore,
+$$\max_{1\leq i\leq n}|\wt{G}_{ii}-\bar{G}_{ii}|\leq \max_{1\leq i\leq n}\TV\left(N(0,\|x_i\|^2/d), N(0,1)\right)\leq\frac{3}{2}\max_{1\leq i\leq n}\left|\frac{\|x_i\|^2}{d}-1\right|.$$
+By Lemma \ref{lem:chi-squared} and a union bound argument, we have
+$$\mathbb{P}\left(\max_{1\leq i\leq n}|\wt{G}_{ii}-\bar{G}_{ii}|>3\sqrt{\frac{t}{d}}+3\frac{t}{d}\right)\leq 2ne^{-t},$$
+for any $t>0$. Choosing $t\asymp\log n$, we obtain the bound
+\begin{equation}
+\max_{1\leq i\leq n}|\wt{G}_{ii}-\bar{G}_{ii}|\lesssim \sqrt{\frac{\log n}{d}}, \label{eq:G-diag}
+\end{equation}
+with high probability.
+
+Now we analyze the off-diagonal entries. We use the notation $\bar{x}_i=\frac{\sqrt{d}}{\|x_i\|}x_i$. For any $i\neq l$, we have
+\begin{eqnarray}
+\label{eq:G-tilde-1} \wt{G}_{il} &=& \mathbb{E}\left(\psi(W^T\bar{x}_i)\psi(W^T\bar{x}_l)|X\right) \\
+\label{eq:G-tilde-2} && + \mathbb{E}\left((\psi(W^Tx_i)-\psi(W^T\bar{x}_i))\psi(W^T\bar{x}_l)|X\right) \\
+\label{eq:G-tilde-3} && + \mathbb{E}\left(\psi(W^T\bar{x}_i)(\psi(W^Tx_l)-\psi(W^T\bar{x}_l))|X\right) \\
+\label{eq:G-tilde-4} && + \mathbb{E}\left((\psi(W^Tx_i)-\psi(W^T\bar{x}_i))(\psi(W^Tx_l)-\psi(W^T\bar{x}_l))|X\right).
+\end{eqnarray}
+For first term on the right hand side of (\ref{eq:G-tilde-1}), we observe that $\mathbb{E}\left(\psi(W^T\bar{x}_i)\psi(W^T\bar{x}_l)|X\right)$ is a function of $\frac{\bar{x}_i^T\bar{x}_l}{d}$, and thus we can write
+$$\mathbb{E}\left(\psi(W^T\bar{x}_i)\psi(W^T\bar{x}_l)|X\right)=f\left(\frac{\bar{x}_i^T\bar{x}_l}{d}\right),$$
+where
+$$f(\rho) = \begin{cases}
+\mathbb{E}\psi(\sqrt{1-\rho}U+\sqrt{\rho}Z)\psi(\sqrt{1-\rho}V+\sqrt{\rho}Z), & \rho \geq 0, \\
+\mathbb{E}\psi(\sqrt{1+\rho}U-\sqrt{-\rho}Z)\psi(\sqrt{1+\rho}V+\sqrt{-\rho}Z), & \rho < 0,
+\end{cases}$$
+with $U,V,Z\stackrel{iid}{\sim} N(0,1)$. By some direct calculations, we have $f(0)=0$, $f'(0)=(\mathbb{E}\psi'(Z))^2$, and $\sup_{|\rho|\leq 0.2}|f''(\rho)|\lesssim 1$. Therefore, as long as $|\bar{x}_i^T\bar{x}_l|/d\leq 1/5$,
+$$\left|f\left(\frac{\bar{x}_i^T\bar{x}_l}{d}\right)-(\mathbb{E}\psi'(Z))^2\frac{\bar{x}_i^T\bar{x}_l}{d}\right|\leq C_1\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^2,$$
+for some constant $C_1>0$. By Lemma \ref{lem:inner-prod}, we know that $\max_{i\neq l}|\bar{x}_i^T\bar{x}_l|/d\lesssim \sqrt{\frac{\log n}{d}}\leq 1/5$ with high probability, which then implies
+\begin{equation}
+\sum_{i\neq l}\left(\mathbb{E}\left(\psi(W^T\bar{x}_i)\psi(W^T\bar{x}_l)|X\right)-\bar{G}_{il}\right)^2 \leq C_1\sum_{i\neq l}\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^4. \label{eq:G-H}
+\end{equation}
+The term on the right hand side can be bounded by
+$$\sum_{i\neq l}\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^4\leq \frac{d}{\min_{1\leq i\leq n}\|x_i\|^2}\sum_{i\neq l}\left|\frac{x_i^Tx_l}{d}\right|^4.$$
+By Lemma \ref{lem:chi-squared}, $\frac{d}{\min_{1\leq i\leq n}\|x_i\|^2}\lesssim 1$ with high probability. By integrating out the probability tail bound of $|x_i^Tx_l|$ given in Lemma \ref{lem:inner-prod}, we have $\sum_{i\neq l}\mathbb{E}\left|\frac{x_i^Tx_l}{d}\right|^4\lesssim \frac{n^2}{d^2}$, and by Markov's inequality, we have $\sum_{i\neq l}\left|\frac{x_i^Tx_l}{d}\right|^4\lesssim \frac{n^2}{d^2}$ with high probability.
+
+We also need to analyze the contributions of (\ref{eq:G-tilde-2}) and (\ref{eq:G-tilde-3}). We can write (\ref{eq:G-tilde-2}) as
+\begin{eqnarray}
+\label{eq:second-order-G-1} && \mathbb{E}\left[\psi(W^T\bar{x}_l)\psi'(W^T\bar{x}_i)W^T(x_i-\bar{x}_i)|X\right] \\
+\label{eq:second-order-G-2} && + \frac{1}{2}\mathbb{E}\left[\psi(W^T\bar{x}_i)\psi''(t_i)|W^T(x_i-\bar{x}_i)|^2|X\right],
+\end{eqnarray}
+where $t_i$ is some random variable between $W^Tx_i$ and $W^T\bar{x}_i$. The first term (\ref{eq:second-order-G-1}) can be expressed as
+$$\left(\frac{\|x_i\|}{\sqrt{d}}-1\right)\mathbb{E}\left[\psi(W^T\bar{x}_l)\psi'(W^T\bar{x}_i)W^T\bar{x}_i|X\right]=\left(\frac{\|x_i\|}{\sqrt{d}}-1\right)g\left(\frac{\bar{x}_i^T\bar{x}_l}{d}\right),$$
+where the function $g$ satisfies $g(0)=0$ and $\sup_{|\rho|\leq 0.2}|g'(\rho)|\lesssim 1$, and thus
+$$\left|g\left(\frac{\bar{x}_i^T\bar{x}_l}{d}\right)\right|\lesssim \left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|\lesssim \left|\frac{x_i^Tx_l}{d}\right|,$$
+because of the high probability bound $\max_{i\neq l}|\bar{x}_i^T\bar{x}_l|/d\lesssim \sqrt{\frac{\log n}{d}}\leq 1/5$.
+Therefore,
+\begin{eqnarray}
+\nonumber && \sum_{i\neq l}\left(\mathbb{E}\left[\psi(W^T\bar{x}_l)\psi'(W^T\bar{x}_i)W^T(x_i-\bar{x}_i)|X\right]\right)^2 \\
+\nonumber &\lesssim& \sum_{i\neq l}\left|\frac{\|x_i\|}{\sqrt{d}}-1\right|^2\left|\frac{{x}_i^T{x}_l}{d}\right|^2 \\
+\label{eq:G-H-mixed} &\lesssim& n\sum_{i=1}^n \left|\frac{\|x_i\|}{\sqrt{d}}-1\right|^4 + \sum_{i\neq l}\left|\frac{{x}_i^T{x}_l}{d}\right|^4.
+\end{eqnarray}
+By integrating out the probability tail bound of Lemma \ref{lem:chi-squared}, we have $\mathbb{E}\left|\frac{\|x_i\|}{\sqrt{d}}-1\right|^4\lesssim d^{-2}$. We also have $\mathbb{E}\left|\frac{{x}_i^T{x}_l}{d}\right|^4\lesssim d^{-2}$. Hence, $\sum_{i\neq l}\left(\mathbb{E}\left[\psi(W^T\bar{x}_l)\psi'(W^T\bar{x}_i)W^T(x_i-\bar{x}_i)|X\right]\right)^2\lesssim \frac{n^2}{d^2}$ with high probability. To bound (\ref{eq:second-order-G-2}), we observe that
+$$\frac{1}{2}\mathbb{E}\left[\psi(W^T\bar{x}_i)\psi''(t_i)|W^T(x_i-\bar{x}_i)|^2|X\right]\leq \mathbb{E}(|W^T(x_i-\bar{x}_i)|^2|X)=\left|\frac{\|x_i\|}{\sqrt{d}}-1\right|^2,$$
+where the inequality above is by $\sup_x|\psi(x)|\leq 1$ and $\sup_x|\psi''(x)|\leq 2$. Since $\mathbb{E}\left|\frac{\|x_i\|}{\sqrt{d}}-1\right|^4\lesssim d^{-2}$, we then have
+$$\sum_{i\neq l}\left(\frac{1}{2}\mathbb{E}\left[\psi(W^T\bar{x}_i)\psi''(t_i)|W^T(x_i-\bar{x}_i)|^2|X\right]\right)^2\lesssim \frac{n^2}{d^2},$$
+with high probability. With a similar analysis of (\ref{eq:G-tilde-3}), we conclude that the contributions of (\ref{eq:G-tilde-2}) and (\ref{eq:G-tilde-3}) is at most at the order of $\frac{n^2}{d^2}$ with respect to the squared Frobenius norm.
+
+Finally, we show that the contribution of (\ref{eq:G-tilde-4}) is negligible. Note that
+\begin{eqnarray*}
+&& \left|\mathbb{E}\left((\psi(W^Tx_i)-\psi(W^T\bar{x}_i))(\psi(W^Tx_l)-\psi(W^T\bar{x}_l))|X\right)\right| \\
+&\leq& \left|\frac{\|x_i\|}{\sqrt{d}}-1\right|\left|\frac{\|x_l\|}{\sqrt{d}}-1\right|\mathbb{E}\left(|W^T\bar{x}_i||W^T\bar{x}_l||X\right) \\
+&\leq& \left|\frac{\|x_i\|}{\sqrt{d}}-1\right|\left|\frac{\|x_l\|}{\sqrt{d}}-1\right|,
+\end{eqnarray*}
+where the last inequality is by $\mathbb{E}\left(|W^T\bar{x}_i||W^T\bar{x}_l||X\right)\leq \frac{1}{2}\mathbb{E}(|W^T\bar{x}_i|^2+|W^T\bar{x}_l|^2|X)=1$.
+Since
+$$\sum_{i\neq l}\mathbb{E}\left(\frac{\|x_i\|}{\sqrt{d}}-1\right)^2\mathbb{E}\left(\frac{\|x_l\|}{\sqrt{d}}-1\right)^2\lesssim \frac{n^2}{d^2},$$
+we can conclude that (\ref{eq:G-tilde-4}) is bounded by $O\left(\frac{n^2}{d^2}\right)$ with high probability by Markov's inequality.
+
+Combining the analyses of (\ref{eq:G-tilde-1}), (\ref{eq:G-tilde-2}), (\ref{eq:G-tilde-3}) and (\ref{eq:G-tilde-4}), we conclude that $\sum_{i\neq l}(\wt{G}_{il}-\bar{G}_{il})^2\lesssim \frac{n^2}{d^2}$ with high probability. Together with (\ref{eq:G-G-tilde}) and (\ref{eq:G-diag}), we obtain the desired bound for $\opnorm{G-\bar{G}}$.
+The last conclusion (\ref{eq:spectrum-G-bound}) follows a similar argument in the proof of Lemma \ref{lem:lim-H-relu}. The proof is complete.
+\end{proof}
+
+
+
+\begin{proof}[Proof of Corollary \ref{cor:repair-rf}]
+Since $\wh{\theta}$ belongs to the row space of $\wt{X}$, there exists some $u^*\in\mathbb{R}^n$ such that $\wh{\theta}=\wt{X}^Tu^*$.
+By Theorem \ref{thm:robust-reg} and Lemma \ref{lem:design-rf}, we know that $\wt{u}=u^*$ with high probability, and therefore $\wt{\theta}=\wt{X}^T\wt{u}=\wt{X}^Tu^*=\wh{\theta}$.
+\end{proof}
+
+
+\subsection{Proof of Theorem \ref{thm:nn-grad}}
+
+
+To prove Theorem \ref{thm:nn-grad}, we need the following kernel random matrix result.
+\begin{lemma}\label{lem:lim-H}
+Consider independent $W_1,...,W_p\sim N(0,d^{-1}I_d)$, $x_1,...,x_n\sim N(0,I_d)$, and $\beta_1,...,\beta_p\sim N(0,1)$. We define the matrices $H, \bar{H}\in\mathbb{R}^{n\times n}$ by
+\begin{eqnarray*}
+H_{il} &=& \frac{x_i^Tx_l}{d}\frac{1}{p}\sum_{j=1}^p\beta_j^2\psi'(W^T_jx_i)\psi'(W_j^Tx_l), \\
+\bar{H}_{il} &=& |\mathbb{E}\psi'(Z)|^2\frac{x_i^Tx_l}{\|x_i\|\|x_l\|} + \left(\mathbb{E}|\psi'(Z)|^2-|\mathbb{E}\psi'(Z)|^2\right)\mathbb{I}\{i=l\},
+\end{eqnarray*}
+where $Z\sim N(0,1)$.
+Assume $d/\log n$ is sufficiently large, and then
+$$\opnorm{H-\bar{H}}^2 \lesssim \frac{n^2}{pd} + \frac{n}{p} + \frac{\log n}{d} + \frac{n^2}{d^2},$$
+with high probability. If we assume that $d/n$ and $p/n$ are sufficiently large, we will also have
+\begin{equation}
+0.09\leq\lambda_{\min}(H)\leq \lambda_{\max}(H)\lesssim 1, \label{eq:spectrum-H-bound}
+\end{equation}
+with high probability.
+\end{lemma}
+\begin{proof}
+Define $\wt{H}\in\mathbb{R}^{n\times n}$ with entries $\wt{H}_{il}=\frac{x_i^Tx_l}{d}\mathbb{E}\left(\psi'(W^Tx_i)\psi'(W^Tx_l)\big|X\right)$, and we first bound the difference between $H$ and $\wt{H}$. Note that
+$$\mathbb{E}(H_{il}-\wt{H}_{il})^2=\mathbb{E}\Var(H_{il}|X)\leq \frac{1}{p}\mathbb{E}\left(\frac{|x_i^Tx_l|^2}{d^2}\beta^4\right)\leq\begin{cases}
+\frac{3}{pd}, & i\neq l, \\
+9p^{-1}, & i=l.
+\end{cases}$$
+We then have
+$$\mathbb{E}\opnorm{H-\wt{H}}^2 \leq \mathbb{E}\fnorm{H-\wt{H}}^2 \leq \frac{3n^2}{pd} + \frac{9n}{p}.$$
+By Markov's inequality,
+\begin{equation}
+\opnorm{H-\wt{H}}^2 \lesssim \frac{n^2}{pd} + \frac{n}{p}, \label{eq:H-H-tilde}
+\end{equation}
+with high probability.
+
+Next, we study the diagonal entries of $\wt{H}$. For any $i\in[n]$,
+$$\wt{H}_{ii}=\frac{\|x_i\|^2}{d}\mathbb{E}(|\psi'(W^Tx_i)|^2|X)=\frac{\|x_i\|^2}{d}\mathbb{E}_{U\sim N(0,\|x_i\|^2/d)}|\psi'(U)|^2.$$
+Since $\sup_x|\psi'(x)|\leq 1$ and $\sup_x|\psi''(x)|\leq 2$, we have
+\begin{eqnarray*}
+|\wt{H}_{ii} - \bar{H}_{ii}| &\leq& \left|\frac{\|x_i\|^2}{d}-1\right| + \left|\mathbb{E}_{U\sim N(0,\|x_i\|^2/d)}|\psi'(U)|^2 - \mathbb{E}_{U\sim N(0,1)}|\psi'(U)|^2\right| \\
+&\leq& \left|\frac{\|x_i\|^2}{d}-1\right| + 2\TV\left(N(0,\|x_i\|^2/d), N(0,1)\right) \\
+&\leq& 4\left|\frac{\|x_i\|^2}{d}-1\right|
+\end{eqnarray*}
+Similar to (\ref{eq:G-diag}), Lemma \ref{lem:chi-squared} and a union bound argument imply
+\begin{equation}
+\max_{1\leq i\leq n}|\wt{H}_{ii}-\bar{H}_{ii}|\lesssim \sqrt{\frac{\log n}{d}}+\frac{\log n}{d}, \label{eq:H-diag}
+\end{equation}
+with high probability.
+
+Now we analyze the off-diagonal entries. Recall the notation $\bar{x}_i=\frac{\sqrt{d}}{\|x_i\|}x_i$. For any $i\neq l$, we have
+\begin{eqnarray}
+\label{eq:H-tilde-1} \wt{H}_{il} &=& \frac{\bar{x}_i^T\bar{x}_l}{d}\mathbb{E}\left(\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\right) \\
+\label{eq:H-tilde-2} && + \frac{x_i^Tx_l}{d}\mathbb{E}\left(\psi'(W^T{x}_i)\psi'(W^T{x}_l)-\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\right) \\
+\label{eq:H-tilde-3} && + \left(\frac{\|x_i\|\|x_l\|}{d}-1\right)\frac{\bar{x}_i^T\bar{x}_l}{d}\mathbb{E}\left(\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\right).
+\end{eqnarray}
+For the first term on the right hand side of (\ref{eq:H-tilde-1}), we observe that $\frac{\bar{x}_i^T\bar{x}_l}{d}\mathbb{E}\left(\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\right)$ is a function of $\frac{\bar{x}_i^T\bar{x}_l}{d}$, and thus we can write
+$$\frac{\bar{x}_i^T\bar{x}_l}{d}\mathbb{E}\left(\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\right)=f\left(\frac{\bar{x}_i^T\bar{x}_l}{d}\right),$$
+where
+$$f(\rho)=\begin{cases}
+\rho\mathbb{E}\psi'(\sqrt{1-\rho}U+\sqrt{\rho}Z)\psi'(\sqrt{1-\rho}V+\sqrt{\rho}Z), & \rho \geq 0, \\
+\rho\mathbb{E}\psi'(\sqrt{1+\rho}U-\sqrt{-\rho}Z)\psi'(\sqrt{1+\rho}V+\sqrt{-\rho}Z), & \rho < 0,
+\end{cases}$$
+with $U,V,Z\stackrel{iid}{\sim} N(0,1)$. By some direct calculations, we have $f(0)=0$, $f'(0)=(\mathbb{E}\psi'(Z))^2$, and $\sup_{|\rho|\leq 0.2}|f''(\rho)|\lesssim 1$. Therefore, using the same analysis that leads to (\ref{eq:G-H}), we have
+$$\sum_{i\neq l}\left(\frac{\bar{x}_i^T\bar{x}_l}{d}\mathbb{E}\left(\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\right)-\bar{H}_{il}\right)^2 \lesssim \sum_{i\neq l}\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^4\lesssim \frac{n^2}{d^2},$$
+with high probability.
+
+For (\ref{eq:H-tilde-2}), we note that
+\begin{eqnarray*}
+&& \mathbb{E}\left(\psi'(W^T{x}_i)\psi'(W^T{x}_l)-\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\right) \\
+&\leq& \mathbb{E}\left(|\psi'(W^T{x}_i)-\psi'(W^T\bar{x}_i)|\big|X\right) + \mathbb{E}\left(|\psi'(W^T{x}_l)-\psi'(W^T\bar{x}_l)|\big|X\right) \\
+&\leq& 2\mathbb{E}\left(|W^T(x_i-\bar{x}_i)|\big|X\right) + 2\mathbb{E}\left(|W^T(x_l-\bar{x}_l)|\big|X\right) \\
+&=& 2\left|\frac{\|x_i\|}{\sqrt{d}}-1\right| + 2\left|\frac{\|x_l\|}{\sqrt{d}}-1\right|,
+\end{eqnarray*}
+where we have used $\sup_x|\psi'(x)|\leq 1$ and $\sup_x|\psi''(x)|\leq 2$ in the above inequalities. Therefore, the contribution of (\ref{eq:H-tilde-2}) in terms of squared Frobenius norm is bounded by
+\begin{eqnarray*}
+&& \sum_{i\neq l}\left|\frac{x_i^Tx_l}{d}\right|^2\left(2\left|\frac{\|x_i\|}{\sqrt{d}}-1\right| + 2\left|\frac{\|x_l\|}{\sqrt{d}}-1\right|\right)^2 \\
+&\lesssim& \sum_{i\neq l}\left|\frac{x_i^Tx_l}{d}\right|^4 + n\sum_{i=1}^n\left|\frac{\|x_l\|}{\sqrt{d}}-1\right|^4 \\
+&\lesssim& \frac{n^2}{d^2},
+\end{eqnarray*}
+with high probability, and the last inequality above uses the same analysis that bounds (\ref{eq:G-H-mixed}).
+
+Finally, since (\ref{eq:H-tilde-3}) can be bounded by $\left|\frac{\|x_i\|\|x_l\|}{d}-1\right|\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|$, its contribution in terms of squared Frobenius norm is bounded by
+\begin{eqnarray*}
+&& \sum_{i\neq l}\left|\frac{\|x_i\|\|x_l\|}{d}-1\right|^2\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^2 \\
+&\lesssim& \sum_{i\neq l}\left|\frac{\|x_i\|\|x_l\|}{d}-1\right|^4 + \sum_{i\neq l}\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^4.
+\end{eqnarray*}
+We have already shown that $\sum_{i\neq l}\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^4\lesssim \frac{n^2}{d^2}$ in the analysis of (\ref{eq:G-H}). For the first term on the right hand side of the above inequality, we use Lemma \ref{lem:inner-prod} and obtain a probability tail bound for $|\|x_i\|\|x_l\|-d|$. By integrating out this tail bound, we have
+$$\sum_{i\neq l}\mathbb{E}\left(\frac{\|x_i\|\|x_l\|}{d}-1\right)^4\lesssim \frac{n^2}{d^2},$$
+which, by Markov's inequality, implies $\sum_{i\neq l}\left(\frac{\|x_i\|\|x_l\|}{d}-1\right)^4\lesssim \frac{n^2}{d^2}$ with high probability. 
+
+Combining the analyses of (\ref{eq:H-tilde-1}), (\ref{eq:H-tilde-2}), and (\ref{eq:H-tilde-3}), we conclude that $\sum_{i\neq l}(\wt{H}_{il}-\bar{H}_{il})^2\lesssim \frac{n^2}{d^2}$ with high probability. Together with (\ref{eq:H-H-tilde}) and (\ref{eq:H-diag}), we obtain the desired bound for $\opnorm{H-\bar{H}}$.
+The last conclusion (\ref{eq:spectrum-H-bound}) follows a similar argument used in the proof of Lemma \ref{lem:lim-H-relu}.
+\end{proof}
+
+
+Now we are ready to prove Theorem \ref{thm:nn-grad}.
+\begin{proof}[Proof of Theorem \ref{thm:nn-grad}]
+The proof is similar to that of Theorem \ref{thm:nn-grad-relu}, and we will omit repeated arguments. We will use the high-probability inequalities (\ref{eq:r1e1})-(\ref{eq:r1e9}). Then, it suffices to establish Claims A, B and C in the proof of Theorem \ref{thm:nn-grad-relu}. Since Claims A and B follow the same argument, we only need to check Claim C. We have
+\begin{equation}
+u(k+1)-u(k)=\gamma(H(k)+G(k))(y-u(k))+r(k), \label{eq:iter-u-arctan}
+\end{equation}
+where
+\begin{eqnarray*}
+G_{il}(k) &=& \frac{1}{p}\sum_{j=1}^p\psi(W_j(k)^Tx_l)\psi(W_j(k)^Tx_i), \\
+H_{il}(k) &=& \frac{x_i^Tx_l}{d}\frac{1}{p}\sum_{j=1}^p\beta_j(k+1)^2\psi'(W_j(k)^Tx_i)\psi'(W_j(k)^Tx_l),
+\end{eqnarray*}
+and
+$$r_i(k)=\frac{1}{2\sqrt{p}}\sum_{j=1}^p\beta_j(k+1)|(W_j(k+1)-W_j(k))^Tx_i|^2\psi''(\xi_{ijk}).$$
+Note that $\xi_{ijk}$ is some random variable whose value is between $W_j(k)^Tx_i$ and $W_j(k+1)^Tx_i$. With the same argument, the bound (\ref{eq:x-japan}) still holds. Then, by Lemma \ref{lem:lim-G}, we have
+\begin{equation}
+0 \leq \lambda_{\min}(G(k)) \leq \lambda_{\max}(G(k)) \lesssim 1+\frac{n^2\log p}{\sqrt{p}}. \label{eq:Gk-spec-arctan}
+\end{equation}
+For the matrix $H(k)$, we show its eigenvalues can be controlled by those of $H(0)$. We have
+\begin{eqnarray*}
+|H_{il}(k)-H_{il}(0)| &\leq& \left|\frac{x_i^Tx_l}{d}\right|\frac{1}{p}\sum_{j=1}^p|\beta_j(k+1)^2-\beta_j^2(0)| \\
+&& + \left|\frac{x_i^Tx_l}{d}\right|\frac{1}{p}\sum_{j=1}^p\beta_j^2(0)|\psi'(W_j(k)^Tx_i) - \psi'(W_j(0)^Tx_i)| \\
+&& + \left|\frac{x_i^Tx_l}{d}\right|\frac{1}{p}\sum_{j=1}^p\beta_j^2(0)|\psi'(W_j(k)^Tx_l) - \psi'(W_j(0)^Tx_l)| \\
+&\leq& \left|\frac{x_i^Tx_l}{d}\right|\frac{1}{p}\sum_{j=1}^pR_2(R_2+2|\beta_j(0)|) \\
+&& + 2R_1\left(\|x_l\| + \|x_i\|\right)\left|\frac{x_i^Tx_l}{d}\right|\frac{1}{p}\sum_{j=1}^p\beta_j^2(0).
+\end{eqnarray*}
+Thus, by (\ref{eq:r1e2}) and (\ref{eq:r1e6}),
+$$\max_{1\leq l\leq n}\sum_{i=1}^n|H_{il}(k) - H_{il}(0)|\lesssim \max_{1\leq l\leq n}\sum_{i=1}^n(R_2+R_1\sqrt{d})\left|\frac{x_i^Tx_l}{d}\right|\lesssim \frac{n\log p}{\sqrt{p}}\left(1+\frac{n}{\sqrt{d}}\right).$$
+Then, we have
+$$
+\opnorm{H(k)-H(0)}\leq \max_{1\leq l\leq n}\sum_{i=1}^n|H_{il}(k) - H_{il}(0)|\lesssim \frac{n\log p}{\sqrt{p}}\left(1+\frac{n}{\sqrt{d}}\right).
+$$
+Together with Lemma \ref{lem:lim-H}, we obtain
+\begin{equation}
+0.089 \leq \lambda_{\min}(H(k)) \leq \lambda_{\max}(H(k)) \lesssim 1. \label{eq:H-time-stable}
+\end{equation}
+Next, we give a bound for $r_i(k)$. By $\sup_x|\psi''(x)|\leq 2$ and $\sup_x|\psi'(x)|\leq 1$, we have
+\begin{eqnarray*}
+|r_i(k)| &\leq& \frac{1}{\sqrt{p}}\sum_{j=1}^p|\beta_j(k+1)||(W_j(k+1)-W_j(k))^Tx_i|^2 \\
+&\leq& \frac{\|x_i\|^2}{\sqrt{p}}\sum_{j=1}^p|\beta_j(k+1)|\|W_j(k+1)-W_j(k)\|^2 \\
+&\leq& \frac{\gamma^2}{pd^2}\frac{\|x_i\|^2}{\sqrt{p}}\sum_{j=1}^p|\beta_j(k+1)||\beta_j(k)|^2\left(\sum_{l=1}^n|y_l-u_l(k)|\|x_l\|\right)^2 \\
+&\leq& \frac{\gamma^2}{pd^2}\frac{\|x_i\|^2\sum_{l=1}^n\|x_l\|^2}{\sqrt{p}}\|y-u(k)\|^2\sum_{j=1}^p|\beta_j(k+1)||\beta_j(k)|^2 \\
+&\lesssim& \frac{\gamma^2n}{\sqrt{p}}\|y-u(k)\|^2 \\
+&\lesssim& \frac{\gamma^2n\sqrt{n\log p}}{\sqrt{p}}\|y-u(k)\|,
+\end{eqnarray*}
+where we have used (\ref{eq:r1e2}), (\ref{eq:r1e3}), (\ref{eq:r1e4}) and (\ref{eq:r1e7}) in the above inequalities.
+This leads to the bound
+\begin{equation}
+\|r(k)\|=\sqrt{\sum_{i=1}^n|r_i(k)|^2}\lesssim \frac{\gamma^2n^2\sqrt{\log p}}{\sqrt{p}}\|y-u(k)\|.\label{eq:bound-res-k}
+\end{equation}
+By (\ref{eq:iter-u-arctan}), we have
+\begin{eqnarray*}
+\|y-u(k+1)\|^2 
+&=& \|y-u(k)\|^2 - 2\gamma(y-u(k))^T(H(k)+G(k))(y-u(k)) \\
+&& - 2\iprod{y-u(k)}{r(k)} + \|u(k)-u(k+1)\|^2.
+\end{eqnarray*}
+The bounds (\ref{eq:Gk-spec-arctan}) and (\ref{eq:H-time-stable}) imply
+\begin{equation}
+- 2\gamma(y-u(k))^T(H(k)+G(k))(y-u(k)) \leq -\frac{\gamma}{6}\|y-u(k)\|^2. \label{eq:main-inner}
+\end{equation}
+The bound (\ref{eq:bound-res-k}) implies
+$$- 2\iprod{y-u(k)}{r(k)}\leq 2\|y-u(k)\|\|r(k)\|\lesssim \frac{\gamma^2n^2\sqrt{\log p}}{\sqrt{p}}\|y-u(k)\|^2.$$
+Using (\ref{eq:Gk-spec-arctan}), (\ref{eq:H-time-stable}) and (\ref{eq:bound-res-k}), we have
+\begin{eqnarray*}
+\|u(k)-u(k+1)\|^2 &\leq& 2\gamma^2\|(H(k)+G(k))(y-u(k))\|^2 + 2\|r(k)\|^2 \\
+&\lesssim& \gamma^2\left(1+\frac{n^4(\log p)^2}{p}\right)\|y-u(k)\|^2 + \frac{\gamma^4n^4\log p}{p}\|y-u(k)\|^2 .
+\end{eqnarray*}
+Therefore, as long as $\gamma\frac{n^4(\log p)^2}{p}$ is sufficiently small, we have
+$$- 2\iprod{y-u(k)}{r(k)} + \|u(k)-u(k+1)\|^2 \leq \frac{\gamma}{24}\|y-u(k)\|^2.$$
+Together with the bound (\ref{eq:main-inner}), we have
+$$\|y-u(k+1)\|^2 \leq \left(1-\frac{\gamma}{8}\right)\|y-u(k)\|^2\leq \left(1-\frac{\gamma}{8}\right)^{k+1}\|y-u(0)\|^2,$$
+and thus Claim C is true. The proof is complete.
+\end{proof}
+
+
+\subsection{Proofs of Theorem \ref{thm:repair-nn-1} and Theorem \ref{thm:repair-nn-2}}
+
+\begin{proof}[Proof of Theorem \ref{thm:repair-nn-1}]
+The proof is the same as that of Theorem \ref{thm:repair-nn-1-relu}. The only exception here is that we apply Lemma \ref{lem:design-rf} and Lemma \ref{lem:lim-G} instead of Lemma \ref{lem:design-rf-relu} and Lemma \ref{lem:lim-G-relu}.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:repair-nn-2}]
+The analysis of $\wh{v}_1,...,\wh{v}_p$ is the same as that in the proof of Theorem \ref{thm:repair-nn-1-relu}, and we have $\wt{W}_j=\wh{W}_j$ for all $j\in[p]$ with high probability.
+
+To analyze $\wh{u}$, we apply Theorem \ref{thm:robust-reg}. It suffices to check Condition A' and Condition B for the design matrix $\psi(X^T\wt{W}^T)=\psi(X^T\wh{W}^T)$. To check Condition A', we consider i.i.d. Rademacher random variables $\delta_1,...,\delta_m$. Then, we define a different gradient update with initialization $\check{W}_j(0)=\delta_jW_j(0)$ and $\check{\beta}_j(0)=\delta_j\beta_j(0)$, and
+\begin{eqnarray*}
+\check{W}_j(t) &=& \check{W}_j(t-1) - \frac{\gamma}{d}\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=(\check{\beta}(t-1),\check{W}(t-1))}, \\
+\check{\beta}_j(t) &=& \check{\beta}_j(t-1) - \gamma\frac{\partial L(\beta,W)}{\partial \beta_j}|_{(\beta,W)=(\check{\beta}(t-1),\check{W}(t-1))}.
+\end{eqnarray*}
+In other words, $(W(t),\beta(t))$ and $(\check{W}(t),\check{\beta}(t))$ only differ in terms of the initialization. We also define $\check{u}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\check{\beta}_j(t)\psi(\check{W}_j(t)^Tx_i)$. It is easy to see that
+$$\check{u}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\delta_j\beta_j(t)\psi(\delta_jW_j(t)^Tx_i)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j(t)\psi(W_j(t)^Tx_i)=u_i(t).$$
+Suppose $\check{W}_j(k)=\delta_jW_j(k)$ and $\check{\beta}_j(k)=\delta_j\beta_j(k)$ are true. Since
+\begin{eqnarray*}
+\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=(\check{\beta}(k),\check{W}(k))} &=& \frac{1}{\sqrt{p}}\check{\beta}_j(k)\sum_{i=1}^n(\check{u}_i(k)-y_i)\psi'(\check{W}_j(k)^Tx_i)x_i \\
+&=& \frac{1}{\sqrt{p}}\delta_j{\beta}_j(k)\sum_{i=1}^n({u}_i(k)-y_i)\psi'(\delta_j{W}_j(k)^Tx_i)x_i \\
+&=& \frac{1}{\sqrt{p}}\delta_j{\beta}_j(k)\sum_{i=1}^n({u}_i(k)-y_i)\psi'({W}_j(k)^Tx_i)x_i \\
+&=& \delta_j\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=({\beta}(k),{W}(k))},
+\end{eqnarray*}
+and
+\begin{eqnarray*}
+\frac{\partial L(\beta,W)}{\partial \beta_j}|_{(\beta,W)=(\check{\beta}(k),\check{W}(k))} &=& \frac{1}{\sqrt{p}}\sum_{i=1}^n(\check{u}_i(k)-y_i)\psi(\check{W}_j(k)^Tx_i) \\
+&=& \frac{1}{\sqrt{p}}\sum_{i=1}^n({u}_i(k)-y_i)\psi(\delta_j{W}_j(k)^Tx_i) \\
+&=& \delta_j\frac{1}{\sqrt{p}}\sum_{i=1}^n({u}_i(k)-y_i)\psi({W}_j(k)^Tx_i) \\
+&=& \delta_j\frac{\partial L(\beta,W)}{\partial \beta_j}|_{(\beta,W)=({\beta}(k),{W}(k))},
+\end{eqnarray*}
+we then have $\check{W}_j(k+1)=\delta_jW_j(k+1)$ and $\check{\beta}_j(k+1)=\delta_j\beta_j(k+1)$. A mathematical induction argument leads to $\check{W}_j(t)=\delta_jW_j(t)$ and $\check{\beta}_j(t)=\delta_j\beta_j(t)$ for all $t\geq 1$. Since $(\check{W}(0),\check{\beta}(0))$ and $(W(0),\beta(0))$ have the same distribution, we can conclude that $(\check{W}(t),\check{\beta}(t))$ and $(W(t),\beta(t))$ also have the same distribution. Therefore, Condition A holds for the design matrix $\psi(X^T\wh{W}^T)=\psi(X^TW(t_{\max})^T)$.
+
+We also need to check Condition B. By Theorem \ref{thm:nn-grad}, we have
+\begin{eqnarray*}
+&& \left|\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(\wh{W}_j^Tx_i)\Delta_i\right| - \frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(W_j(0)^Tx_i)\Delta_i\right|\right| \\
+&\leq& \frac{1}{p}\sum_{j=1}^p\sum_{i=1}^n|\wh{W}_j^Tx_i-W_j(0)^Tx_i||\Delta_i| \\
+&\leq& R_1\sum_{i=1}^n\|x_i\||\Delta_i| \leq R_1\sqrt{\sum_{i=1}^n\|x_i\|^2} \lesssim \frac{n^{3/2}\log p}{\sqrt{p}},
+\end{eqnarray*}
+where $\sum_{i=1}^n\|x_i\|^2\lesssim nd$ is by Lemma \ref{lem:chi-squared}. By Lemma \ref{lem:design-rf}, we can deduce that
+$$\inf_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(\wh{W}_j^Tx_i)\Delta_i\right|\gtrsim 1,$$
+as long as $\frac{n^{3/2}\log p}{\sqrt{p}}$ is sufficiently small. By (\ref{eq:Gk-spec-arctan}), we also have
+$$\sup_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(\wh{W}_j^Tx_i)\Delta_i\right|^2\lesssim 1+\frac{n^2\log p}{\sqrt{p}}.$$
+Therefore, Condition B holds with $\overline{\lambda}^2\asymp 1+\frac{n^2\log p}{\sqrt{p}}$ and $\underline{\lambda}\asymp 1$. Apply Theorem \ref{thm:robust-reg}, we have $\wt{\beta}=\wh{\beta}$ with high probability as desired.
+\end{proof}
