@@ -40,9 +40,12 @@
 \newtheorem*{thm1}{Claim A}
 \newtheorem*{thm2}{Claim B}
 \newtheorem*{thm3}{Claim C}
-\newtheorem*{con0}{Condition A}
-\newtheorem*{con1}{Condition A'}
-\newtheorem*{con2}{Condition B}
+\def\conditionA{Condition $A$}
+\def\conditionAp{Condition $\tilde A$}
+\def\conditionB{Condition $B$}
+\newtheorem*{con0}{\conditionA}
+\newtheorem*{con1}{\conditionAp}
+\newtheorem*{con2}{\conditionB}
 
 \def\given{\,|\,}
 \def\P{\mathbb{P}}
@@ -75,7 +78,7 @@
 \newcommand{\Expect}{\mathbb{E}}
 \newcommand{\Span}{{\rm span}}
 \newcommand{\rank}{\mathop{\sf rank}}
-\newcommand{\sgn}{\mathop{\sf sign}}
+\newcommand{\sgn}{\mathop{\rm sign}}
 \newcommand{\rt}{\mathop{\sf root}}
 \newcommand{\R}{\mathop{\sf R}}
 \newcommand{\Tr}{\mathop{\sf Tr}}
