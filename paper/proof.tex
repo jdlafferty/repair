@@ -43,11 +43,11 @@ Consider independent $Y_1,Y_2\sim N(0,I_k)$. For any $t>0$, we have
 \end{lemma}
 \begin{proof}
 By Lemma \ref{lem:chi-squared}, we have
-\begin{eqnarray*}
-&& \mathbb{P}\left(\|Y_1\|\|Y_2\| -k \geq 2\sqrt{tk}+2t\right) \\
-&\leq& \mathbb{P}\left(\|Y_1\|^2 \geq k +2\sqrt{tk}+2t\right) + \mathbb{P}\left(\|Y_2\|^2 \geq k +2\sqrt{tk}+2t\right) \\
-&\leq& 2e^{-t},
-\end{eqnarray*}
+\begin{align*}
+\mathbb{P}\left(\|Y_1\|\|Y_2\| -k \geq 2\sqrt{tk}+2t\right)
+&\leq \mathbb{P}\left(\|Y_1\|^2 \geq k +2\sqrt{tk}+2t\right) + \mathbb{P}\left(\|Y_2\|^2 \geq k +2\sqrt{tk}+2t\right) \\
+&\leq 2e^{-t},
+\end{align*}
 and
 \begin{eqnarray*}
 && \mathbb{P}\left(\|Y_1\|\|Y_2\| -k \leq -2\sqrt{tk}-2t\right) \\
@@ -223,7 +223,7 @@ Thus,
 \nonumber &=& \mathbb{P}\left(\left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\geq 6\Big|1/2\leq \|W\|^2\leq 2\right)\mathbb{P}\left(1/2\leq \|W\|^2\leq 2\right) \\
 \nonumber &\geq& \mathbb{P}\left(\left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\geq 6\Big|1/2\leq \|W\|^2\leq 2\right)\left(1-2\exp(-d/16)\right),
 \end{eqnarray}
-where the last inequality is by Lemma \ref{lem:chi-squared}. By direct calculations, we have
+where the last inequality is by Lemma \ref{lem:chi-squared}. By direct calculation, we have
 \begin{equation}
 \Var\left(\bar{\psi}(W^Tx)|W\right)=\|W\|^2\Var(\max(0,W^Tx/\|W\|)|W)=\|W\|^2\frac{1-\pi^{-1}}{2}, \label{eq:cond-var-X-W}
 \end{equation}
@@ -436,7 +436,9 @@ Note that
 && \sum_{i\neq l} \left(\frac{\|x_i\|}{\sqrt{d}}-1+\frac{\|x_l\|}{\sqrt{d}}-1\right)^2\left[f\left(\frac{\bar{x}_i^T\bar{x}_l}{d}\right)-\frac{1}{2\pi}\right]^2 \\
 &\lesssim& \sum_{i\neq l} \left(\frac{\|x_i\|}{\sqrt{d}}-1+\frac{\|x_l\|}{\sqrt{d}}-1\right)^4 + \sum_{i\neq l}\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^4.
 \end{eqnarray*}
-We have already shown that $\sum_{i\neq l}\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^4\lesssim \frac{n^2}{d^2}$ with high probability. By integrating out the probability tail bound of Lemma \ref{lem:chi-squared}, we have $\mathbb{E}\left(\frac{\|x_i\|}{\sqrt{d}}-1\right)^4\lesssim d^{-2}$, which then implies $\sum_{i\neq l} \mathbb{E}\left(\frac{\|x_i\|}{\sqrt{d}}-1+\frac{\|x_l\|}{\sqrt{d}}-1\right)^4\lesssim \frac{n^2}{d^2}$ and the corresponding high-probability bound by Markov's inequality.
+We have already shown that $\sum_{i\neq l}\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^4\lesssim \frac{n^2}{d^2}$ with high probability. By integrating out the probability tail bound of Lemma \ref{lem:chi-squared}, we have $\mathbb{E}\left(\frac{\|x_i\|}{\sqrt{d}}-1\right)^4\lesssim d^{-2}$, which then implies
+$$\sum_{i\neq l} \mathbb{E}\left(\frac{\|x_i\|}{\sqrt{d}}-1+\frac{\|x_l\|}{\sqrt{d}}-1\right)^4\lesssim \frac{n^2}{d^2}$$
+and the corresponding high-probability bound by Markov's inequality.
 
 Finally, we show that the contribution of (\ref{eq:G-tilde-4-relu}) is negligible. By (\ref{eq:interesting-rep}), we can write (\ref{eq:G-tilde-4-relu}) as
 $$\left(\frac{\|x_i\|}{\sqrt{d}}-1\right)\left(\frac{\|x_l\|}{\sqrt{d}}-1\right)\mathbb{E}\left(\psi(W^T\bar{x}_i)^2\psi(W^T\bar{x}_l)^2\Big|X\right),$$
@@ -461,7 +463,7 @@ By Theorem \ref{thm:main-improved} and Lemma \ref{lem:design-rf-relu}, we know t
 
 To prove Theorem \ref{thm:nn-grad-relu}, we need the following kernel random matrix result.
 \begin{lemma}\label{lem:lim-H-relu}
-Consider independent $W_1,...,W_p\sim N(0,d^{-1}I_d)$, $x_1,...,x_n\sim N(0,I_d)$, and $\beta_1,...,\beta_p\sim N(0,1)$. We define the matrices $H, \bar{H}\in\mathbb{R}^{n\times n}$ by
+Consider independent $W_1,\ldots,W_p\sim N(0,d^{-1}I_d)$, $x_1,\ldots,x_n\sim N(0,I_d)$, and parameters $\beta_1,\ldots,\beta_p\sim N(0,1)$. We define the matrices $H, \bar{H}\in\mathbb{R}^{n\times n}$ by
 \begin{eqnarray*}
 H_{il} &=& \frac{x_i^Tx_l}{d}\frac{1}{p}\sum_{j=1}^p\beta_j^2\mathbb{I}\{W_j^Tx_i\geq 0, W_j^Tx_l\geq 0\}, \\
 \bar{H}_{il} &=& \frac{1}{4}\frac{x_i^Tx_l}{\|x_i\|\|x_l\|} + \frac{1}{4}\mathbb{I}\{i=l\}.

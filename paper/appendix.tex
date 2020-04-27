@@ -64,7 +64,8 @@ We will analyze the three terms above separately.
 \nonumber &=& \mathbb{P}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1\Big|1/2\leq \|W\|^2\leq 2\right)\mathbb{P}\left(1/2\leq \|W\|^2\leq 2\right) \\
 \nonumber &\geq& \mathbb{P}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1\Big|1/2\leq \|W\|^2\leq 2\right)\left(1-2\exp(-d/16)\right),
 \end{eqnarray}
-where the last inequality is by Lemma \ref{lem:chi-squared}. It is easy to see that $\Var\left(\psi(W^Tx)|W\right)\leq \mathbb{E}(|\psi(W^Tx)|^2|W)\leq 1$. Moreover, for any $W$ such that $1/2\leq \|W\|^2\leq 2$, 
+where the last inequality is by Lemma \ref{lem:chi-squared}. It is easy to see that $$\Var\left(\psi(W^Tx)|W\right)\leq \mathbb{E}(|\psi(W^Tx)|^2|W)\leq 1.$$
+Moreover, for any $W$ such that $1/2\leq \|W\|^2\leq 2$,
 $$\Var\left(\psi(W^Tx)|W\right)= \mathbb{E}(|\psi(W^Tx)|^2|W) \geq \frac{1}{5}\mathbb{P}\left(|W^Tx|>1/2|W\right)\geq \frac{1}{5}\mathbb{P}(|N(0,1)|\geq 1/\sqrt{2}),$$
 which is at least $1/20$. In summary, we have
 $$1/20 \leq \Var\left(\psi(W^Tx)|W\right) \leq 1,$$
@@ -77,13 +78,13 @@ By Lemma \ref{lem:stein}, we have
 \nonumber &\geq& \mathbb{P}\left(N(0,1)>\sqrt{20}\right) - 35\sqrt{\sum_{i=1}^n|\Delta_i|^3} \\
 \nonumber &\geq& \mathbb{P}\left(N(0,1)>\sqrt{20}\right) - 35\max_{1\leq i\leq n}|\Delta_i|^{3/2}.
 \end{eqnarray}
-Hence, when $\max_{1\leq i\leq n}|\Delta_i|^{3/2}\leq \delta_0^{3/2}:=\mathbb{P}\left(N(0,1)>\sqrt{20}\right)/70$, we can lower bound $\mathbb{E}f(W,X,\Delta)$ by an absolute constant, and we conclude that
+Hence, when $\max_{1\leq i\leq n}|\Delta_i|^{3/2}\leq \delta_0^{3/2}:=\mathbb{P}\left(N(0,1)>\sqrt{20}\right)/70$, we can lower bound the expectation $\mathbb{E}f(W,X,\Delta)$ by an absolute constant, and we conclude that
 \begin{equation}
-\inf_{\|\Delta\|=1, \max_{1\leq i\leq n}|\Delta_i|\leq\delta_0}\mathbb{E}f(W,X,\Delta) \gtrsim 1.\label{eq:l1-1-2}
+\inf_{\|\Delta\|=1, \max_{1\leq i\leq n}|\Delta_i|\leq\delta_0}\mathbb{E}f(W,X,\Delta) \gtrsim 1.\label{appeq:l1-1-2}
 \end{equation}
 
 We also need to consider the case when $\max_{1\leq i\leq n}|\Delta_i|> \delta_0$. Without loss of generality, we can assume $\Delta_1>\delta_0$.
-We then lower bound $\mathbb{E}f(W,X,\Delta)$ by
+We then lower bound the expectation $\mathbb{E}f(W,X,\Delta)$ by
 \begin{eqnarray*}
 && \mathbb{E}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\mathbb{I}\left\{\sum_{i=1}^n\psi(W^Tx_i)\Delta_i \geq \delta_0/2, 1/2\leq \|W\|^2\leq 2\right\}\right) \\
 &\geq& \frac{\delta_0}{2} \mathbb{P}\left(\sum_{i=1}^n\psi(W^Tx_i)\Delta_i \geq \delta_0/2\Big| 1/2\leq \|W\|^2\leq 2\right)\mathbb{P}\left(1/2\leq \|W\|^2\leq 2\right) \\
@@ -102,10 +103,10 @@ Therefore, we have
 $$\mathbb{E}f(W,X,\Delta)\geq \frac{\delta_0}{4}\left(1-2\exp(-d/16)\right)\mathbb{P}\left(N(0,1)\geq \sqrt{2}\right)\gtrsim 1,$$
 and we can conclude that
 \begin{equation}
-\inf_{\|\Delta\|=1, \max_{1\leq i\leq n}|\Delta_i|\geq\delta_0}\mathbb{E}f(W,X,\Delta) \gtrsim 1.\label{eq:l1-1-3}
+\inf_{\|\Delta\|=1, \max_{1\leq i\leq n}|\Delta_i|\geq\delta_0}\mathbb{E}f(W,X,\Delta) \gtrsim 1.\label{appeq:l1-1-3}
 \end{equation}
 
-In the end, we combine the two cases (\ref{eq:l1-1-2}) and (\ref{eq:l1-1-3}),  and we obtain the conclusion that $\inf_{\|\Delta\|=1}\mathbb{E}f(W,X,\Delta)\gtrsim 1$.
+In the end, we combine the two cases (\ref{appeq:l1-1-2}) and (\ref{appeq:l1-1-3}),  and we obtain the conclusion that $\inf_{\|\Delta\|=1}\mathbb{E}f(W,X,\Delta)\gtrsim 1$.
 
 
 \paragraph{Analysis of (\ref{eq:ep-f}).} This step follows the same analysis of (\ref{eq:ep-f-relu}) in the proof of Lemma \ref{lem:design-rf-relu}, and we have
@@ -123,7 +124,7 @@ Finally, combine results for (\ref{eq:exp-f-inf}), (\ref{eq:ep-f}) and (\ref{eq:
 
 To prove (\ref{eq:l2-upper-A}) of Lemma \ref{lem:design-rf}, we establish the following stronger result.
 \begin{lemma}\label{lem:lim-G}
-Consider independent $W_1,...,W_p\sim N(0,d^{-1}I_d)$ and $x_1,...,x_n\sim N(0,I_d)$. We define the matrices $G,\bar{G}\in\mathbb{R}^{n\times n}$ by
+Consider independent $W_1,\ldots,W_p\sim N(0,d^{-1}I_d)$ and $x_1,\ldots,x_n\sim N(0,I_d)$. We define the matrices $G,\bar{G}\in\mathbb{R}^{n\times n}$ by
 \begin{eqnarray*}
 G_{il} &=& \frac{1}{p}\sum_{j=1}^p\psi(W^T_jx_i)\psi(W_j^Tx_l), \\
 \bar{G}_{il} &=& |\mathbb{E}\psi'(Z)|^2\frac{x_i^Tx_l}{\|x_i\|\|x_l\|} + \left(\mathbb{E}|\psi(Z)|^2-|\mathbb{E}\psi'(Z)|^2\right)\mathbb{I}\{i=l\},
@@ -150,7 +151,7 @@ By Markov's inequality,
 \end{equation}
 with high probability.
 
-Next, we study the diagonal entries of $\wt{G}$. For any $i\in[n]$, 
+Next, we study the diagonal entries of $\wt{G}$. For any $i\in[n]$,
 $$\wt{G}_{ii}=\mathbb{E}(|\psi(W^Tx_i)|^2|X)=\mathbb{E}_{U\sim N(0,\|x_i\|^2/d)}|\psi(U)|^2.$$
 Therefore,
 $$\max_{1\leq i\leq n}|\wt{G}_{ii}-\bar{G}_{ii}|\leq \max_{1\leq i\leq n}\TV\left(N(0,\|x_i\|^2/d), N(0,1)\right)\leq\frac{3}{2}\max_{1\leq i\leq n}\left|\frac{\|x_i\|^2}{d}-1\right|.$$
@@ -236,7 +237,7 @@ By Theorem \ref{thm:robust-reg} and Lemma \ref{lem:design-rf}, we know that $\wt
 
 To prove Theorem \ref{thm:nn-grad}, we need the following kernel random matrix result.
 \begin{lemma}\label{lem:lim-H}
-Consider independent $W_1,...,W_p\sim N(0,d^{-1}I_d)$, $x_1,...,x_n\sim N(0,I_d)$, and $\beta_1,...,\beta_p\sim N(0,1)$. We define the matrices $H, \bar{H}\in\mathbb{R}^{n\times n}$ by
+Consider independent $W_1,\ldots,W_p\sim N(0,d^{-1}I_d)$, $x_1,\ldots,x_n\sim N(0,I_d)$, and parameters $\beta_1,\ldots,\beta_p\sim N(0,1)$. We define the matrices $H, \bar{H}\in\mathbb{R}^{n\times n}$ by
 \begin{eqnarray*}
 H_{il} &=& \frac{x_i^Tx_l}{d}\frac{1}{p}\sum_{j=1}^p\beta_j^2\psi'(W^T_jx_i)\psi'(W_j^Tx_l), \\
 \bar{H}_{il} &=& |\mathbb{E}\psi'(Z)|^2\frac{x_i^Tx_l}{\|x_i\|\|x_l\|} + \left(\mathbb{E}|\psi'(Z)|^2-|\mathbb{E}\psi'(Z)|^2\right)\mathbb{I}\{i=l\},
@@ -317,7 +318,7 @@ Finally, since (\ref{eq:H-tilde-3}) can be bounded by $\left|\frac{\|x_i\|\|x_l\
 \end{eqnarray*}
 We have already shown that $\sum_{i\neq l}\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^4\lesssim \frac{n^2}{d^2}$ in the analysis of (\ref{eq:G-H}). For the first term on the right hand side of the above inequality, we use Lemma \ref{lem:inner-prod} and obtain a probability tail bound for $|\|x_i\|\|x_l\|-d|$. By integrating out this tail bound, we have
 $$\sum_{i\neq l}\mathbb{E}\left(\frac{\|x_i\|\|x_l\|}{d}-1\right)^4\lesssim \frac{n^2}{d^2},$$
-which, by Markov's inequality, implies $\sum_{i\neq l}\left(\frac{\|x_i\|\|x_l\|}{d}-1\right)^4\lesssim \frac{n^2}{d^2}$ with high probability. 
+which, by Markov's inequality, implies $\sum_{i\neq l}\left(\frac{\|x_i\|\|x_l\|}{d}-1\right)^4\lesssim \frac{n^2}{d^2}$ with high probability.
 
 Combining the analyses of (\ref{eq:H-tilde-1}), (\ref{eq:H-tilde-2}), and (\ref{eq:H-tilde-3}), we conclude that $\sum_{i\neq l}(\wt{H}_{il}-\bar{H}_{il})^2\lesssim \frac{n^2}{d^2}$ with high probability. Together with (\ref{eq:H-H-tilde}) and (\ref{eq:H-diag}), we obtain the desired bound for $\opnorm{H-\bar{H}}$.
 The last conclusion (\ref{eq:spectrum-H-bound}) follows a similar argument used in the proof of Lemma \ref{lem:lim-H-relu}.
@@ -375,7 +376,7 @@ This leads to the bound
 \end{equation}
 By (\ref{eq:iter-u-arctan}), we have
 \begin{eqnarray*}
-\|y-u(k+1)\|^2 
+\|y-u(k+1)\|^2
 &=& \|y-u(k)\|^2 - 2\gamma(y-u(k))^T(H(k)+G(k))(y-u(k)) \\
 && - 2\iprod{y-u(k)}{r(k)} + \|u(k)-u(k+1)\|^2.
 \end{eqnarray*}
