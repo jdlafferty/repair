@@ -214,7 +214,7 @@ Therefore, as long as $d\geq 3$ and $\left|\sum_{i=1}^n\Delta_i\right|\geq 7$, w
 
 Now we consider the case $\left|\sum_{i=1}^n\Delta_i\right|< 7$. A lower bound for $\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|$ is
 \begin{equation}
-\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right| \geq \left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right| - 7h(W) = \left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right| - \frac{7}{\sqrt{2\pi}}\|W\|. \label{eq:seven} 
+\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right| \geq \left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right| - 7h(W) = \left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right| - \frac{7}{\sqrt{2\pi}}\|W\|. \label{eq:seven}
 \end{equation}
 Thus,
 \begin{eqnarray}
@@ -284,7 +284,7 @@ In the end, we combine the three cases (\ref{eq:l1-1-1}), (\ref{eq:l1-1-2-relu})
 \end{eqnarray}
 where $\epsilon_1,...,\epsilon_p$ are independent Rademacher random variables. Let us adopt the notation that
 $$F(\epsilon,W,X,\Delta)=\frac{1}{p}\sum_{j=1}^p\epsilon_j\left|\sum_{i=1}^n\psi(W_j^Tx_i)\Delta_i\right|.$$
-We use a discretization argument. For the Euclidean sphere $S^{n-1}=\{\Delta\in\mathbb{R}^n: \|\Delta\|=1\}$, there exists a subset $\mathcal{N}\subset S^{n-1}$, such that for any $\Delta\in S^{n-1}$, there exists a $\Delta'\in\mathcal{N}$ that satisfies $\|\Delta-\Delta'\|\leq 1/2$, and we also have the bound $\log|\mathcal{N}|\leq 2n$. See, for example, Lemma 5.2 of \cite{vershynin2010introduction}. 
+We use a discretization argument. For the Euclidean sphere $S^{n-1}=\{\Delta\in\mathbb{R}^n: \|\Delta\|=1\}$, there exists a subset $\mathcal{N}\subset S^{n-1}$, such that for any $\Delta\in S^{n-1}$, there exists a $\Delta'\in\mathcal{N}$ that satisfies $\|\Delta-\Delta'\|\leq 1/2$, and we also have the bound $\log|\mathcal{N}|\leq 2n$. See, for example, Lemma 5.2 of \cite{vershynin2010introduction}.
 For any $\Delta\in S^{n-1}$ and the corresponding $\Delta'\in\mathcal{N}$ that satisfies $\|\Delta-\Delta'\|\leq 1/2$, we have
 \begin{eqnarray*}
 |F(\epsilon,W,X,\Delta)| &\leq& |F(\epsilon,W,X,\Delta')| + |F(\epsilon,W,X,\Delta-\Delta')| \\
@@ -528,7 +528,7 @@ for some constant $C_1>0$. By Lemma \ref{lem:inner-prod}, we know that $\max_{i\
 \end{eqnarray}
 For the first term on the right hand side of (\ref{eq:high-prob-off-diag}), we use Lemma \ref{lem:inner-prod} and obtain a probability tail bound for $|\|x_i\|\|x_l\|-d|$. By integrating out this tail bound, we have
 $$\sum_{i\neq l}\mathbb{E}\left(\frac{\|x_i\|\|x_l\|}{d}-1\right)^4\lesssim \frac{n^2}{d^2},$$
-which, by Markov's inequality, implies $\sum_{i\neq l}\left(\frac{\|x_i\|\|x_l\|}{d}-1\right)^4\lesssim \frac{n^2}{d^2}$ with high probability. 
+which, by Markov's inequality, implies $\sum_{i\neq l}\left(\frac{\|x_i\|\|x_l\|}{d}-1\right)^4\lesssim \frac{n^2}{d^2}$ with high probability.
 Using the same argument in the proof of Lemma \ref{lem:lim-G-relu}, we have $\sum_{i\neq l}\left|\frac{x_i^Tx_l}{d}\right|^4\lesssim \frac{n^2}{d^2}$ with high probability.
 Finally, combining (\ref{eq:H-H-tilde-relu}), (\ref{eq:H-diag-relu}), and the bound for (\ref{eq:high-prob-off-diag}), we obtain the desired bound for $\opnorm{H-\bar{H}}$.
 %The lower bound for $\lambda_{\min}(H)$ is a direct application of Weyl's inequality.
@@ -585,7 +585,7 @@ With high probability, for any integer $k\geq 1$, as long as (\ref{eq:iter-funct
 \end{thm3}
 \noindent With all the claims above being true, we can then deduce (\ref{eq:iter-parameter-relu}), (\ref{eq:iter-parameter-beta-relu}) and (\ref{eq:iter-function-relu}) for all $t\geq 1$ by mathematical induction.
 
-\paragraph{Proof of Claim A.} 
+\paragraph{Proof of Claim A.}
 By triangle inequality and the gradient formula,
 \begin{eqnarray*}
 |\beta_j(k+1)-\beta_j(0)| &\leq& \sum_{t=0}^k|\beta_j(t+1)-\beta_j(t)| \\
@@ -757,7 +757,7 @@ By the convexity of $K_m(u)$, we can replace $\|u-u^*\|\geq t$ by $\|u-u^*\| = t
 \end{eqnarray*}
 we then have
 \begin{equation}
-\inf_{\|u-u^*\|=t}L(u) \leq \sup_{\|u-u^*\|= t}|L_m(u)-L(u)| + 2\frac{1}{m}\sum_{i=1}^m|b_i|. \label{eq:basic-L}
+\inf_{\|u-u^*\|=t}L(u) \leq \sup_{\|u-u^*\|= t}|L_m(u)-L(u)| + 2\frac{1}{m}\sum_{i=1}^m|b_i|. %\label{eq:basic-L}
 \end{equation}
 With the lower bound for (\ref{eq:L-decomp}) and the upper bound (\ref{eq:upper-EP}), we obtain
 $$\underline{\lambda}(1-\epsilon)t - \epsilon t\sigma\sqrt{\frac{k}{m}} - 2\frac{1}{m}\sum_{i=1}^m|b_i|\lesssim t\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)},$$
@@ -808,8 +808,3 @@ as long as $\frac{n^{3/2}\log p}{\sqrt{p}}$ is sufficiently small. By (\ref{eq:G
 $$\sup_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(\wh{W}_j^Tx_i)\Delta_i\right|^2\lesssim n.$$
 Therefore, Condition B holds with $\overline{\lambda}^2\asymp n$ and $\underline{\lambda}\asymp 1$. Apply Theorem \ref{thm:main-improved}, we have $\wt{\beta}=\wh{\beta}$ with high probability as desired.
 \end{proof}
-
-
-
-
-
