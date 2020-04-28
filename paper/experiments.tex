@@ -31,7 +31,7 @@ where $z_j \sim (1-\epsilon) \delta_0 +\epsilon Q$. The corrupted estimator is t
 The design is sampled as $X_{ij} \sim N(0,1)$ and we take $\theta_j^* \sim N(0,1)$ and $Q = N(1,1)$. In the plots shown
 in Figure~\ref{fig:exp1} the sample size is fixed at $n=100$ and the dimension $p$ is varied according to $p/n=200/j^2$
 for a range of values of $j$. The plots show the empirical probability of exact repair $\tilde\theta = \hat\theta$ as a function of $\epsilon$. Each point on the curves is the average repair success over $500$ random trials.
-The roughly equal spacing of the curves agrees with the theory, which indicates that $\sqrt{n/p}/(1-\epsilon)$ should be sufficiently small for successful repair.
+The roughly equal spacing of the curves agrees with the theory, which indicates that $\sqrt{n/p}/(1-\epsilon)$ should be sufficiently small for successful repair. The right plot in Figure~\ref{fig:exp1b} shows the per-coefficient repair probability, where the left plot shows the probability that the entire model is repaired; in this plot the sample size is $n=50$.
 
 \begin{figure}[ht]
   \begin{center}
@@ -39,19 +39,21 @@ The roughly equal spacing of the curves agrees with the theory, which indicates 
       \includegraphics[width=.47\textwidth]{fig/plot-linear-100} &
       \includegraphics[width=.47\textwidth]{fig/plot-linear-100-adj}\\[-10pt]
     \end{tabular}
+    \caption{Model repair for underdetermined linear models $y=X^T\theta + w$ with $p>n$. The left plot shows the empirical probability of successful model repair for $n=100$ with the model dimension $p$
+    varying as $p/n = 200 /j^2$, for $j=1,\ldots, 7$. Each point is an average over 500 random trials. The covariates are sampled as $N(0,1)$ and the corruption distribution is $Q=N(1,1)$. The right plot shows the repair probablity as a function
+    of the adjusted corruption probability $\tilde\epsilon_j = \epsilon + c'\cdot j - \frac{1}{2}$ for $c'=0.085$.}
+    \label{fig:exp1}
+    \vskip10pt
+    \begin{tabular}{cc}
+      \includegraphics[width=.47\textwidth]{fig/plot-linear-total-50} &
+      \includegraphics[width=.47\textwidth]{fig/plot-linear-sum-50}\\[-10pt]
+    \end{tabular}
   \end{center}
-\caption{Model repair for underdetermined linear models $y=X^T\theta + w$ with $p>n$. The left plot shows the empirical probability of successful model repair for $n=100$ with the model dimension $p$
-varying as $p/n = 200 /j^2$, for $j=1,\ldots, 7$. Each point is an average over 500 random trials. The covariates are sampled as $N(0,1)$ and the corruption distribution is $Q=N(1,1)$. The right plot shows the repair probablity as a function
-of the adjusted corruption probability $\tilde\epsilon_j = \epsilon + c'\cdot j - \frac{1}{2}$ for $c'=0.085$.}
-\label{fig:exp1}
+\caption{Left: Empirical probability of successful model repair for $n=50$ with the model dimension $p$
+varying as $p/n = 200 /j^2$. Right: Per-coefficient probability of successful repair.}
+\label{fig:exp1b}
 \end{figure}
 
-\subsection{Varying the mean}
-
-In this experiment we simulate over-parameterized linear models
-with nonzero mean. The data are generated as $X_{ij} \sim N(\mu,1)$
-independently, where we vary the mean $\mu$ and fix the dimension $p=500$ and sample size $n=50$.
-The probability of successful repair is shown in Figure~\ref{fig:mean}.
 
 \begin{figure}[ht]
   \begin{center}
@@ -61,9 +63,18 @@ The probability of successful repair is shown in Figure~\ref{fig:mean}.
     \end{tabular}
   \end{center}
 \caption{Model repair for linear models with design entries $X_{i,j}\sim N(\mu, 1)$,
-where the mean $\mu$ is varied and the sample size and dimension are fixed at $n=50$ and $p=500$. Consistent with Theorem~\ref{thm:main-improved}, a lower level of noise is tolerated as the mean $\mu$ increases. In the plot above, the means are chosen as $\mu_j = c_j/\sqrt{n}$ for $c_j$ varying between zero and two.}
+where the mean $\mu$ is varied and the sample size and dimension are fixed at $n=50$ and $p=500$. Consistent with Theorem~\ref{thm:main-improved}, a smaller corruption fraction $\epsilon$ is tolerated as the mean $\mu$ increases. In the plot above, the means are chosen as $\mu_j = c_j/\sqrt{n}$ for $c_j$ varying between zero and two.}
 \label{fig:mean}
 \end{figure}
+
+\subsection{Varying the mean}
+
+
+In this experiment we simulate over-parameterized linear models
+with nonzero mean. The data are generated as $X_{ij} \sim N(\mu,1)$
+independently, where we vary the mean $\mu$ and fix the dimension $p=500$ and sample size $n=50$.
+The probability of successful repair is shown in Figure~\ref{fig:mean}.
+
 
 As expected, the fraction $\epsilon$ that allows successful repair decreases; it appears to saturate at some fixed value $\epsilon_{\min}$. The mean $\mu$ cannot be made too large because it causes the design $X$ to become ill-conditioned, and the median regression fails.
 
