@@ -84,7 +84,7 @@ The inequality in Condition $A$ in this case takes the form
    \equiv \frac{(1+\mu^2)n}{p} + \mu^2 n.
    %  = \frac{(1+\mu^2)n}{p} + c_j.
 \end{align*}
-The mean $\mu$ in the above plot is taken to be $\mu_j = c_j / \sqrt{n}$ as $c_j$ varies between zero and two.
+The means $\mu$ in Figure~\ref{fig:mean} are taken to be $\mu_j = c_j / \sqrt{n}$ as $c_j$ varies between zero and two.
 
 \subsection{Random features models trained with gradient descent}
 
@@ -113,6 +113,6 @@ and $d=\lceil p/2\rceil$. The recovery success curves for gradient descent are s
   \end{center}
 \caption{Model repair for random feature models $y=\psi(XW)\theta + w$ with $p>n$, where $\psi(\cdot) = \tanh(\cdot)$
 for $n=50$ (left) and $n=100$ (right). For each value of $p$, three values of $d$ are evaluated, $d=p$, $d=\lceil 2p/3\rceil$,
-and $d=\lceil p/2\rceil$; the results are effectively the same for each $d$.}
+and $d=\lceil p/2\rceil$; the results are effectively the same for each $d$. The curves are very similar when $\tanh$ is replaced by ReLU, as long as the population mean is subtracted from the features.}
 \label{fig:rf}
 \end{figure}
