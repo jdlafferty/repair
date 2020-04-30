@@ -19,13 +19,14 @@ If $Z\sim N(0,1)$ and $W=\sum_{i=1}^nX_i$ where $X_i$ are independent mean $0$ a
 $$\sup_z\left|\mathbb{P}(W\leq z)-\mathbb{P}(Z\leq z)\right|\leq 2\sqrt{3\sum_{i=1}^n\mathbb{E}|X_i|^3}.$$
 \end{lemma}
 
-
+We also need a Talagrand Gaussian concentration inequality. The following version has explicit constants.
 \begin{lemma}[\cite{cirel1976norms}]\label{lem:talagrand}
 Let $f:\mathbb{R}^k\rightarrow\mathbb{R}$ be a Lipschitz function with constant $L>0$. That is, $|f(x)-f(y)|\leq L\|x-y\|$ for all $x,y\in\mathbb{R}^k$. Then, for any $t>0$,
 $$\mathbb{P}\left(|f(Z)-\mathbb{E}f(Z)|>t\right)\leq 2\exp\left(-\frac{t^2}{2L^2}\right),$$
 where $Z\sim N(0,I_k)$.
 \end{lemma}
 
+Finally, we present two lemmas on the concentration of norms and inner products of multivariate Gaussian.
 \begin{lemma}[\cite{laurent2000adaptive}]\label{lem:chi-squared}
 For any $t>0$, we have
 \begin{eqnarray*}
@@ -67,7 +68,7 @@ which immediately implies the second conclusion.
 
 In order to prove Theorem \ref{thm:robust-reg}, we need the following empirical process result.
 \begin{lemma}\label{lem:EP}
-Consider independent random variables $z_1,...,z_m$. Assume $k/m\leq 1$. Then, for any $t\in (0,1/2)$ and any fixed $A^T=(a_1,...,a_m)^T$ such that (\ref{eq:l2-upper-A}) holds, we have
+Consider independent random variables $z_1,...,z_m$. Assume $k/m\leq 1$. Then, for any $t\in (0,1/2)$ and any fixed $A^T=(a_1,...,a_m)^T\in\mathbb{R}^{m\times k}$ such that (\ref{eq:l2-upper-A}) holds, we have
 $$\sup_{\|\Delta\|\leq t}\left|\frac{1}{m}\sum_{i=1}^m[(|a_i^T\Delta-z_i|-|z_i|)-\mathbb{E}(|a_i^T\Delta-z_i|-|z_i|)]\right|| \lesssim t\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)},$$
 with high probability.
 \end{lemma}
@@ -155,7 +156,7 @@ Condition A is obvious. For Condition B, we have
 $$
 \inf_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta| \geq \sqrt{\frac{2}{\pi}} - \sup_{\|\Delta\|=1}\left|\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta| - \sqrt{\frac{2}{\pi}} \right|,
 $$
-and we will analyze the second term on the right hand side of the inequality above via a discretization argument. There exists a subset $\mathcal{N}_{\zeta}\subset S^{n-1}$, such that for any $\Delta\in S^{n-1}$, there exists a $\Delta'\in\mathcal{N}_{\zeta}$ that satisfies $\|\Delta-\Delta'\|\leq\zeta$, and we also have the bound $\log|\mathcal{N}_{\zeta}|\leq n\log\left(1+2/\zeta\right)$ according to Lemma 5.2 of \cite{vershynin2010introduction}. For any $\Delta\in S^{n-1}$ and the corresponding $\Delta'\in\mathcal{N}_{\zeta}$ that satisfies $\|\Delta-\Delta'\|\leq \zeta$, we have
+and we will analyze the second term on the right hand side of the inequality above via a discretization argument for the Euclidean sphere $S^{n-1}=\{\Delta\in\mathbb{R}^n: \|\Delta\|=1\}$. There exists a subset $\mathcal{N}_{\zeta}\subset S^{n-1}$, such that for any $\Delta\in S^{n-1}$, there exists a $\Delta'\in\mathcal{N}_{\zeta}$ that satisfies $\|\Delta-\Delta'\|\leq\zeta$, and we also have the bound $\log|\mathcal{N}_{\zeta}|\leq n\log\left(1+2/\zeta\right)$ according to Lemma 5.2 of \cite{vershynin2010introduction}. For any $\Delta\in S^{n-1}$ and the corresponding $\Delta'\in\mathcal{N}_{\zeta}$ that satisfies $\|\Delta-\Delta'\|\leq \zeta$, we have
 \begin{eqnarray*}
 \left|\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta| - \sqrt{\frac{2}{\pi}} \right| &\leq& \left|\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta'| - \sqrt{\frac{2}{\pi}} \right|  + \zeta\sup_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta| \\
 &\leq& \left|\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta'| - \sqrt{\frac{2}{\pi}} \right| + \zeta\sup_{\|\Delta\|=1}\left|\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta| - \sqrt{\frac{2}{\pi}} \right| + \zeta\sqrt{\frac{2}{\pi}}.
@@ -246,7 +247,7 @@ Finally, we consider the case when $\max_{1\leq i\leq n}|\Delta_i|> \delta_0$ an
 $$\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq  \bar{\psi}(W^Tx_1)\Delta_1 - \left|\sum_{i=2}^n\bar{\psi}(W^Tx_i)\Delta_i\right| - \frac{7}{\sqrt{2\pi}}\|W\|.$$
 We then lower bound $\mathbb{E}f(W,X,\Delta)$ by
 \begin{eqnarray*}
-&& \mathbb{E}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\mathbb{I}\left\{ \bar{\psi}(W^Tx_1)\Delta_1 \geq 8, \left|\sum_{i=2}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\leq 8, 1/2\leq \|W\|^2\leq 2\right\}\right) \\
+&& \mathbb{E}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\mathbb{I}\left\{ \bar{\psi}(W^Tx_1)\Delta_1 \geq 8, \left|\sum_{i=2}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\leq 2, 1/2\leq \|W\|^2\leq 2\right\}\right) \\
 &\geq& \mathbb{P}\left(\bar{\psi}(W^Tx_1)\Delta_1 \geq 8, \left|\sum_{i=2}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\leq 2\Big|1/2\leq \|W\|^2\leq 2\right)\mathbb{P}\left(1/2\leq \|W\|^2\leq 2\right) \\
 &\geq& \mathbb{P}\left(\bar{\psi}(W^Tx_1)\Delta_1 \geq 8\Big|1/2\leq \|W\|^2\leq 2\right) \\
 && \times \mathbb{P}\left(\left|\sum_{i=2}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\leq 2\Big|1/2\leq \|W\|^2\leq 2\right)\left(1-2\exp(-d/16)\right).
@@ -379,7 +380,7 @@ $$\bar{G}_{il}=\begin{cases}
 \end{cases}$$
 Assume $d/\log n$ is sufficiently large, and then
 $$\opnorm{G-\bar{G}}^2\lesssim \frac{n^2}{p} + \frac{\log n}{d} + \frac{n^2}{d^2},$$
-with high probability. If we additionally assume $d/n$ and $p/n$ are sufficiently small, we will also have $\opnorm{\bar{G}}\lesssim n$ with high probability.
+with high probability. Moreover, we also have $\opnorm{G}\lesssim n$ with high probability.
 \end{lemma}
 \begin{proof}
 Define $\wt{G}\in\mathbb{R}^{n\times n}$ with entries $\wt{G}_{il}=\mathbb{E}\left(\psi(W^Tx_i)\psi(W^Tx_l)|X\right)$, and we first bound the difference between $G$ and $\wt{G}$. Note that
@@ -395,10 +396,8 @@ By Markov's inequality,
 with high probability.
 
 Next, we study the diagonal entries of $\wt{G}$. For any $i\in[n]$, $\wt{G}_{ii}=\mathbb{E}(|\psi(W^Tx_i)|^2|X)=\frac{\|x_i\|^2}{2d}$. By Lemma \ref{lem:chi-squared} and a union bound argument, we have
-$$\mathbb{P}\left(\max_{1\leq i\leq n}|\wt{G}_{ii}-\bar{G}_{ii}|>\sqrt{\frac{t}{d}}+\frac{t}{d}\right)\leq 2ne^{-t},$$
-for any $t>0$. Choosing $t\asymp\log n$, we obtain the bound
 \begin{equation}
-\max_{1\leq i\leq n}|\wt{G}_{ii}-\bar{G}_{ii}|\lesssim \sqrt{\frac{\log n}{d}}+\frac{\log n}{d}, \label{eq:G-diag-relu}
+\max_{1\leq i\leq n}|\wt{G}_{ii}-\bar{G}_{ii}|\lesssim \sqrt{\frac{\log n}{d}}, \label{eq:G-diag-relu}
 \end{equation}
 with high probability.
 
@@ -409,7 +408,7 @@ Now we analyze the off-diagonal entries. We use the notation $\bar{x}_i=\frac{\s
 \label{eq:G-tilde-3-relu} && + \mathbb{E}\left(\psi(W^T\bar{x}_i)(\psi(W^Tx_l)-\psi(W^T\bar{x}_l))|X\right) \\
 \label{eq:G-tilde-4-relu} && + \mathbb{E}\left((\psi(W^Tx_i)-\psi(W^T\bar{x}_i))(\psi(W^Tx_l)-\psi(W^T\bar{x}_l))|X\right).
 \end{eqnarray}
-For first term on the right hand side of (\ref{eq:G-tilde-1-relu}), we observe that $\mathbb{E}\left(\psi(W^T\bar{x}_i)\psi(W^T\bar{x}_l)|X\right)$ is a function of $\frac{\bar{x}_i^T\bar{x}_l}{d}$, and thus we can write
+For the first term on the right hand side of (\ref{eq:G-tilde-1-relu}), we observe that $\mathbb{E}\left(\psi(W^T\bar{x}_i)\psi(W^T\bar{x}_l)|X\right)$ is a function of $\frac{\bar{x}_i^T\bar{x}_l}{d}$, and thus we can write
 $$\mathbb{E}\left(\psi(W^T\bar{x}_i)\psi(W^T\bar{x}_l)|X\right)=f\left(\frac{\bar{x}_i^T\bar{x}_l}{d}\right),$$
 where
 $$f(\rho) = \begin{cases}
@@ -419,7 +418,9 @@ $$f(\rho) = \begin{cases}
 with $U,V,Z\stackrel{iid}{\sim} N(0,1)$. By some direct calculations, we have $f(0)=\frac{1}{2\pi}$, $f'(0)=\frac{1}{4}$, and $\sup_{|\rho|\leq 0.2}\frac{|f'(\rho)-f'(0)|}{|\rho|}\lesssim 1$. Therefore, as long as $|\bar{x}_i^T\bar{x}_l|/d\leq 1/5$,
 $$\left|f\left(\frac{\bar{x}_i^T\bar{x}_l}{d}\right)-\frac{1}{2\pi}-\frac{1}{4}\frac{\bar{x}_i^T\bar{x}_l}{d}\right|\leq C_1\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^2,$$
 for some constant $C_1>0$. By Lemma \ref{lem:inner-prod}, we know that $\max_{i\neq l}|\bar{x}_i^T\bar{x}_l|/d\lesssim \sqrt{\frac{\log n}{d}}\leq 1/5$ with high probability, which then implies
-$$\sum_{i\neq l}\left(\mathbb{E}\left(\psi(W^T\bar{x}_i)\psi(W^T\bar{x}_l)|X\right)-\bar{G}_{il}\right)^2 \leq C_1\sum_{i\neq l}\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^2.$$
+\begin{equation}
+\sum_{i\neq l}\left(\mathbb{E}\left(\psi(W^T\bar{x}_i)\psi(W^T\bar{x}_l)|X\right)-\bar{G}_{il}\right)^2 \leq C_1\sum_{i\neq l}\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^4.\label{eq:4th-bd-later}
+\end{equation}
 The term on the right hand side can be bounded by
 $$\sum_{i\neq l}\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^4\leq \frac{d}{\min_{1\leq i\leq n}\|x_i\|^2}\sum_{i\neq l}\left|\frac{x_i^Tx_l}{d}\right|^4.$$
 By Lemma \ref{lem:chi-squared}, $\frac{d}{\min_{1\leq i\leq n}\|x_i\|^2}\lesssim 1$ with high probability. By integrating out the probability tail bound of $|x_i^Tx_l|$ given in Lemma \ref{lem:inner-prod}, we have $\sum_{i\neq l}\mathbb{E}\left|\frac{x_i^Tx_l}{d}\right|^4\lesssim \frac{n^2}{d^2}$, and by Markov's inequality, we have $\sum_{i\neq l}\left|\frac{x_i^Tx_l}{d}\right|^4\lesssim \frac{n^2}{d^2}$ with high probability.
@@ -470,7 +471,7 @@ H_{il} &=& \frac{x_i^Tx_l}{d}\frac{1}{p}\sum_{j=1}^p\beta_j^2\mathbb{I}\{W_j^Tx_
 \end{eqnarray*}
 Assume $d/\log n$ is sufficiently large, and then
 $$\opnorm{H-\bar{H}}^2 \lesssim \frac{n^2}{pd} + \frac{n}{p} + \frac{\log n}{d} + \frac{n^2}{d^2},$$
-with high probability. If we additionally assume that $d/n$ and $p/n$ are sufficiently large, we will also have, we will also have
+with high probability. If we additionally assume that $d/n$ and $p/n$ are sufficiently large, we will also have
 $$\frac{1}{5}\leq\lambda_{\min}(H)\leq\lambda_{\max}(H)\lesssim 1,$$
 with high probability.
 %If we assume that $d/n$ and $p/n$ are sufficiently large, we will also have
@@ -493,7 +494,7 @@ with high probability.
 
 Next, we study the diagonal entries of $\wt{H}$. For any $i\in[n]$, $\wt{H}_{ii}=\frac{\|x_i\|^2}{d}\mathbb{E}(\beta^2\mathbb{I}\{W^Tx_i\geq 0\}|X)=\frac{\|x_i\|^2}{2d}$. The same analysis that leads to the bound (\ref{eq:G-diag-relu}) also implies that
 \begin{equation}
-\max_{1\leq i\leq n}|\wt{H}_{ii}-\bar{H}_{ii}|\lesssim \sqrt{\frac{\log n}{d}}+\frac{\log n}{d}, \label{eq:H-diag-relu}
+\max_{1\leq i\leq n}|\wt{H}_{ii}-\bar{H}_{ii}|\lesssim \sqrt{\frac{\log n}{d}}, \label{eq:H-diag-relu}
 \end{equation}
 with high probability.
 
@@ -509,8 +510,8 @@ Since $\mathbb{P}\left(W^T\bar{x}_i\geq 0, W^T\bar{x}_l\geq 0|X\right)$ is a fun
 \end{equation}
 where for $\rho>0$,
 \begin{eqnarray*}
-f(\rho) &=& \rho\mathbb{P}\left(\sqrt{1-\rho}U+\sqrt{\rho}Z\geq 0, \sqrt{1-\rho}V+\sqrt{\rho}Z\right) \\
-&=& \rho\mathbb{E}\mathbb{P}\left(\sqrt{1-\rho}U+\sqrt{\rho}Z\geq 0, \sqrt{1-\rho}V+\sqrt{\rho}Z|Z\right) \\
+f(\rho) &=& \rho\mathbb{P}\left(\sqrt{1-\rho}U+\sqrt{\rho}Z\geq 0, \sqrt{1-\rho}V+\sqrt{\rho}Z\geq0\right) \\
+&=& \rho\mathbb{E}\mathbb{P}\left(\sqrt{1-\rho}U+\sqrt{\rho}Z\geq 0, \sqrt{1-\rho}V+\sqrt{\rho}Z\geq 0|Z\right) \\
 &=& \rho\mathbb{E}\Phi\left(\sqrt{\frac{\rho}{1-\rho}}Z\right)^2,
 \end{eqnarray*}
 with $U,V,Z\stackrel{iid}{\sim} N(0,1)$ and $\Phi(\cdot)$ being the cumulative distribution function of $N(0,1)$. Similarly, for $\rho<0$,
@@ -559,16 +560,7 @@ We first establish some high probability events:
  \label{eq:r1e8}\max_{1\leq j\leq p}\sum_{i=1}^n|W_j(0)^Tx_i|^2 &\leq& 6n+18\log p, \\
  \label{eq:r1e9}\max_{1\leq i\leq n}\frac{1}{p}\sum_{j=1}^p\mathbb{I}\{|W_j(0)^Tx_i|\leq R_1\|x_i\|\} &\lesssim& \sqrt{d}R_1 + \sqrt{\frac{\log n}{p}}.
 \end{eqnarray}
-The bound (\ref{eq:r1e1}) is a consequence of a standard Gaussian tail inequality and a union bound argument. The second bound (\ref{eq:r1e2}) is by Markov's inequality and the fact that $\frac{1}{p}\sum_{j=1}^p\mathbb{E}|\beta_j(0)|^k\lesssim 1$. Then, we have (\ref{eq:r1e3}), (\ref{eq:r1e4}) and (\ref{eq:r1e8}) derived from Lemma \ref{lem:chi-squared} and a union bound. Similarly, (\ref{eq:r1e5}) is by Lemma \ref{lem:inner-prod} and a union bound. For (\ref{eq:r1e6}), we first have the bound
-\begin{eqnarray*}
-\max_{1\leq l\leq n}\sum_{i=1}^n\left|\frac{x_i^Tx_l}{d}\right| &\leq& \max_{1\leq l\leq n}\frac{\|x_l\|^2}{d} + \max_{1\leq l\leq n}\frac{\|x_l\|}{d}\sum_{i\in[n]\backslash\{l\}}\left|\frac{x_i^Tx_l}{\|x_l\|}\right| \\
-&\lesssim&  1 + \frac{1}{\sqrt{d}}\max_{1\leq l\leq n}\sum_{i\in[n]\backslash\{l\}}\left|\frac{x_i^Tx_l}{\|x_l\|}\right|,
-\end{eqnarray*}
-where the last inequality is by (\ref{eq:r1e4}). Since
-$$\sum_{i\in[n]\backslash\{l\}}\left|\frac{x_i^Tx_l}{\|x_l\|}\right|\leq \sqrt{n}\sqrt{\sum_{i\in[n]\backslash\{l\}}\left|\frac{x_i^Tx_l}{\|x_l\|}\right|^2},$$
-and $\sum_{i\in[n]\backslash\{l\}}\left|\frac{x_i^Tx_l}{\|x_l\|}\right|^2\sim \chi_{n-1}^2$, we can then use Lemma \ref{lem:chi-squared} and a union bound and obtain
-$$\max_{1\leq l\leq n}\sum_{i\in[n]\backslash\{l\}}\left|\frac{x_i^Tx_l}{\|x_l\|}\right|\lesssim n,$$
-with high probability, which then leads to (\ref{eq:r1e6}). To obtain (\ref{eq:r1e7}), we note that $\mathbb{E}|u_i(0)|^2 = \mathbb{E}\Var(u_i(0)|X) \lesssim 1$, which then implies (\ref{eq:r1e7}) by Markov's inequality. Finally, for (\ref{eq:r1e9}), we have
+The bound (\ref{eq:r1e1}) is a consequence of a standard Gaussian tail inequality and a union bound argument. The second bound (\ref{eq:r1e2}) is by Markov's inequality and the fact that $\frac{1}{p}\sum_{j=1}^p\mathbb{E}|\beta_j(0)|^k\lesssim 1$. Then, we have (\ref{eq:r1e3}), (\ref{eq:r1e4}) and (\ref{eq:r1e8}) derived from Lemma \ref{lem:chi-squared} and a union bound. Similarly, (\ref{eq:r1e5}) is by Lemma \ref{lem:inner-prod} and a union bound. The bound (\ref{eq:r1e6}) is a direct consequence of (\ref{eq:r1e4}) and (\ref{eq:r1e5}). To obtain (\ref{eq:r1e7}), we note that $\mathbb{E}|u_i(0)|^2 = \mathbb{E}\Var(u_i(0)|X) \lesssim 1$, which then implies (\ref{eq:r1e7}) by Markov's inequality. Finally, for (\ref{eq:r1e9}), we have
 \begin{eqnarray*}
 &&\max_{1\leq i\leq n}\frac{1}{p}\sum_{j=1}^p\mathbb{I}\{|W_j(0)^Tx_i|\leq R_1\|x_i\|\} \leq \mathbb{P}\left(|N(0,1)|\leq \sqrt{d}R_1\right) \\
 &&+ \max_{1\leq i\leq n}\frac{1}{p}\sum_{j=1}^p\left(\mathbb{I}\{|W_j(0)^Tx_i|\leq R_1\|x_i\|\}-\mathbb{P}\left(|N(0,1)|\leq \sqrt{d}R_1\right)\right),
@@ -599,7 +591,7 @@ By triangle inequality and the gradient formula,
 &\leq& 16\sqrt{\frac{7n+18\log p}{p}}\|y-u(0)\| \\
 &\leq& 32\sqrt{\frac{n^2\log p}{p}} = R_2,
 \end{eqnarray*}
-where we have used (\ref{eq:r1e4}), (\ref{eq:r1e8}) and (\ref{eq:r1e9}).
+where we have used (\ref{eq:r1e4}), (\ref{eq:r1e7}) and (\ref{eq:r1e8}).
 Hence, (\ref{eq:iter-parameter-beta-relu}) holds for $t=k+1$, and Claim A is true.
 
 
@@ -611,7 +603,7 @@ Hence, (\ref{eq:iter-parameter-beta-relu}) holds for $t=k+1$, and Claim A is tru
 &\leq& \frac{16}{d\sqrt{p}}(|\beta_j(0)|+R_2)\sqrt{\sum_{i=1}^n\|x_i\|^2}\|y-u(0)\| \\
 &\leq& \frac{100n\log p}{\sqrt{pd}} = R_1,
 \end{eqnarray*}
-where we have used (\ref{eq:r1e1}), (\ref{eq:r1e3}) and (\ref{eq:r1e7}) in the above inequalities.
+where we have used (\ref{eq:r1e1}), (\ref{eq:r1e3}) and (\ref{eq:r1e7}) in the above inequalities. Thus, Claim B is true.
 
 \paragraph{Proof of Claim C.} We first analyze $u(k+1)-u(k)$. For each $i\in[n]$, we have
 \begin{eqnarray*}
@@ -727,7 +719,7 @@ By (\ref{eq:Gk-spec}), (\ref{eq:Hk-spec}) and (\ref{eq:bound-res-k-relu}), we al
 \|u(k)-u(k+1)\|^2 &\leq& 2\gamma^2\|(H(k)+G(k))(y-u(k))\|^2 + 2\|r(k)\|^2 \\
 &\lesssim& \gamma^2n\|y-u(k)\|^2 + (\gamma n\log p)^2\left(R_1+\sqrt{\frac{\log n}{p}}\right)^2\|y-u(k)\|^2 .
 \end{eqnarray*}
-Therefore, as long as ??, we have
+Therefore, as long as $\frac{n\log n}{d}$, $\frac{n^3(\log p)^4}{p}$ and $\gamma n$ are all sufficiently small, we have
 $$- 2\iprod{y-u(k)}{r(k)} + \|u(k)-u(k+1)\|^2 \leq \frac{\gamma}{24}\|y-u(k)\|^2.$$
 Together with the bound (\ref{eq:main-inner-relu}), we have
 $$\|y-u(k+1)\|^2 \leq \left(1-\frac{\gamma}{8}\right)\|y-u(k)\|^2\leq \left(1-\frac{\gamma}{8}\right)^{k+1}\|y-u(0)\|^2,$$
@@ -737,7 +729,7 @@ and thus Claim C is true. The proof is complete.
 
 \subsection{Proofs of Theorem \ref{thm:repair-nn-1-relu} and Theorem \ref{thm:repair-nn-2-relu}}
 
-To prove Theorem \ref{thm:repair-nn-1-relu}, we need to extend Theorem \ref{thm:main-improved}. Consider $\eta=b+Au^*+z\in\mathbb{R}^m$, where the noise vector $z$ satisfies (\ref{eq:noise-add-con}), and $b\in\mathbb{R}^m$ is any bias vector. Then, the estimator $\wh{u}=\argmin_{u\in\mathbb{R}^k}\|\eta-Au\|_1$ satisfies the following theoretical guarantee.
+To prove Theorem \ref{thm:repair-nn-1-relu}, we need to extend Theorem \ref{thm:main-improved}. Consider $\eta=b+Au^*+z\in\mathbb{R}^m$, where the noise vector $z$ satisfies (\ref{eq:noise-add-con}), and $b\in\mathbb{R}^m$ is an arbitrary bias vector. Then, the estimator $\wh{u}=\argmin_{u\in\mathbb{R}^k}\|\eta-Au\|_1$ satisfies the following theoretical guarantee.
 \begin{thm}\label{thm:robust-reg-b}
 Assume the design matrix $A$ satisfies Condition A and Condition B. Then, as long as $\frac{\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}+\epsilon\sigma\sqrt{\frac{k}{m}}}{\underline{\lambda}(1-\epsilon)}$ is sufficiently small and $\frac{8\frac{1}{m}\sum_{i=1}^m|b_i|}{\underline{\lambda}(1-\epsilon)}<1$, we have
 $$\|\wh{u}-u^*\|\leq \frac{4\frac{1}{m}\sum_{i=1}^m|b_i|}{\underline{\lambda}(1-\epsilon)},$$
@@ -808,5 +800,5 @@ where $\sum_{i=1}^n\|x_i\|^2\lesssim nd$ is by Lemma \ref{lem:chi-squared}. By L
 $$\inf_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(\wh{W}_j^Tx_i)\Delta_i\right|\gtrsim 1,$$
 as long as $\frac{n^{3/2}\log p}{\sqrt{p}}$ is sufficiently small. By (\ref{eq:Gk-spec}), we also have
 $$\sup_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(\wh{W}_j^Tx_i)\Delta_i\right|^2\lesssim n.$$
-Therefore, Condition B holds with $\overline{\lambda}^2\asymp n$ and $\underline{\lambda}\asymp 1$. Apply Theorem \ref{thm:main-improved}, we have $\wt{\beta}=\wh{\beta}$ with high probability as desired.
+Therefore, Condition B holds with $\overline{\lambda}^2\asymp n$ and $\underline{\lambda}\asymp 1$. Apply Theorem \ref{thm:main-improved}, and we have $\wt{\beta}=\wh{\beta}$ with high probability as desired.
 \end{proof}

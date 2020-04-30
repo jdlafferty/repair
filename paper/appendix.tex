@@ -84,7 +84,7 @@ Hence, when $\max_{1\leq i\leq n}|\Delta_i|^{3/2}\leq \delta_0^{3/2}:=\mathbb{P}
 \end{equation}
 
 We also need to consider the case when $\max_{1\leq i\leq n}|\Delta_i|> \delta_0$. Without loss of generality, we can assume $\Delta_1>\delta_0$.
-We then lower bound the expectation $\mathbb{E}f(W,X,\Delta)$ by
+We then lower bound $\mathbb{E}f(W,X,\Delta)$ by
 \begin{eqnarray*}
 && \mathbb{E}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\mathbb{I}\left\{\sum_{i=1}^n\psi(W^Tx_i)\Delta_i \geq \delta_0/2, 1/2\leq \|W\|^2\leq 2\right\}\right) \\
 &\geq& \frac{\delta_0}{2} \mathbb{P}\left(\sum_{i=1}^n\psi(W^Tx_i)\Delta_i \geq \delta_0/2\Big| 1/2\leq \|W\|^2\leq 2\right)\mathbb{P}\left(1/2\leq \|W\|^2\leq 2\right) \\
@@ -132,7 +132,7 @@ G_{il} &=& \frac{1}{p}\sum_{j=1}^p\psi(W^T_jx_i)\psi(W_j^Tx_l), \\
 where $Z\sim N(0,1)$.
 Assume $d/\log n$ is sufficiently large, and then
 $$\opnorm{G-\bar{G}}^2\lesssim \frac{n^2}{p} + \frac{\log n}{d} + \frac{n^2}{d^2},$$
-with high probability. Therefore, if we assume $n^2/p$ and $n/d$ are sufficiently small, we also have
+with high probability. Therefore, if we further assume $n^2/p$ and $n/d$ are sufficiently small, we also have
 \begin{equation}
 1\lesssim\lambda_{\min}(G)\leq \lambda_{\max}(G)\lesssim 1, \label{eq:spectrum-G-bound}
 \end{equation}
@@ -156,8 +156,6 @@ $$\wt{G}_{ii}=\mathbb{E}(|\psi(W^Tx_i)|^2|X)=\mathbb{E}_{U\sim N(0,\|x_i\|^2/d)}
 Therefore,
 $$\max_{1\leq i\leq n}|\wt{G}_{ii}-\bar{G}_{ii}|\leq \max_{1\leq i\leq n}\TV\left(N(0,\|x_i\|^2/d), N(0,1)\right)\leq\frac{3}{2}\max_{1\leq i\leq n}\left|\frac{\|x_i\|^2}{d}-1\right|.$$
 By Lemma \ref{lem:chi-squared} and a union bound argument, we have
-$$\mathbb{P}\left(\max_{1\leq i\leq n}|\wt{G}_{ii}-\bar{G}_{ii}|>3\sqrt{\frac{t}{d}}+3\frac{t}{d}\right)\leq 2ne^{-t},$$
-for any $t>0$. Choosing $t\asymp\log n$, we obtain the bound
 \begin{equation}
 \max_{1\leq i\leq n}|\wt{G}_{ii}-\bar{G}_{ii}|\lesssim \sqrt{\frac{\log n}{d}}, \label{eq:G-diag}
 \end{equation}
@@ -183,9 +181,7 @@ for some constant $C_1>0$. By Lemma \ref{lem:inner-prod}, we know that $\max_{i\
 \begin{equation}
 \sum_{i\neq l}\left(\mathbb{E}\left(\psi(W^T\bar{x}_i)\psi(W^T\bar{x}_l)|X\right)-\bar{G}_{il}\right)^2 \leq C_1\sum_{i\neq l}\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^4. \label{eq:G-H}
 \end{equation}
-The term on the right hand side can be bounded by
-$$\sum_{i\neq l}\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^4\leq \frac{d}{\min_{1\leq i\leq n}\|x_i\|^2}\sum_{i\neq l}\left|\frac{x_i^Tx_l}{d}\right|^4.$$
-By Lemma \ref{lem:chi-squared}, $\frac{d}{\min_{1\leq i\leq n}\|x_i\|^2}\lesssim 1$ with high probability. By integrating out the probability tail bound of $|x_i^Tx_l|$ given in Lemma \ref{lem:inner-prod}, we have $\sum_{i\neq l}\mathbb{E}\left|\frac{x_i^Tx_l}{d}\right|^4\lesssim \frac{n^2}{d^2}$, and by Markov's inequality, we have $\sum_{i\neq l}\left|\frac{x_i^Tx_l}{d}\right|^4\lesssim \frac{n^2}{d^2}$ with high probability.
+The term on the right hand side has been analyzed in (\ref{eq:4th-bd-later}), and we have $\sum_{i\neq l}\left|\frac{x_i^Tx_l}{d}\right|^4\lesssim \frac{n^2}{d^2}$ with high probability.
 
 We also need to analyze the contributions of (\ref{eq:G-tilde-2}) and (\ref{eq:G-tilde-3}). We can write (\ref{eq:G-tilde-2}) as
 \begin{eqnarray}
@@ -245,7 +241,7 @@ H_{il} &=& \frac{x_i^Tx_l}{d}\frac{1}{p}\sum_{j=1}^p\beta_j^2\psi'(W^T_jx_i)\psi
 where $Z\sim N(0,1)$.
 Assume $d/\log n$ is sufficiently large, and then
 $$\opnorm{H-\bar{H}}^2 \lesssim \frac{n^2}{pd} + \frac{n}{p} + \frac{\log n}{d} + \frac{n^2}{d^2},$$
-with high probability. If we assume that $d/n$ and $p/n$ are sufficiently large, we will also have
+with high probability. If we further assume that $d/n$ and $p/n$ are sufficiently large, we will also have
 \begin{equation}
 0.09\leq\lambda_{\min}(H)\leq \lambda_{\max}(H)\lesssim 1, \label{eq:spectrum-H-bound}
 \end{equation}
@@ -275,7 +271,7 @@ Since $\sup_x|\psi'(x)|\leq 1$ and $\sup_x|\psi''(x)|\leq 2$, we have
 \end{eqnarray*}
 Similar to (\ref{eq:G-diag}), Lemma \ref{lem:chi-squared} and a union bound argument imply
 \begin{equation}
-\max_{1\leq i\leq n}|\wt{H}_{ii}-\bar{H}_{ii}|\lesssim \sqrt{\frac{\log n}{d}}+\frac{\log n}{d}, \label{eq:H-diag}
+\max_{1\leq i\leq n}|\wt{H}_{ii}-\bar{H}_{ii}|\lesssim \sqrt{\frac{\log n}{d}}, \label{eq:H-diag}
 \end{equation}
 with high probability.
 
@@ -292,7 +288,7 @@ $$f(\rho)=\begin{cases}
 \rho\mathbb{E}\psi'(\sqrt{1-\rho}U+\sqrt{\rho}Z)\psi'(\sqrt{1-\rho}V+\sqrt{\rho}Z), & \rho \geq 0, \\
 \rho\mathbb{E}\psi'(\sqrt{1+\rho}U-\sqrt{-\rho}Z)\psi'(\sqrt{1+\rho}V+\sqrt{-\rho}Z), & \rho < 0,
 \end{cases}$$
-with $U,V,Z\stackrel{iid}{\sim} N(0,1)$. By some direct calculations, we have $f(0)=0$, $f'(0)=(\mathbb{E}\psi'(Z))^2$, and $\sup_{|\rho|\leq 0.2}|f''(\rho)|\lesssim 1$. Therefore, using the same analysis that leads to (\ref{eq:G-H}), we have
+with $U,V,Z\stackrel{iid}{\sim} N(0,1)$. By some direct calculations, we have $f(0)=0$, $f'(0)=(\mathbb{E}\psi'(Z))^2$, and $\sup_{|\rho|\leq 0.2}|f''(\rho)|\lesssim 1$. Therefore, using the same analysis that leads to the bound for (\ref{eq:G-H}), we have
 $$\sum_{i\neq l}\left(\frac{\bar{x}_i^T\bar{x}_l}{d}\mathbb{E}\left(\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\right)-\bar{H}_{il}\right)^2 \lesssim \sum_{i\neq l}\left|\frac{\bar{x}_i^T\bar{x}_l}{d}\right|^4\lesssim \frac{n^2}{d^2},$$
 with high probability.
 
@@ -410,26 +406,29 @@ The analysis of $\wh{v}_1,...,\wh{v}_p$ is the same as that in the proof of Theo
 
 To analyze $\wh{u}$, we apply Theorem \ref{thm:robust-reg}. It suffices to check Condition A' and Condition B for the design matrix $\psi(X^T\wt{W}^T)=\psi(X^T\wh{W}^T)$. To check Condition A', we consider i.i.d. Rademacher random variables $\delta_1,...,\delta_m$. Then, we define a different gradient update with initialization $\check{W}_j(0)=\delta_jW_j(0)$ and $\check{\beta}_j(0)=\delta_j\beta_j(0)$, and
 \begin{eqnarray*}
-\check{W}_j(t) &=& \check{W}_j(t-1) - \frac{\gamma}{d}\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=(\check{\beta}(t-1),\check{W}(t-1))}, \\
-\check{\beta}_j(t) &=& \check{\beta}_j(t-1) - \gamma\frac{\partial L(\beta,W)}{\partial \beta_j}|_{(\beta,W)=(\check{\beta}(t-1),\check{W}(t-1))}.
+\check{\beta}_j(t) &=& \check{\beta}_j(t-1) - \gamma\frac{\partial L(\beta,W)}{\partial \beta_j}|_{(\beta,W)=(\check{\beta}(t-1),\check{W}(t-1))}, \\
+\check{W}_j(t) &=& \check{W}_j(t-1) - \frac{\gamma}{d}\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=(\check{\beta}(t),\check{W}(t-1))}.
 \end{eqnarray*}
-In other words, $(W(t),\beta(t))$ and $(\check{W}(t),\check{\beta}(t))$ only differ in terms of the initialization. We also define $\check{u}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\check{\beta}_j(t)\psi(\check{W}_j(t)^Tx_i)$. It is easy to see that
+In other words, $(W(t),\beta(t))$ and $(\check{W}(t),\check{\beta}(t))$ only differ in terms of the initialization. We also define $\check{u}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\check{\beta}_j(t)\psi(\check{W}_j(t)^Tx_i)$ and $\check{v}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\check{\beta}_j(t+1)\psi(\check{W}_j(t)^Tx_i)$. It is easy to see that
 $$\check{u}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\delta_j\beta_j(t)\psi(\delta_jW_j(t)^Tx_i)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j(t)\psi(W_j(t)^Tx_i)=u_i(t).$$
+Similarly, we also have
+$$\check{v}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\delta_j\beta_j(t+1)\psi(\delta_jW_j(t)^Tx_i)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j(t+1)\psi(W_j(t)^Tx_i)=v_i(t).$$
 Suppose $\check{W}_j(k)=\delta_jW_j(k)$ and $\check{\beta}_j(k)=\delta_j\beta_j(k)$ are true. Since
-\begin{eqnarray*}
-\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=(\check{\beta}(k),\check{W}(k))} &=& \frac{1}{\sqrt{p}}\check{\beta}_j(k)\sum_{i=1}^n(\check{u}_i(k)-y_i)\psi'(\check{W}_j(k)^Tx_i)x_i \\
-&=& \frac{1}{\sqrt{p}}\delta_j{\beta}_j(k)\sum_{i=1}^n({u}_i(k)-y_i)\psi'(\delta_j{W}_j(k)^Tx_i)x_i \\
-&=& \frac{1}{\sqrt{p}}\delta_j{\beta}_j(k)\sum_{i=1}^n({u}_i(k)-y_i)\psi'({W}_j(k)^Tx_i)x_i \\
-&=& \delta_j\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=({\beta}(k),{W}(k))},
-\end{eqnarray*}
-and
 \begin{eqnarray*}
 \frac{\partial L(\beta,W)}{\partial \beta_j}|_{(\beta,W)=(\check{\beta}(k),\check{W}(k))} &=& \frac{1}{\sqrt{p}}\sum_{i=1}^n(\check{u}_i(k)-y_i)\psi(\check{W}_j(k)^Tx_i) \\
 &=& \frac{1}{\sqrt{p}}\sum_{i=1}^n({u}_i(k)-y_i)\psi(\delta_j{W}_j(k)^Tx_i) \\
 &=& \delta_j\frac{1}{\sqrt{p}}\sum_{i=1}^n({u}_i(k)-y_i)\psi({W}_j(k)^Tx_i) \\
 &=& \delta_j\frac{\partial L(\beta,W)}{\partial \beta_j}|_{(\beta,W)=({\beta}(k),{W}(k))},
 \end{eqnarray*}
-we then have $\check{W}_j(k+1)=\delta_jW_j(k+1)$ and $\check{\beta}_j(k+1)=\delta_j\beta_j(k+1)$. A mathematical induction argument leads to $\check{W}_j(t)=\delta_jW_j(t)$ and $\check{\beta}_j(t)=\delta_j\beta_j(t)$ for all $t\geq 1$. Since $(\check{W}(0),\check{\beta}(0))$ and $(W(0),\beta(0))$ have the same distribution, we can conclude that $(\check{W}(t),\check{\beta}(t))$ and $(W(t),\beta(t))$ also have the same distribution. Therefore, Condition A holds for the design matrix $\psi(X^T\wh{W}^T)=\psi(X^TW(t_{\max})^T)$.
+we have $\check{\beta}_j(k+1)=\delta_j\beta_j(k+1)$.
+Then,
+\begin{eqnarray*}
+\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=(\check{\beta}(k+1),\check{W}(k))} &=& \frac{1}{\sqrt{p}}\check{\beta}_j(k+1)\sum_{i=1}^n(\check{v}_i(k)-y_i)\psi'(\check{W}_j(k)^Tx_i)x_i \\
+&=& \frac{1}{\sqrt{p}}\delta_j{\beta}_j(k+1)\sum_{i=1}^n({v}_i(k)-y_i)\psi'(\delta_j{W}_j(k)^Tx_i)x_i \\
+&=& \frac{1}{\sqrt{p}}\delta_j{\beta}_j(k+1)\sum_{i=1}^n({v}_i(k)-y_i)\psi'({W}_j(k)^Tx_i)x_i \\
+&=& \delta_j\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=({\beta}(k+1),{W}(k))},
+\end{eqnarray*}
+and thus we also have $\check{W}_j(k+1)=\delta_jW_j(k+1)$. A mathematical induction argument leads to $\check{W}_j(t)=\delta_jW_j(t)$ and $\check{\beta}_j(t)=\delta_j\beta_j(t)$ for all $t\geq 1$. Since $(\check{W}(0),\check{\beta}(0))$ and $(W(0),\beta(0))$ have the same distribution, we can conclude that $(\check{W}(t),\check{\beta}(t))$ and $(W(t),\beta(t))$ also have the same distribution. Therefore, Condition A holds for the design matrix $\psi(X^T\wh{W}^T)=\psi(X^TW(t_{\max})^T)$.
 
 We also need to check Condition B. By Theorem \ref{thm:nn-grad}, we have
 \begin{eqnarray*}
