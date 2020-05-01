@@ -567,17 +567,26 @@ The bound (\ref{eq:r1e1}) is a consequence of a standard Gaussian tail inequalit
 \end{eqnarray*}
 where the first term $\mathbb{P}\left(|N(0,1)|\leq \sqrt{d}R_1\right)$ can be bounded by $O(\sqrt{d}R_1)$, and the second term can be bounded by $\sqrt{\frac{\log n}{p}}$ according to Lemma \ref{lem:hoeffding} and a union bound.
 
-Now we are ready to prove the main result. It suffices to show the following to claims are true.
+Now we are ready to prove the main result. We introduce the function
+$$v_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j(t)\psi(W_j(t-1)^Tx_i).$$
+Besides (\ref{eq:iter-parameter-relu}), (\ref{eq:iter-parameter-beta-relu}) and (\ref{eq:iter-function-relu}), we will also establish
+\begin{equation}
+\|y-v(t)\|^2 \leq \left(1-\frac{\gamma}{8}\right)^t\|y-v(0)\|^2. \label{eq:v-seq}
+\end{equation}
+It suffices to show the following to claims are true.
 \begin{thm1}
-With high probability, for any integer $k\geq 1$, as long as (\ref{eq:iter-function-relu}), (\ref{eq:iter-parameter-relu}) and (\ref{eq:iter-parameter-beta-relu}) hold for all $t\leq k$, then (\ref{eq:iter-parameter-beta-relu}) holds for $t=k+1$.
+With high probability, for any integer $k\geq 1$, as long as (\ref{eq:v-seq}), (\ref{eq:iter-function-relu}), (\ref{eq:iter-parameter-relu}) and (\ref{eq:iter-parameter-beta-relu}) hold for all $t\leq k$, then (\ref{eq:iter-parameter-beta-relu}) holds for $t=k+1$.
 \end{thm1}
 \begin{thm2}
-With high probability, for any integer $k\geq 1$, as long as (\ref{eq:iter-function-relu}) and (\ref{eq:iter-parameter-relu}) hold for all $t\leq k$, and (\ref{eq:iter-parameter-beta-relu}) holds for all $t\leq k+1$, then (\ref{eq:iter-parameter-relu}) holds for $t=k+1$.
+With high probability, for any integer $k\geq 1$, as long as (\ref{eq:v-seq}), (\ref{eq:iter-function-relu}) and (\ref{eq:iter-parameter-relu}) hold for all $t\leq k$, and (\ref{eq:iter-parameter-beta-relu}) holds for all $t\leq k+1$, then (\ref{eq:v-seq}) holds for $t=k+1$.
 \end{thm2}
 \begin{thm3}
-With high probability, for any integer $k\geq 1$, as long as (\ref{eq:iter-function-relu}) holds for all $t\leq k$, and (\ref{eq:iter-parameter-relu}) and (\ref{eq:iter-parameter-beta-relu}) hold for all $t\leq k+1$, then (\ref{eq:iter-function-relu}) holds for $t=k+1$.
+With high probability, for any integer $k\geq 1$, as long as (\ref{eq:iter-function-relu}) and (\ref{eq:iter-parameter-relu}) hold for all $t\leq k$, and (\ref{eq:iter-parameter-beta-relu}) and (\ref{eq:v-seq}) hold for all $t\leq k+1$, then (\ref{eq:iter-parameter-relu}) holds for $t=k+1$.
 \end{thm3}
-\noindent With all the claims above being true, we can then deduce (\ref{eq:iter-parameter-relu}), (\ref{eq:iter-parameter-beta-relu}) and (\ref{eq:iter-function-relu}) for all $t\geq 1$ by mathematical induction.
+\begin{thm4}
+With high probability, for any integer $k\geq 1$, as long as (\ref{eq:iter-function-relu}) holds for all $t\leq k$, and (\ref{eq:v-seq}), (\ref{eq:iter-parameter-relu}) and (\ref{eq:iter-parameter-beta-relu}) hold for all $t\leq k+1$, then (\ref{eq:iter-function-relu}) holds for $t=k+1$.
+\end{thm4}
+\noindent With all the claims above being true, we can then deduce (\ref{eq:iter-parameter-relu}), (\ref{eq:iter-parameter-beta-relu}), (\ref{eq:iter-function-relu}) and (\ref{eq:v-seq}) for all $t\geq 1$ by mathematical induction.
 
 \paragraph{Proof of Claim A.}
 By triangle inequality and the gradient formula,
@@ -594,18 +603,19 @@ By triangle inequality and the gradient formula,
 where we have used (\ref{eq:r1e4}), (\ref{eq:r1e7}) and (\ref{eq:r1e8}).
 Hence, (\ref{eq:iter-parameter-beta-relu}) holds for $t=k+1$, and Claim A is true.
 
+\paragraph{Proof of Claim B.} We omit this step, because the analysis uses the same argument as that of the proof of Claim D.
 
-\paragraph{Proof of Claim B.} We bound $\|W_j(k+1)-W_j(0)\|$ by $\sum_{t=0}^k\|W_j(t+1)-W_j(t)\|$. Then by the gradient descent formula, we have
+\paragraph{Proof of Claim C.} We bound $\|W_j(k+1)-W_j(0)\|$ by $\sum_{t=0}^k\|W_j(t+1)-W_j(t)\|$. Then by the gradient descent formula, we have
 \begin{eqnarray*}
-\|W_j(k+1)-W_j(0)\| &\leq& \frac{\gamma}{d\sqrt{p}}\sum_{t=0}^k\left\|\beta_j(t+1)\sum_{i=1}^n(u_i(t)-y_i)\psi'(W_j(t)^Tx_i)x_i\right\| \\
-&\leq& \frac{\gamma}{d\sqrt{p}}\sum_{t=0}^k|\beta_j(t+1)|\sum_{i=1}^n|y_i-u_i(t)|\|x_i\| \\
-&\leq& \frac{\gamma}{d\sqrt{p}}(|\beta_j(0)|+R_2)\sqrt{\sum_{i=1}^n\|x_i\|^2}\sum_{t=0}^k\|y-u(t)\| \\
-&\leq& \frac{16}{d\sqrt{p}}(|\beta_j(0)|+R_2)\sqrt{\sum_{i=1}^n\|x_i\|^2}\|y-u(0)\| \\
+\|W_j(k+1)-W_j(0)\| &\leq& \frac{\gamma}{d\sqrt{p}}\sum_{t=0}^k\left\|\beta_j(t+1)\sum_{i=1}^n(v_i(t+1)-y_i)\psi'(W_j(t)^Tx_i)x_i\right\| \\
+&\leq& \frac{\gamma}{d\sqrt{p}}\sum_{t=0}^k|\beta_j(t+1)|\sum_{i=1}^n|y_i-v_i(t+1)|\|x_i\| \\
+&\leq& \frac{\gamma}{d\sqrt{p}}(|\beta_j(0)|+R_2)\sqrt{\sum_{i=1}^n\|x_i\|^2}\sum_{t=0}^k\|y-v(t+1)\| \\
+&\leq& \frac{16}{d\sqrt{p}}(|\beta_j(0)|+R_2)\sqrt{\sum_{i=1}^n\|x_i\|^2}\|y-v(0)\| \\
 &\leq& \frac{100n\log p}{\sqrt{pd}} = R_1,
 \end{eqnarray*}
-where we have used (\ref{eq:r1e1}), (\ref{eq:r1e3}) and (\ref{eq:r1e7}) in the above inequalities. Thus, Claim B is true.
+where we have used (\ref{eq:r1e1}), (\ref{eq:r1e3}) and (\ref{eq:r1e7}) in the above inequalities. Thus, Claim C is true.
 
-\paragraph{Proof of Claim C.} We first analyze $u(k+1)-u(k)$. For each $i\in[n]$, we have
+\paragraph{Proof of Claim D.} We first analyze $u(k+1)-u(k)$. For each $i\in[n]$, we have
 \begin{eqnarray*}
 && u_i(k+1) - u_i(k) \\
 &=& \frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j(k+1)\left(\psi(W_j(k+1)^Tx_i)-\psi(W_j(k)^Tx_i)\right) \\
@@ -723,7 +733,7 @@ Therefore, as long as $\frac{n\log n}{d}$, $\frac{n^3(\log p)^4}{p}$ and $\gamma
 $$- 2\iprod{y-u(k)}{r(k)} + \|u(k)-u(k+1)\|^2 \leq \frac{\gamma}{24}\|y-u(k)\|^2.$$
 Together with the bound (\ref{eq:main-inner-relu}), we have
 $$\|y-u(k+1)\|^2 \leq \left(1-\frac{\gamma}{8}\right)\|y-u(k)\|^2\leq \left(1-\frac{\gamma}{8}\right)^{k+1}\|y-u(0)\|^2,$$
-and thus Claim C is true. The proof is complete.
+and thus Claim D is true. The proof is complete.
 \end{proof}
 
 

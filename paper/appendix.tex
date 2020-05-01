@@ -323,7 +323,7 @@ The last conclusion (\ref{eq:spectrum-H-bound}) follows a similar argument used 
 
 Now we are ready to prove Theorem \ref{thm:nn-grad}.
 \begin{proof}[Proof of Theorem \ref{thm:nn-grad}]
-The proof is similar to that of Theorem \ref{thm:nn-grad-relu}, and we will omit repeated arguments. We will use the high-probability inequalities (\ref{eq:r1e1})-(\ref{eq:r1e9}). Then, it suffices to establish Claims A, B and C in the proof of Theorem \ref{thm:nn-grad-relu}. Since Claims A and B follow the same argument, we only need to check Claim C. We have
+The proof is similar to that of Theorem \ref{thm:nn-grad-relu}, and we will omit repeated arguments. We will use the high-probability inequalities (\ref{eq:r1e1})-(\ref{eq:r1e9}). Then, it suffices to establish Claims A, B, C and D in the proof of Theorem \ref{thm:nn-grad-relu}. Since Claims A and C follow the same argument, we only need to check Claims B and D. Given the similarity of Claims B and D, we only present the proof of Claim D. We have
 \begin{equation}
 u(k+1)-u(k)=\gamma(H(k)+G(k))(y-u(k))+r(k), \label{eq:iter-u-arctan}
 \end{equation}
@@ -391,7 +391,7 @@ Therefore, as long as $\gamma\frac{n^4(\log p)^2}{p}$ is sufficiently small, we 
 $$- 2\iprod{y-u(k)}{r(k)} + \|u(k)-u(k+1)\|^2 \leq \frac{\gamma}{24}\|y-u(k)\|^2.$$
 Together with the bound (\ref{eq:main-inner}), we have
 $$\|y-u(k+1)\|^2 \leq \left(1-\frac{\gamma}{8}\right)\|y-u(k)\|^2\leq \left(1-\frac{\gamma}{8}\right)^{k+1}\|y-u(0)\|^2,$$
-and thus Claim C is true. The proof is complete.
+and thus Claim D is true. The proof is complete.
 \end{proof}
 
 
@@ -409,10 +409,10 @@ To analyze $\wh{u}$, we apply Theorem \ref{thm:robust-reg}. It suffices to check
 \check{\beta}_j(t) &=& \check{\beta}_j(t-1) - \gamma\frac{\partial L(\beta,W)}{\partial \beta_j}|_{(\beta,W)=(\check{\beta}(t-1),\check{W}(t-1))}, \\
 \check{W}_j(t) &=& \check{W}_j(t-1) - \frac{\gamma}{d}\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=(\check{\beta}(t),\check{W}(t-1))}.
 \end{eqnarray*}
-In other words, $(W(t),\beta(t))$ and $(\check{W}(t),\check{\beta}(t))$ only differ in terms of the initialization. We also define $\check{u}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\check{\beta}_j(t)\psi(\check{W}_j(t)^Tx_i)$ and $\check{v}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\check{\beta}_j(t+1)\psi(\check{W}_j(t)^Tx_i)$. It is easy to see that
+In other words, $(W(t),\beta(t))$ and $(\check{W}(t),\check{\beta}(t))$ only differ in terms of the initialization. We also define $\check{u}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\check{\beta}_j(t)\psi(\check{W}_j(t)^Tx_i)$ and $\check{v}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\check{\beta}_j(t)\psi(\check{W}_j(t-1)^Tx_i)$. It is easy to see that
 $$\check{u}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\delta_j\beta_j(t)\psi(\delta_jW_j(t)^Tx_i)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j(t)\psi(W_j(t)^Tx_i)=u_i(t).$$
 Similarly, we also have
-$$\check{v}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\delta_j\beta_j(t+1)\psi(\delta_jW_j(t)^Tx_i)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j(t+1)\psi(W_j(t)^Tx_i)=v_i(t).$$
+$$\check{v}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\delta_j\beta_j(t)\psi(\delta_jW_j(t-1)^Tx_i)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j(t)\psi(W_j(t-1)^Tx_i)=v_i(t).$$
 Suppose $\check{W}_j(k)=\delta_jW_j(k)$ and $\check{\beta}_j(k)=\delta_j\beta_j(k)$ are true. Since
 \begin{eqnarray*}
 \frac{\partial L(\beta,W)}{\partial \beta_j}|_{(\beta,W)=(\check{\beta}(k),\check{W}(k))} &=& \frac{1}{\sqrt{p}}\sum_{i=1}^n(\check{u}_i(k)-y_i)\psi(\check{W}_j(k)^Tx_i) \\
@@ -423,9 +423,9 @@ Suppose $\check{W}_j(k)=\delta_jW_j(k)$ and $\check{\beta}_j(k)=\delta_j\beta_j(
 we have $\check{\beta}_j(k+1)=\delta_j\beta_j(k+1)$.
 Then,
 \begin{eqnarray*}
-\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=(\check{\beta}(k+1),\check{W}(k))} &=& \frac{1}{\sqrt{p}}\check{\beta}_j(k+1)\sum_{i=1}^n(\check{v}_i(k)-y_i)\psi'(\check{W}_j(k)^Tx_i)x_i \\
-&=& \frac{1}{\sqrt{p}}\delta_j{\beta}_j(k+1)\sum_{i=1}^n({v}_i(k)-y_i)\psi'(\delta_j{W}_j(k)^Tx_i)x_i \\
-&=& \frac{1}{\sqrt{p}}\delta_j{\beta}_j(k+1)\sum_{i=1}^n({v}_i(k)-y_i)\psi'({W}_j(k)^Tx_i)x_i \\
+\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=(\check{\beta}(k+1),\check{W}(k))} &=& \frac{1}{\sqrt{p}}\check{\beta}_j(k+1)\sum_{i=1}^n(\check{v}_i(k+1)-y_i)\psi'(\check{W}_j(k)^Tx_i)x_i \\
+&=& \frac{1}{\sqrt{p}}\delta_j{\beta}_j(k+1)\sum_{i=1}^n({v}_i(k+1)-y_i)\psi'(\delta_j{W}_j(k)^Tx_i)x_i \\
+&=& \frac{1}{\sqrt{p}}\delta_j{\beta}_j(k+1)\sum_{i=1}^n({v}_i(k+1)-y_i)\psi'({W}_j(k)^Tx_i)x_i \\
 &=& \delta_j\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=({\beta}(k+1),{W}(k))},
 \end{eqnarray*}
 and thus we also have $\check{W}_j(k+1)=\delta_jW_j(k+1)$. A mathematical induction argument leads to $\check{W}_j(t)=\delta_jW_j(t)$ and $\check{\beta}_j(t)=\delta_j\beta_j(t)$ for all $t\geq 1$. Since $(\check{W}(0),\check{\beta}(0))$ and $(W(0),\beta(0))$ have the same distribution, we can conclude that $(\check{W}(t),\check{\beta}(t))$ and $(W(t),\beta(t))$ also have the same distribution. Therefore, Condition A holds for the design matrix $\psi(X^T\wh{W}^T)=\psi(X^TW(t_{\max})^T)$.
