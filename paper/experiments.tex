@@ -116,3 +116,38 @@ for $n=50$ (left) and $n=100$ (right). For each value of $p$, three values of $d
 and $d=\lceil p/2\rceil$; the results are effectively the same for each $d$. The curves are very similar when $\tanh$ is replaced by ReLU, as long as the population mean is subtracted from the features.}
 \label{fig:rf}
 \end{figure}
+
+\subsection{Neural networks}
+\vskip10pt
+
+In this set of simulations we investigate repair algorithms for neural networks. We report results using a single layer and the use of the hyperbolic tangent activation function. Results using the ReLU activation are similar as long as the features are centered.
+
+As described in Section~\ref{sec:neural}, we consider two possible ways of training the models---with our without a forward pass to train the network parameters in stages. In the first approach, the network is trained using gradient descent, and the weights $\hat W\in\reals^{d\times p}$ are then fixed. Next, the weights $\beta\in\reals^p$ are initialized at zero, and gradient descent over $\beta$ is carried out using features
+$\tilde X = \psi(X\hat W)$. This two-pass approach allows for exact repair, and only the initial weights $W(0)$ need to be accessed by the repair algorithm, using the seed value used in the pseudorandom number generator.
+
+The left plot in Figure~\ref{fig:ann} shows the behavior of the linear program for exact repair when using this two-stage training algorithm.
+The sample size is fixed at $n=50$, the number of ``neurons'' $W_j$ varies as $p$, and we take $d=p/2$. It can been seen that similar repair curves are obtained as for linear models, but the curves are shifted toward the left, indicating an overall smaller probability of successful repair. This makes sense intuitively since for successful repair it is required that
+$O(p^2)$ parameters are recovered---each of the $p$ columns $W_j\in\reals^d$ in addition to the vector $\beta\in\reals^p$.
+
+In the second approach, the neural network is trained using standard gradient descent, without a final forward pass. As described in
+Section~\ref{sec:neural}, when trained in this manner the column space of $\tilde X = \psi(X W)$ is continually changing. However,
+the ``neural tangent kernel'' analysis ensures that the linear program will approximately recover the trained parameters after they are corrupted by additive noise. This is seen in the center and right plots of Figure~\ref{fig:ann}, which show the
+average squared errors $(\tilde W_{ij} - \hat W_{ij})^2$ and $(\tilde \beta_j - \hat\beta_j)^2$. All of these results are consistent with our analysis, and suggest that the growth conditions on $d$ and $p$ in the results of our theorems are conservative.
+
+\begin{figure}[ht]
+  \begin{center}
+    \vskip15pt
+    \begin{tabular}{ccc}
+    \hskip-6pt\includegraphics[width=.32\textwidth]{fig/ann-tanh-retrain-n=50-trials=100} &
+    \hskip-6pt\includegraphics[width=.32\textwidth]{fig/ann-tanh-retrain=F-n=50-trials=100-W_error} &
+    \hskip-6pt\includegraphics[width=.32\textwidth]{fig/ann-tanh-retrain=F-n=50-trials=100-beta_error}
+
+    \end{tabular}
+  \end{center}
+\caption{Model repair for neural networks with a single hidden layer. The sample size is fixed at $n=50$, the number of hidden units is $p$, and the input dimension is $d=p/2$; the dimenson of the design is $X\in\reals^{n\times d}$, and the hidden layer is generated
+as $\tanh(XW)$ where $W\in\reals^{d\times p}$. The predicted values are $\hat y = \tanh(XW)\beta$.
+Left: The neural network is trained with gradient descent after initializing $W_{ij}$ as $N(0, 1/d)$
+and $\beta \sim N(0, I_p)$. After training, a forward pass is made where $\hat W$ is fixed and the parameters
+$\beta$ are retrained using gradient descent initialized at zero. This enables exact repair by running the linear program in stages, first repairing $\hat W$, and then repairing $\hat \beta$. In order to obtain a successful repair, it is required that all of the columns of $\hat W$ and the vector $\hat\beta$ are exactly recovered, up to numerical precision. Center and right: The neural network is trained with gradient descent using random initialization of $W$ and $\beta$; no forward pass is made after training. The weight matrix $W$ and weight vector $\beta$ are then not repaired exactly. The center and right plots show the average $L_2$ error in the estimated coefficients $W_{ij}$ and $\beta_j$ as a function of the corruption fraction $\epsilon$. In all plots, each point is the average over $100$ random trials. }
+\label{fig:ann}
+\end{figure}
