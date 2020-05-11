@@ -46,9 +46,9 @@ $\inf_h \E\|\tilde\eta -\theta\|^2 = O_P(k \log n/k)$. In this setting,
 the piecewise constant signal acts as a simple repetition code, with majority vote
 serving as a natural decoding procedure.
 
-Returning to motivation mentioned in the introduction, when training increasingly large neural networks
+Returning to some of the motivation mentioned in the introduction, when training increasingly large neural networks
 it becomes necessary to estimate the models in a distributed manner, and erasures and errors may occur when
 communicating parameters across nodes, or after the trained model has been embedded in an application.
-Instead of running the linear program on a central hub,
-which would require sharing data and potentially compromising privacy, the repair algorithm
-might also be distributed \citep{hong12}. Finally, drawing an analogy to brain plasticity and repair after trauma such as stroke, if a spatially localized part of the parameter space is permanently corrupted, the repair problem needs to be reformulated to allow ``rewiring'' or reconfiguring the parameters to obtain a model this is close to the original, possibly with specialized training. With appropriate formalization, these and other extensions might allow statistical analysis.
+Instead of running the repair program on a central hub,
+which would require sharing data and potentially compromising privacy, the linear program
+might also be distributed \citep{hong12}. Finally, drawing an analogy to brain plasticity and repair after trauma such as stroke, if a spatially localized part of the parameter space is permanently corrupted, the repair problem needs to be reformulated to allow ``rewiring'' the parameters to obtain a model whose predictions are close to those of the original model, possibly through specialized training. With appropriate formalization, these and other extensions might allow statistical analysis.
