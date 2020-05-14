@@ -11,7 +11,7 @@ $$f(x)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j\psi(W_j^Tx),$$
 where $\psi$ is either the rectified linear unit (ReLU) function $\psi(t)=\max(t,0)$, or the
 hyperbolic tangent $\psi(t) = \tanh(t) = \frac{e^t - e^{-t}}{e^t + e^{-t}}$.
 The factor $p^{-1/2}$ in the definition above is convenient for our theoretical analysis.
-In this section we present the analysis for the ReLU activation function, with the hyperbolic tangent
+In this section we present the analysis for the hyperbolic tangent activation function, with the ReLU
 deferred to the appendix.
 
 With the squared error loss function
@@ -70,51 +70,140 @@ It is important to note that the repair of neural networks not only requires $X$
 requires the initializations $\beta(0)$ and $W(0)$. From a practical
 perspective, this can be easily achieved by setting a seed using a pseudorandom number generator to initialize the
 parameters, and making the seed available to the repair algorithm. We also note that when $\hat\beta$ is
-trained after fixing $\hat W$, one can take $\beta(0)=0$.
+trained after fixing $\hat W$, one can replace $\beta(0)$ by 0 in Algorithm \ref{alg:MR}.
 \end{remark}
 
 Since the gradient $\frac{\partial \L(\beta,W)}{\partial W_j}$ lies in the row space of $X$, the vector $\wh{W}_j-W_j(0)$ also lies in the row space of $X$. Thus, the theoretical guarantee of the hidden layer repair directly follows
 Corollary \ref{cor:repair-linear}.
-The repair of the output layer is more complicated, because the gradient $\frac{\partial \L(\beta,W)}{\partial \beta_j}|_{W=W(t-1)}$ lies in the row space of $\psi(XW(t-1))$, which changes over time. Thus, we cannot directly apply the result of Corollary \ref{cor:repair-rf} for the random feature model. However, when the neural network is overparametrized, it can be shown that the gradient descent algorithm (Algorithm \ref{alg:GD}) leads to $W(t)$ that is close to the initialization $W(0)$ for all $t\geq 0$. We establish this result in the following theorem by assuming that $x_i$ is i.i.d. $N(0,I_d)$ and $|y_i|\leq 1$ for all $i\in[n]$.
+The repair of the output layer is more complicated, because the gradient $\frac{\partial \L(\beta,W)}{\partial \beta_j}|_{W=W(t-1)}$ lies in the row space of $\psi(XW(t-1))$, which changes over time. Thus, we cannot directly apply the result of Corollary \ref{cor:repair-rf} for the random feature model. However, when the neural network is overparametrized, it can be shown that the gradient descent algorithm (Algorithm \ref{alg:GD}) leads to $W(t)$ that is close to the initialization $W(0)$ for all $t\geq 0$. We establish this result in the following theorem by assuming that $x_i$ is i.i.d. $N(0,I_d)$ and $|y_i|\leq 1$ for all $i\in[n]$. Define $u(t)\in\mathbb{R}^n$ with its $i$th entry given by
+$u_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j(t)\psi(W_j(t)^Tx_i)$.
 \vskip10pt
-
-\begin{thm}\label{thm:nn-grad-relu}
-Assume $\frac{n\log n}{d}$, $\frac{n^3(\log p)^4}{p}$ and $\gamma n$ are all sufficiently small. Then we have
-\begin{eqnarray}
-\label{eq:iter-parameter-relu} \max_{1\leq j\leq p}\|W_j(t)-W_j(0)\| &\leq& R_1, \\
-\label{eq:iter-parameter-beta-relu} \max_{1\leq j\leq p}|\beta_j(t)-\beta_j(0)| &\leq& R_2,
-\end{eqnarray}
-and
+\begin{thm}\label{thm:nn-grad}
+Assume $\frac{n}{d}$, $\frac{n^3(\log p)^2}{p}$, and $\gamma\left(1+\frac{n^4(\log p)^2}{p}\right)$ are all sufficiently small. Then, we have
 \begin{equation}
-\|y-u(t)\|^2 \leq \left(1-\frac{\gamma}{8}\right)^t\|y-u(0)\|^2, \label{eq:iter-function-relu}
+\|y-u(t)\|^2 \leq \left(1-\frac{\gamma}{8}\right)^t\|y-u(0)\|^2, \label{eq:iter-function}
 \end{equation}
+and
+\begin{eqnarray}
+\label{eq:iter-parameter} \max_{1\leq j\leq p}\|W_j(t)-W_j(0)\| &\leq& R_1, \\
+\label{eq:iter-parameter-beta} \max_{1\leq j\leq p}|\beta_j(t)-\beta_j(0)| &\leq& R_2,
+\end{eqnarray}
 for all $t\geq 1$ with high probability, where $R_1=\frac{100n\log p}{\sqrt{pd}}$ and $R_2=32\sqrt{\frac{n^2\log p}{p}}$.
 \end{thm}
 
-Theorem \ref{thm:nn-grad-relu} assumes that the width of the neural network is wide compared with the sample size in the sense that $\frac{p}{(\log p)^4}\gg n^3$. For fixed $n$, the limit of the neural network when $p\rightarrow\infty$ is known as the neural tangent kernel (NTK) regime, and the behavior of gradient descent under this limit has been studied by \cite{jacot2018neural}. The result of Theorem \ref{thm:nn-grad-relu} follows the explicit calculation in \cite{du2018gradient}, and we are able to sharpen some of the asymptotic conditions in \cite{du2018gradient}.
+Theorem \ref{thm:nn-grad} assumes that the width of the neural network is wide compared with the sample size in the sense that $\frac{p}{(\log p)^4}\gg n^3$. For fixed $n$, the limit of the neural network when $p\rightarrow\infty$ is known as the neural tangent kernel (NTK) regime, and the behavior of gradient descent under this limit has been studied by \cite{jacot2018neural}. The result of Theorem \ref{thm:nn-grad} follows the explicit calculation in \cite{du2018gradient}, and we are able to sharpen some of the asymptotic conditions in \cite{du2018gradient}.
 
-The theorem has two conclusions. The first conclusion shows the gradient descent algorithm has global convergence in the sense of (\ref{eq:iter-parameter-relu}) even though the loss $\L(\beta,W)$ is nonconvex. The second conclusion shows that the trajectory of the algorithm $(W(t),\beta(t))$ is bounded within some radius of the initialization. This allows us to characterize the repaired model $\wt{\beta}$ for the output layer.
+The theorem has two conclusions. The first conclusion shows the gradient descent algorithm has global convergence in the sense of (\ref{eq:iter-function}) even though the loss $\L(\beta,W)$ is nonconvex. The second conclusion shows that the trajectory of the algorithm $(W(t),\beta(t))$ is bounded within some radius of the initialization. This allows us to characterize the repaired model $\wt{\beta}$ for the output layer.
 
-Let us first consider the case $\wh{\beta}=\beta(t_{\max})$ and $\wh{W}=W(t_{\max})$. Since the vector $\beta(t)-\beta(t-1)$ lies in the row space of $\psi(XW(t-1))$ for every $t$, one can show that $\wh{\beta}-\beta(0)$ approximately lies in the row space of $\psi(XW(0))$ by Theorem \ref{thm:nn-grad-relu}. Therefore, by extending the result of Corollary \ref{cor:repair-rf-relu} that includes the bias induced by the row space approximation, we are able to obtain the following guarantee for the model repair.
+Let us first consider the case $\wh{\beta}=\beta(t_{\max})$ and $\wh{W}=W(t_{\max})$. Since the vector $\beta(t)-\beta(t-1)$ lies in the row space of $\psi(XW(t-1))$ for every $t$, one can show that $\wh{\beta}-\beta(0)$ approximately lies in the row space of $\psi(XW(0))$ by Theorem \ref{thm:nn-grad}. Therefore, by extending the result of Corollary \ref{cor:repair-rf} that includes the bias induced by the row space approximation, we are able to obtain the following guarantee for the model repair.
+
+
+
+
 
 \vskip10pt
-\begin{thm}\label{thm:repair-nn-1-relu}
-Under the conditions of Theorem \ref{thm:nn-grad-relu}, additionally assume that $\frac{\log p}{d}$ and $\epsilon\sqrt{n}$ are sufficiently small. We then have $\wt{W}=\wh{W}$ and $\frac{1}{p}\|\wt{\beta}-\wh{\beta}\|^2 \lesssim \frac{n^3\log p}{p}$ with high probability.
+\begin{thm}\label{thm:repair-nn-1}
+Under the conditions of Theorem \ref{thm:nn-grad}, additionally assume that $\frac{\log p}{d}$, $\frac{\sqrt{\frac{n}{d}\log\left(\frac{ed}{n}\right)}}{1-\epsilon}$ and $\frac{n^2\log p}{p(1-\epsilon)}$ are sufficiently small. We then have $\wt{W}=\wh{W}$ and $\frac{1}{p}\|\wt{\beta}-\wh{\beta}\|^2 \lesssim \frac{n^2\log p}{p(1-\epsilon)}$ with high probability.
 \end{thm}
 
 
-We also consider the case where $\wh{W}=W(t_{\max})$ and $\wh{\beta}$ is obtained by retraining $\beta$ using the features $\psi(X\wh{W})$. In this case, the vector $\wh{\beta}-\beta(0)$ exactly lies in the row space of $\psi(X\wh{W})$. This allows us to extend the result of Lemma \ref{lem:design-rf} to the matrix $\psi(\wh{W}^TX^T)$ with the help of Theorem \ref{thm:nn-grad-relu}. Then, we can directly apply Corollary \ref{cor:repair-rf}. We are able to obtain exact recovery of both $\wh{\beta}$ and $\wh{W}$ in this case.
+We also consider the case where $\wh{W}=W(t_{\max})$ and $\wh{\beta}$ is obtained by retraining $\beta$ using the features $\psi(X\wh{W})$. Recall that in this case we shall replace $\beta(0)$ by $0$ in Algorithm \ref{alg:MR}. Note that the vector $\wh{\beta}$ exactly lies in the row space of $\psi(X\wh{W})$. This allows us to extend the result of Lemma \ref{lem:design-rf} to the matrix $\psi(\wh{W}^TX^T)$ with the help of Theorem \ref{thm:nn-grad}. Then, we can directly apply Theorem \ref{thm:robust-reg}. We are able to obtain exact recovery of both $\wh{\beta}$ and $\wh{W}$ in this case.
 
 \vskip10pt
-\begin{thm}\label{thm:repair-nn-2-relu}
-Under the conditions of Theorem \ref{thm:nn-grad-relu}, additionally assume that $\frac{\log p}{d}$ and $\epsilon\sqrt{n}$ are sufficiently small. We then have $\wt{W}=\wh{W}$ and $\wt{\beta}=\wh{\beta}$ with high probability.
+\begin{thm}\label{thm:repair-nn-2}
+Under the conditions of Theorem \ref{thm:nn-grad}, additionally assume that $\frac{\log p}{d}$, $\frac{\sqrt{\frac{n}{d}\log\left(\frac{ed}{n}\right)}}{1-\epsilon}$, $\frac{n\log p}{p(1-\epsilon)}$ and $\frac{n}{p}\left(\frac{\log p}{1-\epsilon}\right)^{4/3}$ are sufficiently small. We then have $\wt{W}=\wh{W}$ and $\wt{\beta}=\wh{\beta}$ with high probability.
 \end{thm}
 \vskip10pt
 
 \begin{remark}
-When $\epsilon\sqrt{n}\ll 1$ is satisfied, the conditions of Theorem \ref{thm:repair-nn-1-relu} and Theorem \ref{thm:repair-nn-2-relu} can be simplified to $p\gg n^3$ and $d\gg n$ by ignoring the logarithmic factors. The condition $p\gg n^3$ ensures the good property of gradient descent in the NTK regime, but our experimental results show that it can potentially be weakened by an improved analysis.
+As long as the rate that $\epsilon$ tends to $1$ is not so fast, the conditions of Theorem \ref{thm:repair-nn-1} and Theorem \ref{thm:repair-nn-2} can be simplified to $p\gg n^3$ and $d\gg n$ by ignoring the logarithmic factors. The condition $p\gg n^3$ ensures the good property of gradient descent in the NTK regime, but our experimental results show that it can potentially be weakened by an improved analysis.
 \end{remark}
 
+\iffalse
 \begin{remark}
-When the nonlinear activation is replaced by the hyperbolic tangent function $\psi(t)=\tanh(t)$, the conditions of Theorem \ref{thm:repair-nn-1-relu} and Theorem \ref{thm:repair-nn-2-relu} can be weakened, and repair of neural nets is even possible with $\epsilon\rightarrow 1$. The results are presented in the Appendix.
+When the nonlinear activation is replaced by ReLU $\psi(t)=\max(t,0)$, \nb{add text}
 \end{remark}
+\fi
+
+
+\section{Proofs of Theorem \ref{thm:repair-nn-1} and Theorem \ref{thm:repair-nn-2}}
+
+To prove Theorem \ref{thm:repair-nn-1}, we need to extend Theorem \ref{thm:main-improved}. Consider $\eta=b+Au^*+z\in\mathbb{R}^m$, where the noise vector $z$ satisfies (\ref{eq:noise-add-con}), and $b\in\mathbb{R}^m$ is an arbitrary bias vector. Then, the estimator $\wh{u}=\argmin_{u\in\mathbb{R}^k}\|\eta-Au\|_1$ satisfies the following theoretical guarantee.
+\begin{thm}\label{thm:robust-reg-b}
+Assume the design matrix $A$ satisfies Condition A and Condition B. Then, as long as $\frac{\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}+\epsilon\sigma\sqrt{\frac{k}{m}}}{\underline{\lambda}(1-\epsilon)}$ is sufficiently small and $\frac{8\frac{1}{m}\sum_{i=1}^m|b_i|}{\underline{\lambda}(1-\epsilon)}<1$, we have
+$$\|\wh{u}-u^*\|\leq \frac{4\frac{1}{m}\sum_{i=1}^m|b_i|}{\underline{\lambda}(1-\epsilon)},$$
+with high probability.
+\end{thm}
+It is easy to see that Theorem \ref{thm:main-improved} is a special case when $b=0$.
+Now we are ready to prove Theorem \ref{thm:repair-nn-1}.
+\begin{proof}[Proof of Theorem \ref{thm:repair-nn-1}]
+We first analyze $\wh{v}_1,...,\wh{v}_p$. The idea is to apply the result of Theorem \ref{thm:main-improved} to each of the $p$ robust regression problems. Thus, it suffices to check if the conditions of Theorem \ref{thm:main-improved} hold for the $p$ regression problems simultaneously. Since the $p$ regression problems share the same Gaussian design matrix, Lemma \ref{lem:design-linear} implies that Conditions A and B hold for all the $p$ regression problems. Next, by scrutinizing the proof of Theorem \ref{thm:main-improved}, the randomness of the conclusion is from the noise vector $Z_j$ through the empirical process bound given by Lemma \ref{lem:EP}. With an additional union bound argument applied to (\ref{eq:double-ub}), Lemma \ref{lem:EP} can be extended to $Z_j$ for all $j\in[p]$ with an additional assumption that $\frac{\log p}{d}$ is sufficiently small. Then, by the same argument in the proof of Corollary \ref{cor:repair-linear}, we have $\wt{W}_j=\wh{W}_j$ for all $j\in[p]$ with high probability.
+
+To analyze $\wh{u}$, we apply Theorem \ref{thm:robust-reg-b}. Note that
+\begin{eqnarray*}
+\eta_j - \beta_j(0) &=& \beta_j(t_{\max}) - \beta_j(0) +z_j \\
+&=& \sum_{t=0}^{t_{\max}-1}\left(\beta_j(t+1)-\beta_j(t)\right) + z_j \\
+&=& \frac{\gamma}{\sqrt{p}}\sum_{t=0}^{t_{\max}-1}\sum_{i=1}^n(y_i-u_i(t))\psi(W_j(t)^Tx_i) + z_j \\
+&=& \frac{\gamma}{\sqrt{p}}\sum_{t=0}^{t_{\max}-1}\sum_{i=1}^n(y_i-u_i(t))(\psi(W_j(t)^Tx_i)-\psi(W_j(0)^Tx_i)) \\
+&& + \frac{\gamma}{\sqrt{p}}\sum_{t=0}^{t_{\max}-1}\sum_{i=1}^n(y_i-u_i(t))\psi(W_j(0)^Tx_i) + z_j.
+\end{eqnarray*}
+Thus, in the framework of Theorem \ref{thm:robust-reg-b}, we can view $\eta-\beta(0)$ as the response, $\psi(X^TW(0)^T)$ as the design, $z$ as the noise, and $b_j=\frac{\gamma}{\sqrt{p}}\sum_{t=0}^{t_{\max}-1}\sum_{i=1}^n(y_i-u_i(t))(\psi(W_j(t)^Tx_i)-\psi(W_j(0)^Tx_i))$ as the $j$th entry of the bias vector. By Lemma \ref{lem:design-rf}, we know that the design matrix $\psi(X^TW(0)^T)$ satisfies Condition A and Condition B. So it suffices to bound $\frac{1}{p}\sum_{j=1}^p|b_j|$. With the help of Theorem \ref{thm:nn-grad}, we have
+\begin{eqnarray*}
+\frac{1}{p}\sum_{j=1}^p|b_j| &\leq& \frac{\gamma}{p^{3/2}}\sum_{j=1}^p\sum_{t=0}^{t_{\max}-1}\sum_{i=1}^n|y_i-u_i(t)||(W_j(t)-W_j(0))^Tx_i| \\
+&\leq& \frac{R_1\gamma}{p^{1/2}}\sum_{t=0}^{t_{\max}-1}\sum_{i=1}^n|y_i-u_i(t)|\|x_i\| \\
+&\leq& \frac{R_1\gamma}{p^{1/2}}\sum_{t=0}^{t_{\max}-1}\|y-u(t)\|\sqrt{\sum_{i=1}^n\|x_i\|^2} \\
+&\lesssim& \frac{R_1}{p^{1/2}}\|y-u(0)\|\sqrt{\sum_{i=1}^n\|x_i\|^2} \\
+&\lesssim& \frac{n^2\log p}{p},
+\end{eqnarray*}
+where the last inequality is by $\sum_{i=1}^n\|x_i\|^2\lesssim nd$ due to a standard chi-squared bound (Lemma \ref{lem:chi-squared}), and $\|u(0)\|^2\lesssim n$ due to Markov's inequality and $\mathbb{E}|u_i(0)|^2 = \mathbb{E}\Var(u_i(0)|X) \leq 1$. By Theorem \ref{thm:robust-reg-b} and Lemma \ref{lem:lim-G}, we have $\frac{1}{p}\|\wt{\beta}-\wh{\beta}\|^2 \lesssim \frac{n^3\log p}{p}$, which is the desired conclusion.
+\end{proof}
+
+\begin{proof}[Proof of Theorem \ref{thm:repair-nn-2}]
+The analysis of $\wh{v}_1,...,\wh{v}_p$ is the same as that in the proof of Theorem \ref{thm:repair-nn-1}, and we have $\wt{W}_j=\wh{W}_j$ for all $j\in[p]$ with high probability.
+
+To analyze $\wh{u}$, we apply Theorem \ref{thm:robust-reg}. It suffices to check Condition A' and Condition B for the design matrix $\psi(X^T\wt{W}^T)=\psi(X^T\wh{W}^T)$. To check Condition A', we consider i.i.d. Rademacher random variables $\delta_1,...,\delta_m$. Then, we define a different gradient update with initialization $\check{W}_j(0)=\delta_jW_j(0)$ and $\check{\beta}_j(0)=\delta_j\beta_j(0)$, and
+\begin{eqnarray*}
+\check{\beta}_j(t) &=& \check{\beta}_j(t-1) - \gamma\frac{\partial L(\beta,W)}{\partial \beta_j}|_{(\beta,W)=(\check{\beta}(t-1),\check{W}(t-1))}, \\
+\check{W}_j(t) &=& \check{W}_j(t-1) - \frac{\gamma}{d}\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=(\check{\beta}(t),\check{W}(t-1))}.
+\end{eqnarray*}
+In other words, $(W(t),\beta(t))$ and $(\check{W}(t),\check{\beta}(t))$ only differ in terms of the initialization. Recall that $u_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j(t)\psi(W_j(t)^Tx_i)$. We also define 
+\begin{eqnarray*}
+\check{u}_i(t) &=& \frac{1}{\sqrt{p}}\sum_{j=1}^p\check{\beta}_j(t)\psi(\check{W}_j(t)^Tx_i), \\
+v_i(t) &=& \frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j(t)\psi(W_j(t-1)^Tx_i), \\
+\check{v}_i(t) &=& \frac{1}{\sqrt{p}}\sum_{j=1}^p\check{\beta}_j(t)\psi(\check{W}_j(t-1)^Tx_i).
+\end{eqnarray*}
+It is easy to see that
+$$\check{u}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\delta_j\beta_j(t)\psi(\delta_jW_j(t)^Tx_i)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j(t)\psi(W_j(t)^Tx_i)=u_i(t).$$
+Similarly, we also have
+$$\check{v}_i(t)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\delta_j\beta_j(t)\psi(\delta_jW_j(t-1)^Tx_i)=\frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j(t)\psi(W_j(t-1)^Tx_i)=v_i(t).$$
+Suppose $\check{W}_j(k)=\delta_jW_j(k)$ and $\check{\beta}_j(k)=\delta_j\beta_j(k)$ are true. Since
+\begin{eqnarray*}
+\frac{\partial L(\beta,W)}{\partial \beta_j}|_{(\beta,W)=(\check{\beta}(k),\check{W}(k))} &=& \frac{1}{\sqrt{p}}\sum_{i=1}^n(\check{u}_i(k)-y_i)\psi(\check{W}_j(k)^Tx_i) \\
+&=& \frac{1}{\sqrt{p}}\sum_{i=1}^n({u}_i(k)-y_i)\psi(\delta_j{W}_j(k)^Tx_i) \\
+&=& \delta_j\frac{1}{\sqrt{p}}\sum_{i=1}^n({u}_i(k)-y_i)\psi({W}_j(k)^Tx_i) \\
+&=& \delta_j\frac{\partial L(\beta,W)}{\partial \beta_j}|_{(\beta,W)=({\beta}(k),{W}(k))},
+\end{eqnarray*}
+we have $\check{\beta}_j(k+1)=\delta_j\beta_j(k+1)$.
+Then,
+\begin{eqnarray*}
+\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=(\check{\beta}(k+1),\check{W}(k))} &=& \frac{1}{\sqrt{p}}\check{\beta}_j(k+1)\sum_{i=1}^n(\check{v}_i(k+1)-y_i)\psi'(\check{W}_j(k)^Tx_i)x_i \\
+&=& \frac{1}{\sqrt{p}}\delta_j{\beta}_j(k+1)\sum_{i=1}^n({v}_i(k+1)-y_i)\psi'(\delta_j{W}_j(k)^Tx_i)x_i \\
+&=& \frac{1}{\sqrt{p}}\delta_j{\beta}_j(k+1)\sum_{i=1}^n({v}_i(k+1)-y_i)\psi'({W}_j(k)^Tx_i)x_i \\
+&=& \delta_j\frac{\partial L(\beta,W)}{\partial W_j}|_{(\beta,W)=({\beta}(k+1),{W}(k))},
+\end{eqnarray*}
+and thus we also have $\check{W}_j(k+1)=\delta_jW_j(k+1)$. A mathematical induction argument leads to $\check{W}_j(t)=\delta_jW_j(t)$ and $\check{\beta}_j(t)=\delta_j\beta_j(t)$ for all $t\geq 1$. Since $(\check{W}(0),\check{\beta}(0))$ and $(W(0),\beta(0))$ have the same distribution, we can conclude that $(\check{W}(t),\check{\beta}(t))$ and $(W(t),\beta(t))$ also have the same distribution. Therefore, Condition A' holds for the design matrix $\psi(X^T\wh{W}^T)=\psi(X^TW(t_{\max})^T)$.
+
+We also need to check Condition B. By Theorem \ref{thm:nn-grad}, we have
+\begin{eqnarray*}
+&& \left|\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(\wh{W}_j^Tx_i)\Delta_i\right| - \frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(W_j(0)^Tx_i)\Delta_i\right|\right| \\
+&\leq& \frac{1}{p}\sum_{j=1}^p\sum_{i=1}^n|\wh{W}_j^Tx_i-W_j(0)^Tx_i||\Delta_i| \\
+&\leq& R_1\sum_{i=1}^n\|x_i\||\Delta_i| \leq R_1\sqrt{\sum_{i=1}^n\|x_i\|^2} \lesssim \frac{n^{3/2}\log p}{\sqrt{p}},
+\end{eqnarray*}
+where $\sum_{i=1}^n\|x_i\|^2\lesssim nd$ is by Lemma \ref{lem:chi-squared}. By Lemma \ref{lem:design-rf}, we can deduce that
+$$\inf_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(\wh{W}_j^Tx_i)\Delta_i\right|\gtrsim 1,$$
+as long as $\frac{n^{3/2}\log p}{\sqrt{p}}$ is sufficiently small. 
+According to Lemma \ref{lem:lim-G}, we also have
+$$\sup_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(\wh{W}_j^Tx_i)\Delta_i\right|^2\lesssim 1+\frac{n^2\log p}{\sqrt{p}}.$$
+See (\ref{eq:Gk-spec-arctan}) for details of derivation.
+Therefore, Condition B holds with $\overline{\lambda}^2\asymp 1+\frac{n^2\log p}{\sqrt{p}}$ and $\underline{\lambda}\asymp 1$. Apply Theorem \ref{thm:robust-reg}, we have $\wt{\beta}=\wh{\beta}$ with high probability as desired.
+\end{proof}

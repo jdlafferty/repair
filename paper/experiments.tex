@@ -13,10 +13,10 @@ In all of our experiments, the \texttt{quantreg} package in $R$ is used to carry
 
 We begin by giving further details of the simulation briefly discussed
 in Section~\ref{sec:overview}. In this experiment we simulate underdetermined linear models where $p > n$.
-We generate $n$ data points $(X_i, y_i)$ where
-$y_i = X_i^T \theta^* + w_i$ with $w_i$ an additive noise term. We then compute the minimum norm estimator
+We generate $n$ data points $(x_i, y_i)$ where
+$y_i = x_i^T \theta^* + w_i$ with $w_i$ an additive noise term. We then compute the minimum norm estimator
 \begin{equation}
-  \hat\theta = X^T (X X^T)^{-1} y
+  \hat\theta = X^T (X X^T)^{-1} y.
 \end{equation}
 The estimated model is corrupted to
 \begin{equation}
@@ -24,7 +24,7 @@ The estimated model is corrupted to
 \end{equation}
 where $z_j \sim (1-\epsilon) \delta_0 +\epsilon Q$. The corrupted estimator is then repaired by performing median regression:
 \begin{align}
-  \tilde u &= \argmin \|\eta - X^T u\|_1 \\
+  \tilde u &= \argmin \|\eta - X^T u\|_1, \\
   \tilde \theta &= X^T \tilde u.
 \end{align}
 
@@ -78,10 +78,10 @@ The probability of successful repair is shown in Figure~\ref{fig:mean}.
 
 As expected, the fraction $\epsilon$ that allows successful repair decreases; it appears to saturate at some fixed value $\epsilon_{\min}$. The mean $\mu$ cannot be made too large because it causes the design $X$ to become ill-conditioned, and the median regression fails.
 
-The inequality in Condition $A$ in this case takes the form
+The inequality in Condition $A$ \nb{dollar in A} in this case takes the form
 \begin{align*}
-  \left\|\frac{1}{m}\sum_{i=1}^m c_i a_i\right\|^2 &\leq \frac{(1+\mu^2)k}{m} + \mu^2 k
-   \equiv \frac{(1+\mu^2)n}{p} + \mu^2 n.
+  \mathbb{E}\left\|\frac{1}{m}\sum_{i=1}^m c_i a_i\right\|^2 &\leq \frac{k}{m} + \mu^2 k
+   \equiv \frac{n}{p} + \mu^2 n.
    %  = \frac{(1+\mu^2)n}{p} + c_j.
 \end{align*}
 The means $\mu$ in Figure~\ref{fig:mean} are taken to be $\mu_j = c_j / \sqrt{n}$ as $c_j$ varies between zero and two.
@@ -89,15 +89,15 @@ The means $\mu$ in Figure~\ref{fig:mean} are taken to be $\mu_j = c_j / \sqrt{n}
 \subsection{Random features models trained with gradient descent}
 
 In this experiment we simulate over-parameterized random features models.
-We generate $n$ data points $(X_i, y_i)$ where
-$y_i = X_i^T \theta^* + w_i$ with $w_i$ an additive noise term. The covariates are generated
-as a layer of a random neural network, with $X_i = \tanh(WZ_i)$ where $Z_i \in\reals^d$ with $Z_{ij} \sim N(0,1)$
-and $W\in\reals^{p\times d}$ with $W_{ij} \sim N(0, 1/d)$. We then approximate the least squares
+We generate $n$ data points $(\wt{x}_i, y_i)$ where
+$y_i = \wt{x}_i^T \theta^* + w_i$ with $w_i$ an additive noise term. The covariates are generated
+as a layer of a random neural network, with $\wt{x}_i = \tanh(W^Tx_i)$ where $x_i \in\reals^d$ with $x_{ij} \sim N(0,1)$
+and $W\in\reals^{d\times p}$ with $W_{ij} \sim N(0, 1/d)$. We then approximate the least squares
 solution using gradient descent intialized at zero, with updates
 \begin{equation}
-  \hat\theta^{(t)} = \hat\theta^{(t-1)} + \frac{\eta}{n} X^T R^{(t-1)}
+  \hat\theta^{(t)} = \hat\theta^{(t-1)} + \frac{\eta}{n} \wt{X}^T R^{(t-1)}
 \end{equation}
-where the residual vector $R^{(t-1)}\in\reals^n$ is given by $R_i = (y_i - X_i^ T\hat\theta^{(t-1)})$.
+where the residual vector $R^{(t-1)}\in\reals^n$ is given by $R_i^{(t-1)} = (y_i - \wt{x}_i^ T\hat\theta^{(t-1)})$.
 The step size $\eta$ is selected empirically to insure convergence in under $1{,}000$ iterations.
 Figure~\ref{fig:rf} shows two sets of results, for $n=50$ and $n=100$. For each value of the final dimension $p$,
 three values of the original data dimension $d$ are selected: $d=p$, $d=\lceil 2p/3\rceil$,
@@ -122,7 +122,7 @@ and $d=\lceil p/2\rceil$; the results are effectively the same for each $d$. The
 
 In this set of simulations we investigate repair algorithms for neural networks. We report results using a single layer and the use of the hyperbolic tangent activation function. Results using the ReLU activation are similar as long as the features are centered.
 
-As described in Section~\ref{sec:neural}, we consider two possible ways of training the models---with our without a forward pass to train the network parameters in stages. In the first approach, the network is trained using gradient descent, and the weights $\hat W\in\reals^{d\times p}$ are then fixed. Next, the weights $\beta\in\reals^p$ are initialized at zero, and gradient descent over $\beta$ is carried out using features
+As described in Section~\ref{sec:neural}, we consider two possible ways of training the models---with or without a forward pass to train the network parameters in stages. In the first approach, the network is trained using gradient descent, and the weights $\hat W\in\reals^{d\times p}$ are then fixed. Next, the weights $\beta\in\reals^p$ are initialized at zero, and gradient descent over $\beta$ is carried out using features
 $\tilde X = \psi(X\hat W)$. This two-pass approach allows for exact repair, and only the initial weights $W(0)$ need to be accessed by the repair algorithm, using the seed value used in the pseudorandom number generator.
 
 The left plot in Figure~\ref{fig:ann} shows the behavior of the linear program for exact repair when using this two-stage training algorithm.

@@ -10,14 +10,14 @@ In this section we formulate the problem of model repair, and give an overview o
 \begin{equation}
   \eta = \hat\theta + z
 \end{equation}
-where $z_j \sim (1-\epsilon) \delta_0 + \epsilon Q_j$ and $Q_j$ is an arbitrary distribution. In other words, each component $\hat\theta_j$ of $\hat\theta$ is corrupted by additive noise from an arbitrary distribution $Q_j$ with probability $\epsilon$, where $0\leq \epsilon \leq 1$, and is uncorrupted with probability $1-\epsilon$. We discuss alternative error models later in the paper. The goal is to recover $\hat\theta$ from $\eta$, without reestimating the model from scratch; in particular, without using the response values $\{y_i\}$ when the model is estimated in a supervised learning setting.
+where $z_j \sim (1-\epsilon) \delta_0 + \epsilon Q_j$ and $Q_j$ is an arbitrary distribution. In other words, each component $\hat\theta_j$ of $\hat\theta$ is corrupted by additive noise from an arbitrary distribution $Q_j$ with probability $\epsilon$, where $0\leq \epsilon \leq 1$, and is uncorrupted with probability $1-\epsilon$. The noise vector $z$ is assumed to be independent of the design $\{x_i\}_{i=1}^n$. We discuss alternative error models later in the paper. The goal is to recover $\hat\theta$ from $\eta$, without reestimating the model from scratch; in particular, without using the response values $\{y_i\}$ when the model is estimated in a supervised learning setting.
 
 \point{Overparameterized linear models}
 To explain the main ideas, let us first consider the setting of under-determined linear regression. Let $X\in\reals^{n\times p}$ be the design matrix and $y\in\reals^n$ a vector of response values, and suppose that we wish to minimize the squared error  $\|y-X\theta\|_2^2$. If $n > p$ then this is an under-determined optimization problem. Among all solutions to the linear system $y = X\theta$, the solution of minimal norm $\|\theta\|_2$ is given by
 \begin{equation}
   \hat \theta = X^T (X X^T)^{-1} y \label{eq:min-norm-solution}
 \end{equation}
-assuming that $X$ has full rank $n$ \citep{boyd:04}. Thus, $\hat\theta$ lies in the row space of the $n\times p$ design matrix $X$.
+assuming that $X$ has full rank $n$ \citep{boyd:04}. Thus, $\hat\theta$ lies in the row space of the $n\times p$ design matrix $X$. The risk behavior of (\ref{eq:min-norm-solution}) has been well studied in the recent literature \citep{belkin2019two,hastie2019surprises,bartlett2020benign}.
 
 Now suppose that $\eta = \hat\theta + z$ where $z_j \sim (1-\epsilon) \delta_0 + \epsilon Q_j$. The method we propose to recover $\hat\theta$ from $\eta$ is to let $\tilde u\in\reals^n$ be the solution to the optimization
 \begin{equation}
@@ -36,7 +36,7 @@ $\epsilon_k = 1/2$ for the constant $c' = \frac{\sqrt{2}}{20 c}$; this is seen i
 
 
 \point{Robust regression} This procedure can be viewed in terms of robust regression. Specifically, $\eta$ can be viewed as a corrupted response vector, and $A = X^T \in \reals^{p\times n}$ can be viewed as a design matrix that is \textit{not corrupted}.  Our result makes precise conditions under which this robust regression problem can be successfully carried out.
-In particular, we show that model repair is possible even if $\epsilon \to 1$, so that the proportion of corrupted model components approaches one. This is in contrast to the traditional Huber model where the design is corrupted \citep{huber:64}, under which consistent estimation is only possible if $\epsilon \to 0$ \citep{chen2016,gao2020}.
+In particular, we show that model repair is possible even if $\epsilon \to 1$, so that the proportion of corrupted model components approaches one. This is in contrast to the traditional Huber model where the design is also corrupted \citep{huber:64}, under which consistent estimation is only possible if $\epsilon$ is below some small constant \citep{chen2016,gao2020}.
 
 \begin{figure}[t]
   \begin{tabular}{cc}
