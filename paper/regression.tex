@@ -45,8 +45,7 @@ Define $L_m(u)=\frac{1}{m}\sum_{i=1}^m(|a_i^T(u^*-u)+z_i|-|z_i|)$, and $L(u)=\ma
 %If $\|\wh{u}-u^*\|\geq t$,
 Letting $t\geq 0$ be arbitrary, we must have $\inf_{\|u-u^*\|\geq t}L_m(u)\leq L_m(u^*)=0$. By the convexity of $L_m(u)$, this leads to $\inf_{\|u-u^*\|= t}L_m(u)\leq 0$, and thus
 \begin{align*}
-\inf_{\|u-u^*\|=t}L(u) &= \sup_{\|u-u^*\|=t} - L(u)\\
-& = \sup_{\|u-u^*\|=t} \left( L_m(u) - L(u) - L_m(u)\right) \\
+\inf_{\|u-u^*\|=t}L(u) &\leq \inf_{\|u-u^*\|=t}L_m(u) + \sup_{\|u-u^*\|=t} \left(L(u) - L_m(u)\right) \\
 & \leq \sup_{\|u-u^*\|=t}|L_m(u)-L(u)|.
 \end{align*}
 Introducing the notation $f_i(x)=\mathbb{E}_{z_i\sim Q_i}(|x+z_i|-|z_i|)$ and $Q_i(x)=Q_i(z_i\leq x)$,
@@ -67,8 +66,9 @@ for any $u$ such that $\|u-u^*\|=t$,
 where the first inequality uses Cauchy-Schwarz, and the second inequality uses \conditionA.
 By \conditionB{} and an empirical process result proved as Lemma \ref{lem:EP} in Section \ref{sec:pf-robust-reg}, we have
 \begin{equation}
-\sup_{\|u-u^*\|= t}|L_m(u)-L(u)| \lesssim t\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}. \label{eq:upper-EP}
+\sup_{\|u-u^*\|= t}|L_m(u)-L(u)| \lesssim t\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}, \label{eq:upper-EP}
 \end{equation}
+with high probability.
 Therefore, we have shown that $\|\wh{u}-u^*\|\geq t$ implies
 $$\underline{\lambda}(1-\epsilon)t - \epsilon t\sigma\sqrt{\frac{k}{m}} \lesssim t\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)},$$
 which is impossible when $\frac{\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}+\epsilon\sigma\sqrt{\frac{k}{m}}}{\underline{\lambda}(1-\epsilon)}$ is sufficiently small, and thus $\|\wh{u}-u^*\|< t$ with high probability. Since $t$ is arbitrary, we must have $\wh{u}=u^*$.

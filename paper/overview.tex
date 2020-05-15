@@ -29,7 +29,7 @@ The linear program defined in \eqref{eq:keylp} can be thought of as performing m
 Our analysis shows that, under appropriate assumptions, the estimated model is exactly recovered with high probability, so that $\tilde \theta = \hat\theta$, as long as $n/p \leq c(1-\epsilon)^2$ for some sufficiently small constant $c$.
 
 Figure~\ref{fig:exp} shows the performance of
-the repair algorithm in simulation. The design is sampled as $X_{ij} \sim N(0,1)$ and the corruption distribution is $Q_j = N(1,1)$ for each $j$. With the sample size fixed at $n=50$, the dimension $p$ is varied according to $p_k/n=200/k^2$ with
+the repair algorithm in simulation. The design is sampled as $x_{ij} \sim N(0,1)$ and the corruption distribution is $Q_j = N(1,1)$ for each $j$. With the sample size fixed at $n=50$, the dimension $p$ is varied according to $p_k/n=200/k^2$ with
 $k$ ranging from 1 to 6. The plots show the empirical probability of exact repair $\tilde\theta = \hat\theta$ as a function of $\epsilon$. The roughly equal spacing of the curves agrees with our theory, which indicates that $\sqrt{n/p}/(1-\epsilon)$ should be sufficiently small for successful repair. The theory indicates that the repair probability for dimension $p_k$ as a function of the adjusted value $\epsilon_k = \epsilon + c'\cdot k - \frac{1}{2}$ should exhibit a threshold at
 $\epsilon_k = 1/2$ for the constant $c' = \frac{\sqrt{2}}{20 c}$; this is seen in the right plot of Figure~\ref{fig:exp}.
 
@@ -75,7 +75,7 @@ a broad range of estimators for problems such as linear least squares and logist
 \begin{align}
   \theta^{(t+1)} &= \theta^{(t)} - \gamma_t \frac{1}{n} \sum_{i=1}^n \nabla_\theta \L(y_i, x_i^T \theta^{(t-1)}) \\
   &= \theta^{(t)} - \gamma_t \frac{1}{n} \sum_{i=1}^n \frac{\partial}{\partial f} \L(y_i, x_i^T \theta^{(t-1)}) x_i \\
-  &= \theta^{(t)} - \sum_{i=1}^n w_i^{(t)} x_i
+  &= \theta^{(t)} - \sum_{i=1}^n w_i^{(t)} x_i,
 \end{align}
 where $\gamma_t$ is a step size parameter. If the model is initialized at $\theta^{(0)}= 0\in\reals^p$ then the estimate at time $t$ can thus be written as
 \begin{equation}

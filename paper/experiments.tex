@@ -31,7 +31,7 @@ where $z_j \sim (1-\epsilon) \delta_0 +\epsilon Q$. The corrupted estimator is t
 The design is sampled as $X_{ij} \sim N(0,1)$ and we take $\theta_j^* \sim N(0,1)$ and $Q = N(1,1)$. In the plots shown
 in Figure~\ref{fig:exp1} the sample size is fixed at $n=100$ and the dimension $p$ is varied according to $p/n=200/j^2$
 for a range of values of $j$. The plots show the empirical probability of exact repair $\tilde\theta = \hat\theta$ as a function of $\epsilon$. Each point on the curves is the average repair success over $500$ random trials.
-The roughly equal spacing of the curves agrees with the theory, which indicates that $\sqrt{n/p}/(1-\epsilon)$ should be sufficiently small for successful repair. The right plot in Figure~\ref{fig:exp1b} shows the per-coefficient repair probability, where the left plot shows the probability that the entire model is repaired; in this plot the sample size is $n=50$.
+The roughly equal spacing of the curves agrees with the theory, which indicates that $\sqrt{n/p}/(1-\epsilon)$ should be sufficiently small for successful repair. The right plot in Figure~\ref{fig:exp1b} shows the per-coefficient repair probability, where the left plot shows the probability that the entire model is repaired; in this plot the sample size is $n=50$. \nb{left or right? legend}
 
 \begin{figure}[ht]
   \begin{center}
@@ -120,7 +120,7 @@ and $d=\lceil p/2\rceil$; the results are effectively the same for each $d$. The
 \subsection{Neural networks}
 \vskip10pt
 
-In this set of simulations we investigate repair algorithms for neural networks. We report results using a single layer and the use of the hyperbolic tangent activation function. Results using the ReLU activation are similar as long as the features are centered.
+In this set of simulations we investigate repair algorithms for neural networks. We report results using a single hidden layer and the use of the hyperbolic tangent activation function. Results using the ReLU activation are similar as long as the features are centered.
 
 As described in Section~\ref{sec:neural}, we consider two possible ways of training the models---with or without a forward pass to train the network parameters in stages. In the first approach, the network is trained using gradient descent, and the weights $\hat W\in\reals^{d\times p}$ are then fixed. Next, the weights $\beta\in\reals^p$ are initialized at zero, and gradient descent over $\beta$ is carried out using features
 $\tilde X = \psi(X\hat W)$. This two-pass approach allows for exact repair, and only the initial weights $W(0)$ need to be accessed by the repair algorithm, using the seed value used in the pseudorandom number generator.

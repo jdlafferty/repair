@@ -91,7 +91,7 @@ and
 for all $t\geq 1$ with high probability, where $R_1=\frac{100n\log p}{\sqrt{pd}}$ and $R_2=32\sqrt{\frac{n^2\log p}{p}}$.
 \end{thm}
 
-Theorem \ref{thm:nn-grad} assumes that the width of the neural network is wide compared with the sample size in the sense that $\frac{p}{(\log p)^4}\gg n^3$. For fixed $n$, the limit of the neural network when $p\rightarrow\infty$ is known as the neural tangent kernel (NTK) regime, and the behavior of gradient descent under this limit has been studied by \cite{jacot2018neural}. The result of Theorem \ref{thm:nn-grad} follows the explicit calculation in \cite{du2018gradient}, and we are able to sharpen some of the asymptotic conditions in \cite{du2018gradient}.
+Theorem \ref{thm:nn-grad} assumes that the width of the neural network is large compared with the sample size in the sense that $\frac{p}{(\log p)^4}\gg n^3$. For fixed $n$, the limit of the neural network as $p\rightarrow\infty$ is known as the neural tangent kernel (NTK) regime, and the behavior of gradient descent under this limit has been studied by \cite{jacot2018neural}. The result of Theorem \ref{thm:nn-grad} follows the explicit calculation in \cite{du2018gradient}, and we are able to sharpen some of the asymptotic conditions in \cite{du2018gradient}.
 
 The theorem has two conclusions. The first conclusion shows the gradient descent algorithm has global convergence in the sense of (\ref{eq:iter-function}) even though the loss $\L(\beta,W)$ is nonconvex. The second conclusion shows that the trajectory of the algorithm $(W(t),\beta(t))$ is bounded within some radius of the initialization. This allows us to characterize the repaired model $\wt{\beta}$ for the output layer.
 
@@ -128,6 +128,7 @@ When the nonlinear activation is replaced by ReLU $\psi(t)=\max(t,0)$, \nb{add t
 
 \section{Proofs of Theorem \ref{thm:repair-nn-1} and Theorem \ref{thm:repair-nn-2}}
 
+We give proofs of Theorem \ref{thm:repair-nn-1} and Theorem \ref{thm:repair-nn-2} in this section.
 To prove Theorem \ref{thm:repair-nn-1}, we need to extend Theorem \ref{thm:main-improved}. Consider $\eta=b+Au^*+z\in\mathbb{R}^m$, where the noise vector $z$ satisfies (\ref{eq:noise-add-con}), and $b\in\mathbb{R}^m$ is an arbitrary bias vector. Then, the estimator $\wh{u}=\argmin_{u\in\mathbb{R}^k}\|\eta-Au\|_1$ satisfies the following theoretical guarantee.
 \begin{thm}\label{thm:robust-reg-b}
 Assume the design matrix $A$ satisfies Condition A and Condition B. Then, as long as $\frac{\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}+\epsilon\sigma\sqrt{\frac{k}{m}}}{\underline{\lambda}(1-\epsilon)}$ is sufficiently small and $\frac{8\frac{1}{m}\sum_{i=1}^m|b_i|}{\underline{\lambda}(1-\epsilon)}<1$, we have
@@ -137,7 +138,7 @@ with high probability.
 It is easy to see that Theorem \ref{thm:main-improved} is a special case when $b=0$.
 Now we are ready to prove Theorem \ref{thm:repair-nn-1}.
 \begin{proof}[Proof of Theorem \ref{thm:repair-nn-1}]
-We first analyze $\wh{v}_1,...,\wh{v}_p$. The idea is to apply the result of Theorem \ref{thm:main-improved} to each of the $p$ robust regression problems. Thus, it suffices to check if the conditions of Theorem \ref{thm:main-improved} hold for the $p$ regression problems simultaneously. Since the $p$ regression problems share the same Gaussian design matrix, Lemma \ref{lem:design-linear} implies that Conditions A and B hold for all the $p$ regression problems. Next, by scrutinizing the proof of Theorem \ref{thm:main-improved}, the randomness of the conclusion is from the noise vector $Z_j$ through the empirical process bound given by Lemma \ref{lem:EP}. With an additional union bound argument applied to (\ref{eq:double-ub}), Lemma \ref{lem:EP} can be extended to $Z_j$ for all $j\in[p]$ with an additional assumption that $\frac{\log p}{d}$ is sufficiently small. Then, by the same argument in the proof of Corollary \ref{cor:repair-linear}, we have $\wt{W}_j=\wh{W}_j$ for all $j\in[p]$ with high probability.
+We first analyze $\wh{v}_1,...,\wh{v}_p$. The idea is to apply the result of Theorem \ref{thm:main-improved} to each of the $p$ robust regression problems. Thus, it suffices to check if the conditions of Theorem \ref{thm:main-improved} hold for the $p$ regression problems simultaneously. Since the $p$ regression problems share the same Gaussian design matrix, Lemma \ref{lem:design-linear} implies that Conditions A and B hold for all the $p$ regression problems. Next, by scrutinizing the proof of Theorem \ref{thm:main-improved}, the randomness of the conclusion is from the noise vector $Z_j$ through the empirical process bound given by Lemma \ref{lem:EP}. With an additional union bound argument applied to (\ref{eq:double-ub}) in its proof, Lemma \ref{lem:EP} can be extended to $Z_j$ simultaneously for all $j\in[p]$ with an additional assumption that $\frac{\log p}{d}$ is sufficiently small. Then, by the same argument that leads to Corollary \ref{cor:repair-linear}, we have $\wt{W}_j=\wh{W}_j$ for all $j\in[p]$ with high probability.
 
 To analyze $\wh{u}$, we apply Theorem \ref{thm:robust-reg-b}. Note that
 \begin{eqnarray*}
@@ -155,7 +156,7 @@ Thus, in the framework of Theorem \ref{thm:robust-reg-b}, we can view $\eta-\bet
 &\lesssim& \frac{R_1}{p^{1/2}}\|y-u(0)\|\sqrt{\sum_{i=1}^n\|x_i\|^2} \\
 &\lesssim& \frac{n^2\log p}{p},
 \end{eqnarray*}
-where the last inequality is by $\sum_{i=1}^n\|x_i\|^2\lesssim nd$ due to a standard chi-squared bound (Lemma \ref{lem:chi-squared}), and $\|u(0)\|^2\lesssim n$ due to Markov's inequality and $\mathbb{E}|u_i(0)|^2 = \mathbb{E}\Var(u_i(0)|X) \leq 1$. By Theorem \ref{thm:robust-reg-b} and Lemma \ref{lem:lim-G}, we have $\frac{1}{p}\|\wt{\beta}-\wh{\beta}\|^2 \lesssim \frac{n^3\log p}{p}$, which is the desired conclusion.
+where the last inequality is by $\sum_{i=1}^n\|x_i\|^2\lesssim nd$ due to a standard chi-squared bound (Lemma \ref{lem:chi-squared}), and $\|u(0)\|^2\lesssim n$ is due to Markov's inequality and $\mathbb{E}|u_i(0)|^2 = \mathbb{E}\Var(u_i(0)|X) \leq 1$. By Theorem \ref{thm:robust-reg-b} and Lemma \ref{lem:lim-G}, we have $\frac{1}{p}\|\wt{\beta}-\wh{\beta}\|^2 \lesssim \frac{n^3\log p}{p}$, which is the desired conclusion.
 \end{proof}
 
 \begin{proof}[Proof of Theorem \ref{thm:repair-nn-2}]

@@ -7,12 +7,12 @@
 
 \subsection{Repair of random feature model and neural nets} \label{app:results}
 
-In this section, we present the corresponding results of Sections \ref{sec:linear} and \ref{sec:neural} with ReLU activation. First, consider the random feature model with design $\wt{X}=\psi(XW)=\{\psi(W_j^Tx_i)\}_{i\in[n],j\in[p]}$, where $\psi(t)=\max(0,t)$. Recall that $x_i\sim N(0,I_d)$ and $W_j\sim N(0,d^{-1}I_d)$ independently for all $i\in[n]$ and $j\in[p]$. The random matrix $\wt{X}$ has good properties, which is given by the following lemma.
+In this section, we present analogous results of Sections \ref{sec:linear} and \ref{sec:neural} with ReLU activation. First, consider the random feature model with design $\wt{X}=\psi(XW)=\{\psi(W_j^Tx_i)\}_{i\in[n],j\in[p]}$, where $\psi(t)=\max(0,t)$. Recall that $x_i\sim N(0,I_d)$ and $W_j\sim N(0,d^{-1}I_d)$ independently for all $i\in[n]$ and $j\in[p]$. The random matrix $\wt{X}$ has good properties, which is given by the following lemma.
 \begin{lemma}\label{lem:design-rf-relu}
 Assume $n/p^2$ and $n\log n/d$ are sufficiently small. Then, Condition A and Condition B hold for $A=\wt{X}^T$, $m=p$ and $k=n$ with some $\sigma^2\asymp p$, $\overline{\lambda}^2\asymp n$ and $\underline{\lambda}\asymp 1$.
 \end{lemma}
 
-Now consider a model $\wh{\theta}$ lies in the row space of $\wt{X}$. For example, $\wh{\theta}$ can be computed from a gradient-based algorithm initialized at $0$. We observe a contaminated version $\eta=\wh{\theta}+z$.
+Now consider a model $\wh{\theta}$ that lies in the row space of $\wt{X}$. For example, $\wh{\theta}$ can be computed from a gradient-based algorithm initialized at $0$. We observe a contaminated version $\eta=\wh{\theta}+z$.
 We can then compute the procedure $\wt{u}=\argmin_{u\in\mathbb{R}^n}\|\eta-\wt{X}^Tu\|_1$ and use $\wt{\theta}=\wt{X}^T\wt{u}$ for model repair.
 
 \begin{corollary}\label{cor:repair-rf-relu}
@@ -46,7 +46,7 @@ Under the conditions of Theorem \ref{thm:nn-grad-relu}, additionally assume that
 \end{thm}
 
 \begin{remark}
-When $\epsilon\sqrt{n}$ is sufficiently small, the conditions of Theorem \ref{thm:repair-nn-1-relu} and Theorem \ref{thm:repair-nn-2-relu} can be simplified as $p \gg n^3$ and $d\gg n$ by ignoring the logarithmic factors. The more stringent requirement on $\epsilon$ is due to the fact that the design matrix $\psi(XW)$ does not have approximate zero mean with the ReLU activation. This results in a large $\sigma^2$ in Condition A.
+When $\epsilon\sqrt{n}$ is sufficiently small, the conditions of Theorem \ref{thm:repair-nn-1-relu} and Theorem \ref{thm:repair-nn-2-relu} can be simplified as $p \gg n^3$ and $d\gg n$ by ignoring the logarithmic factors. The more stringent requirement on $\epsilon$ is due to the fact that the design matrix $\psi(XW)$ does not have approximate zero mean with the ReLU activation. This results in a large $\sigma^2$ in Condition A. In contrast, the hyperbolic tangent activation is an odd function, a property of symmetry that leads to Condition A with a constant $\sigma^2$.
 \end{remark}
 
 
@@ -56,8 +56,8 @@ We first state the proof of Lemma \ref{lem:design-rf-relu}.
 The conclusion of Condition A is obvious by
 $$\sum_{i=1}^n\mathbb{E}\left(\frac{1}{p}\sum_{j=1}^pc_j\psi(W_j^Tx_i)\right)^2\leq \sum_{i=1}^n\frac{1}{p}\sum_{j=1}^p\mathbb{E}|W_j^Tx_i|^2= n,$$
 and Markov's inequality. To check Condition B, we prove (\ref{eq:l1-upper-A}) and (\ref{eq:l2-upper-A}) separately.
-\begin{proof}[Proof of (\ref{eq:l1-upper-A}) of Lemma \ref{lem:design-rf}]
-We adopt a similar strategy to the proof of Lemma \ref{lem:design-rf-relu}. Define
+\begin{proof}[Proof of (\ref{eq:l1-upper-A}) of Lemma \ref{lem:design-rf-relu}]
+We adopt a similar strategy to the proof of Lemma \ref{lem:design-rf}. Define
 $$f(W,X,\Delta)=\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(W_j^Tx_i)\Delta_i\right|,$$
 and $g(X,\Delta)=\mathbb{E}(f(W,X,\Delta)|X)$.
 We then have
