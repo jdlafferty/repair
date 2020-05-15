@@ -8,9 +8,9 @@
 Consider a linear model with $X\in\mathbb{R}^{n\times p}$ being the design matrix and $y\in\mathbb{R}^n$ being a vector of response values. We assume that each entry of the design matrix is i.i.d. $N(0,1)$ and do not impose any assumption on the response $y$. A machine learning algorithm learns a linear model $X\wh{\theta}$ with some $\wh{\theta}\in\mathbb{R}^{p}$. The vector $\wh{\theta}$ is either computed via the formula (\ref{eq:min-norm-solution}) or through a gradient-based algorithm with the objective (\ref{eq:gen-obj}) initialized from $0$. Either case implies $\wh{\theta}$ belongs to the row space of $X$. Suppose we observe a contaminated version of $\wh{\theta}$ through $
 \eta=\wh{\theta}+z$, where $z$ is independent of $\wh{\theta}$ and $z_j\sim (1-\epsilon)\delta_0+\epsilon Q_j$ independently for all $j\in[p]$. We then propose to recover $\wh{\theta}$ via
 $$\wt{u}=\argmin_{u\in\mathbb{R}^n}\|\eta-X^Tu\|_1,$$
-and define the repaired model as $\wt{\theta}=X^T\wt{u}$. This turns out to be the same robust regression problem studied in Section \ref{sec:regression}, and thus we only need to check the design matrix $A=X^T$ satisfies Condition A and Condition B.
+and define the repaired model as $\wt{\theta}=X^T\wt{u}$. This turns out to be the same robust regression problem studied in Section \ref{sec:regression}, and thus we only need to check the design matrix $A=X^T$ satisfies \conditionA{} and \conditionB.
 \begin{lemma}\label{lem:design-linear}
-Assume $n/p$ is sufficiently small. Then, Condition A and Condition B hold for $A=X^T$, $m=p$ and $k=n$ with some constants $\sigma^2$, $\underline{\lambda}$ and $\overline{\lambda}$.
+Assume $n/p$ is sufficiently small. Then, \conditionA{} and \conditionB{} hold for $A=X^T$, $m=p$ and $k=n$ with some constants $\sigma^2$, $\underline{\lambda}$ and $\overline{\lambda}$.
 \end{lemma}
 Combine Lemma \ref{lem:design-linear} and Theorem \ref{thm:main-improved}, and we obtain the following guarantee for model repair.
 \begin{corollary}\label{cor:repair-linear}
@@ -30,10 +30,10 @@ It is clear that $\wh{\theta}_{\sf min-norm}$ has identical entries and $\wh{\th
 \end{remark}
 
 
-We also study a random feature model with design $\{\psi(W_j^Tx_i)\}_{i\in[n],j\in[p]}$, where $x_i\sim N(0,I_d)$ and $W_j\sim N(0,d^{-1}I_d)$ independently for all $i\in[n]$ and $j\in[p]$. We choose the nonlinear activation function to be $\psi(t)=\tanh(t)=\frac{e^t-e^{-t}}{e^t+e^{-t}}$, the hyperbolic tangent unit. The design matrix can thus be written as $\wt{X}=\psi(XW)\in\mathbb{R}^{n\times p}$ with $X\in\mathbb{R}^{n\times d}$ and $W\in\mathbb{R}^{d\times p}$. This is an important model, and its asymptotic risk behavior under overparametrization has recently been studied by \cite{mei2019generalization}. We show that the design matrix $\wt{X}^T=\psi(W^TX^T)$ satisfies Condition A and Condition B so that model repair is possible.
+We also study a random feature model with design $\{\psi(W_j^Tx_i)\}_{i\in[n],j\in[p]}$, where $x_i\sim N(0,I_d)$ and $W_j\sim N(0,d^{-1}I_d)$ independently for all $i\in[n]$ and $j\in[p]$. We choose the nonlinear activation function to be $\psi(t)=\tanh(t)=\frac{e^t-e^{-t}}{e^t+e^{-t}}$, the hyperbolic tangent unit. The design matrix can thus be written as $\wt{X}=\psi(XW)\in\mathbb{R}^{n\times p}$ with $X\in\mathbb{R}^{n\times d}$ and $W\in\mathbb{R}^{d\times p}$. This is an important model, and its asymptotic risk behavior under overparametrization has recently been studied by \cite{mei2019generalization}. We show that the design matrix $\wt{X}^T=\psi(W^TX^T)$ satisfies \conditionA{} and \conditionB{} so that model repair is possible.
 
 \begin{lemma}\label{lem:design-rf}
-Assume $n/p^2$ and $n/d$ are sufficiently small. Then, Condition A and Condition B hold for $A=\wt{X}^T$, $m=p$ and $k=n$ with some constants  $\sigma^2$, $\underline{\lambda}$ and $\overline{\lambda}$.
+Assume $n/p^2$ and $n/d$ are sufficiently small. Then, \conditionA{} and \conditionB{} hold for $A=\wt{X}^T$, $m=p$ and $k=n$ with some constants  $\sigma^2$, $\underline{\lambda}$ and $\overline{\lambda}$.
 \end{lemma}
 
 

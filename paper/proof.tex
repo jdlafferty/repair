@@ -1,6 +1,6 @@
 % !TEX root = ./repair.tex
 
-
+\appendix
 
 \section{Proofs}
 \label{sec:proof}
@@ -174,7 +174,7 @@ which is impossible with the choice $t=\frac{4\frac{1}{m}\sum_{i=1}^m|b_i|}{\und
 
 
 \begin{proof}[Proof of Lemma \ref{lem:design-linear}]
-Condition A is obvious. For Condition B, we have
+Condition $A$ is obvious. For Condition $B$, we have
 $$
 \inf_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta| \geq \sqrt{\frac{2}{\pi}} - \sup_{\|\Delta\|=1}\left|\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta| - \sqrt{\frac{2}{\pi}} \right|,
 $$
@@ -198,9 +198,9 @@ By Theorem \ref{thm:main-improved} and Lemma \ref{lem:design-linear}, we know th
 \end{proof}
 
 
-Now we state the proof of Lemma \ref{lem:design-rf}. Note that Condition A holds because
+Now we state the proof of Lemma \ref{lem:design-rf}. Note that Condition $A$ holds because
 $$\sum_{i=1}^n\mathbb{E}\left(\frac{1}{p}\sum_{j=1}^pc_j\psi(W_j^Tx_i)\right)^2  \leq \sum_{i=1}^n\frac{1}{p^2}\sum_{j=1}^p\mathbb{E}|\psi(W_j^Tx_i)|^2\leq \frac{n}{p},$$
-and we only need to prove Condition B. We present the proofs of (\ref{eq:l1-upper-A}) and (\ref{eq:l2-upper-A}) separately.
+and we only need to prove Condition $B$. We present the proofs of (\ref{eq:l1-upper-A}) and (\ref{eq:l2-upper-A}) separately.
 \begin{proof}[Proof of (\ref{eq:l1-upper-A}) of Lemma \ref{lem:design-rf}]
 Let us adopt the notation that
 $$f(W,X,\Delta)=\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(W_j^Tx_i)\Delta_i\right|.$$

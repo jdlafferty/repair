@@ -64,7 +64,7 @@ for any $u$ such that $\|u-u^*\|=t$,
 &\geq& -\epsilon t\sigma\sqrt{\frac{k}{m}},
 \end{eqnarray*}
 where the first inequality uses Cauchy-Schwarz, and the second inequality uses \conditionA.
-By \conditionB{} and an empirical process result proved as Lemma \ref{lem:EP} in Section \ref{sec:pf-robust-reg}, we have
+By \conditionB{} and an empirical process result proved as Lemma \ref{lem:EP} in Appendix \ref{sec:pf-robust-reg}, we have
 \begin{equation}
 \sup_{\|u-u^*\|= t}|L_m(u)-L(u)| \lesssim t\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}, \label{eq:upper-EP}
 \end{equation}
@@ -76,7 +76,7 @@ which is impossible when $\frac{\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\fr
 
 The theorem gives a sufficient condition for the exact recovery of the regression coefficients. When both $(\sigma+\overline{\lambda})/\underline{\lambda}$ and $1-\epsilon$ are constants, the condition becomes that $k/m$ is sufficiently small.
 
-A notable feature of this theorem is that it allows for $\epsilon \rightarrow 1$; that is, an arbitrarily large fraction of the components of the response $Au^*$ can be corrupted. This is in contrast to robust regression where both the response and design are contaminated. To be specific, consider independent observations $(a_i,\eta_i)\sim (1-\epsilon)P_{u^*}+\epsilon Q_i$, where the probability distribution $P_{u^*}$ encodes the linear model $\eta_i=a_i^Tu_i$, and for each $i\in[m]$, there is probability $\epsilon$ that the pair $(a_i,\eta_i)$ is drawn from some arbitrary distribution $Q_i$. In this setting, consistent or exact recovery of the regression coefficient is only possible when $\epsilon<c$ for some small constant $c>0$ \citep{gao2020}. The reason Theorem \ref{thm:main-improved} allows $\epsilon\rightarrow 1$ is that there is no contamination for the design matrix $A$. We note here that robust regression with uncorrupted design has also been studied by \cite{tsakonas2014convergence,wright,nguyen1,nguyen2,karmalkar2018compressed,bhatia}. The recent work \cite{suggala2019adaptive} has established consistent recovery while allowing $\epsilon\rightarrow 1$. Compared with their algorithm, our method based on $\ell_1$ minimization is much simpler. Moreover, we allow $\epsilon=1-\Theta\left(\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}\right)$, compared with the requirement $\epsilon\leq 1-\Theta\left(\frac{1}{\log\log m}\right)$ in \cite{suggala2019adaptive}.
+A notable feature of this theorem is that it allows for $\epsilon \rightarrow 1$; that is, an arbitrarily large fraction of the components of the response $Au^*$ can be corrupted. This is in contrast to robust regression where both the response and design are contaminated. To be specific, consider independent observations $(a_i,\eta_i)\sim (1-\epsilon)P_{u^*}+\epsilon Q_i$, where the probability distribution $P_{u^*}$ encodes the linear model $\eta_i=a_i^Tu_i$, and for each $i\in[m]$, there is probability $\epsilon$ that the pair $(a_i,\eta_i)$ is drawn from some arbitrary distribution $Q_i$. In this setting, consistent or exact recovery of the regression coefficient is only possible when $\epsilon<c$ for some small constant $c>0$ \citep{gao2020}. The reason Theorem \ref{thm:main-improved} allows $\epsilon\rightarrow 1$ is that there is no contamination for the design matrix $A$. 
 
 %We note here previous work by that has also observed the possibility $\epsilon\to 1$ in a regression setting with corrupted response using $\ell_1$ minimization, although this literature has primarily focused on the case of sparse $u^*$ \citep{wright,nguyen1,nguyen2}. The work of \cite{bhatia} establishes consistency of an iterative hard thresholding method.
 
@@ -94,13 +94,13 @@ and thus \conditionA{} holds with some constant $\sigma^2$, by an additional arg
 
 More generally, \conditionA{} also allows a design matrix with entries whose means are not necessarily zero. This will in general lead to a term $\sigma^2$ that may not be of constant order. However, since the condition of Theorem \ref{thm:main-improved} involves an additional $\epsilon$ factor in front of $\sigma$, the robust estimator $\wh{u}$ can still recover $u^*$ as long as the contamination proportion is vanishing at an appropriate rate. As an important application, the result of Theorem \ref{thm:main-improved} also applies to design matrices with an intercept.
 
-To close this section, we introduce an alternative of \conditionA. By (\ref{eq:pop-insight}), we observe that Fisher consistency also follows if $\mathbb{E}\sgn(z_i)=0$. However, this does not mean that we have to assume the distribution of $z_i$ is symmetric. It turns out we only need the distribution of $a_i$ to be symmetric by applying a symmetrization argument.
+We also introduce an alternative of \conditionA. By (\ref{eq:pop-insight}), we observe that Fisher consistency also follows if $\mathbb{E}\sgn(z_i)=0$. However, this does not mean that we have to assume the distribution of $z_i$ is symmetric. It turns out we only need the distribution of $a_i$ to be symmetric by applying a symmetrization argument.
 Note that with the help of independent Rademacher random variables $\delta_i\sim\text{Uniform}\{\pm 1\}$, we can write the data generating process as $\delta_i\eta_i=\delta_ia_i^Tu^*+\delta_iz_i$. With this new representation, we can also view $\delta_i\eta_i$, $\delta_ia_i$ and $\delta_iz_i$ as the response, covariate, and noise. Now the noise $\delta_iz_i$ is symmetric around zero, and it can be shown that $\delta_ia_i$ and $\delta_iz_i$ are still independent as long as the distribution of $a_i$ is symmetric. Since for any $u\in\mathbb{R}^k$,
 $$\sum_{i=1}^m|\delta_i\eta_i- \delta_ia_i^Tu|=\sum_{i=1}^m|\eta_i-a_i^Tu|,$$
 we obtain an equivalent median regression after symmetrization.
 This alternative condition is stated as follows.
 
-\nb{why $\wt{A}$?}
+
 \begin{con1}
 Given i.i.d. Rademacher random variables $\delta_1,...,\delta_m$, the distribution of
 $$\wt{A}^T=(\delta_1a_1,\delta_2a_2,...,\delta_ma_m)^T$$
@@ -111,3 +111,6 @@ is identical to that of $A^T$.
 Assume the design matrix $A$ satisfies \conditionAp{} and \conditionB. Then if $$\frac{\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}}{\underline{\lambda}(1-\epsilon)}$$
 is sufficiently small, we have $\wh{u}=u^*$ with high probability.
 \end{thm}
+
+To close this section, we note that the problem of robust regression with uncorrupted design is also recognized as outlier-robust regression in the literature.
+This problem has been studied previously by \cite{tsakonas2014convergence,wright,nguyen1,nguyen2,karmalkar2018compressed}. In particular, \cite{bhatia} proposed a hard-thresholding algorithm that consistently recovers the regression coefficients as long as $\epsilon$ is below some small constant. The recent work \cite{suggala2019adaptive} has established consistent recovery while allowing $\epsilon\rightarrow 1$. Compared with their algorithm, our method based on $\ell_1$ minimization is much simpler. Moreover, we allow $\epsilon=1-\Theta\left(\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}\right)$, compared with the requirement $\epsilon\leq 1-\Theta\left(\frac{1}{\log\log m}\right)$ in \cite{suggala2019adaptive}.

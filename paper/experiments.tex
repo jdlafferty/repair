@@ -31,7 +31,7 @@ where $z_j \sim (1-\epsilon) \delta_0 +\epsilon Q$. The corrupted estimator is t
 The design is sampled as $X_{ij} \sim N(0,1)$ and we take $\theta_j^* \sim N(0,1)$ and $Q = N(1,1)$. In the plots shown
 in Figure~\ref{fig:exp1} the sample size is fixed at $n=100$ and the dimension $p$ is varied according to $p/n=200/j^2$
 for a range of values of $j$. The plots show the empirical probability of exact repair $\tilde\theta = \hat\theta$ as a function of $\epsilon$. Each point on the curves is the average repair success over $500$ random trials.
-The roughly equal spacing of the curves agrees with the theory, which indicates that $\sqrt{n/p}/(1-\epsilon)$ should be sufficiently small for successful repair. The right plot in Figure~\ref{fig:exp1b} shows the per-coefficient repair probability, where the left plot shows the probability that the entire model is repaired; in this plot the sample size is $n=50$. \nb{left or right? legend}
+The roughly equal spacing of the curves agrees with the theory, which indicates that $\sqrt{n/p}/(1-\epsilon)$ should be sufficiently small for successful repair. The right plot in Figure~\ref{fig:exp1b} shows the per-coefficient repair probability, where the left plot shows the probability that the entire model is repaired; in this plot the sample size is $n=50$.
 
 \begin{figure}[ht]
   \begin{center}
@@ -45,8 +45,8 @@ The roughly equal spacing of the curves agrees with the theory, which indicates 
     \label{fig:exp1}
     \vskip10pt
     \begin{tabular}{cc}
-      \includegraphics[width=.47\textwidth]{figures/fig4a} &
-      \includegraphics[width=.47\textwidth]{figures/fig4b}\\[-10pt]
+      \includegraphics[width=.47\textwidth]{figures/fig4b} &
+      \includegraphics[width=.47\textwidth]{figures/fig4a}\\[-10pt]
     \end{tabular}
   \end{center}
 \caption{Left: Empirical probability of successful model repair for $n=50$ with the model dimension $p$
@@ -78,7 +78,7 @@ The probability of successful repair is shown in Figure~\ref{fig:mean}.
 
 As expected, the fraction $\epsilon$ that allows successful repair decreases; it appears to saturate at some fixed value $\epsilon_{\min}$. The mean $\mu$ cannot be made too large because it causes the design $X$ to become ill-conditioned, and the median regression fails.
 
-The inequality in Condition $A$ \nb{dollar in A} in this case takes the form
+The inequality in Condition $A$ in this case takes the form
 \begin{align*}
   \mathbb{E}\left\|\frac{1}{m}\sum_{i=1}^m c_i a_i\right\|^2 &\leq \frac{k}{m} + \mu^2 k
    \equiv \frac{n}{p} + \mu^2 n.

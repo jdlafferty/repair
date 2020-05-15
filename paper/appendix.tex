@@ -1,6 +1,6 @@
 % !TEX root = ./repair.tex
 
-\appendix
+
 
 \section{Results with hyperbolic tangent activation}
 
@@ -9,7 +9,7 @@
 
 In this section, we present analogous results of Sections \ref{sec:linear} and \ref{sec:neural} with ReLU activation. First, consider the random feature model with design $\wt{X}=\psi(XW)=\{\psi(W_j^Tx_i)\}_{i\in[n],j\in[p]}$, where $\psi(t)=\max(0,t)$. Recall that $x_i\sim N(0,I_d)$ and $W_j\sim N(0,d^{-1}I_d)$ independently for all $i\in[n]$ and $j\in[p]$. The random matrix $\wt{X}$ has good properties, which is given by the following lemma.
 \begin{lemma}\label{lem:design-rf-relu}
-Assume $n/p^2$ and $n\log n/d$ are sufficiently small. Then, Condition A and Condition B hold for $A=\wt{X}^T$, $m=p$ and $k=n$ with some $\sigma^2\asymp p$, $\overline{\lambda}^2\asymp n$ and $\underline{\lambda}\asymp 1$.
+Assume $n/p^2$ and $n\log n/d$ are sufficiently small. Then, Condition $A$ and Condition $B$ hold for $A=\wt{X}^T$, $m=p$ and $k=n$ with some $\sigma^2\asymp p$, $\overline{\lambda}^2\asymp n$ and $\underline{\lambda}\asymp 1$.
 \end{lemma}
 
 Now consider a model $\wh{\theta}$ that lies in the row space of $\wt{X}$. For example, $\wh{\theta}$ can be computed from a gradient-based algorithm initialized at $0$. We observe a contaminated version $\eta=\wh{\theta}+z$.
@@ -46,16 +46,16 @@ Under the conditions of Theorem \ref{thm:nn-grad-relu}, additionally assume that
 \end{thm}
 
 \begin{remark}
-When $\epsilon\sqrt{n}$ is sufficiently small, the conditions of Theorem \ref{thm:repair-nn-1-relu} and Theorem \ref{thm:repair-nn-2-relu} can be simplified as $p \gg n^3$ and $d\gg n$ by ignoring the logarithmic factors. The more stringent requirement on $\epsilon$ is due to the fact that the design matrix $\psi(XW)$ does not have approximate zero mean with the ReLU activation. This results in a large $\sigma^2$ in Condition A. In contrast, the hyperbolic tangent activation is an odd function, a property of symmetry that leads to Condition A with a constant $\sigma^2$.
+When $\epsilon\sqrt{n}$ is sufficiently small, the conditions of Theorem \ref{thm:repair-nn-1-relu} and Theorem \ref{thm:repair-nn-2-relu} can be simplified as $p \gg n^3$ and $d\gg n$ by ignoring the logarithmic factors. The more stringent requirement on $\epsilon$ is due to the fact that the design matrix $\psi(XW)$ does not have approximate zero mean with the ReLU activation. This results in a large $\sigma^2$ in Condition $A$. In contrast, the hyperbolic tangent activation is an odd function, a property of symmetry that leads to Condition $A$ with a constant $\sigma^2$.
 \end{remark}
 
 
 \subsection{Proofs of Lemma \ref{lem:design-rf-relu} and Corollary \ref{cor:repair-rf-relu}}
 
 We first state the proof of Lemma \ref{lem:design-rf-relu}. 
-The conclusion of Condition A is obvious by
+The conclusion of Condition $A$ is obvious by
 $$\sum_{i=1}^n\mathbb{E}\left(\frac{1}{p}\sum_{j=1}^pc_j\psi(W_j^Tx_i)\right)^2\leq \sum_{i=1}^n\frac{1}{p}\sum_{j=1}^p\mathbb{E}|W_j^Tx_i|^2= n,$$
-and Markov's inequality. To check Condition B, we prove (\ref{eq:l1-upper-A}) and (\ref{eq:l2-upper-A}) separately.
+and Markov's inequality. To check Condition $B$, we prove (\ref{eq:l1-upper-A}) and (\ref{eq:l2-upper-A}) separately.
 \begin{proof}[Proof of (\ref{eq:l1-upper-A}) of Lemma \ref{lem:design-rf-relu}]
 We adopt a similar strategy to the proof of Lemma \ref{lem:design-rf}. Define
 $$f(W,X,\Delta)=\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(W_j^Tx_i)\Delta_i\right|,$$
@@ -459,10 +459,10 @@ The proof is the same as that of Theorem \ref{thm:repair-nn-1}. The only excepti
 \begin{proof}[Proof of Theorem \ref{thm:repair-nn-2-relu}]
 The analysis of $\wh{v}_1,...,\wh{v}_p$ is the same as that in the proof of Theorem \ref{thm:repair-nn-1}, and we have $\wt{W}_j=\wh{W}_j$ for all $j\in[p]$ with high probability.
 
-To analyze $\wh{u}$, we apply Theorem \ref{thm:main-improved}. It suffices to check Condition A and Condition B for the design matrix $\psi(X^T\wt{W}^T)=\psi(X^T\wh{W}^T)$. Since
+To analyze $\wh{u}$, we apply Theorem \ref{thm:main-improved}. It suffices to check Condition $A$ and Condition $B$ for the design matrix $\psi(X^T\wt{W}^T)=\psi(X^T\wh{W}^T)$. Since
 $$\sum_{i=1}^n\mathbb{E}\left(\frac{1}{p}\sum_{j=1}^pc_j\psi(\wh{W}_j^Tx_i)\right)^2\leq \sum_{i=1}^n\frac{1}{p}\sum_{j=1}^p\mathbb{E}\psi(\wh{W}^Tx_i)^2,$$
-and $\mathbb{E}\psi(\wh{W}^Tx_i)^2\leq \mathbb{E}|\wh{W}_j^Tx_i|^2\lesssim 1 + R_1d\lesssim 1$, Condition A holds with $\sigma^2\asymp p$.
-We also need to check Condition B. By Theorem \ref{thm:nn-grad-relu}, we have
+and $\mathbb{E}\psi(\wh{W}^Tx_i)^2\leq \mathbb{E}|\wh{W}_j^Tx_i|^2\lesssim 1 + R_1d\lesssim 1$, Condition $A$ holds with $\sigma^2\asymp p$.
+We also need to check Condition $B$. By Theorem \ref{thm:nn-grad-relu}, we have
 \begin{eqnarray*}
 && \left|\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(\wh{W}_j^Tx_i)\Delta_i\right| - \frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(W_j(0)^Tx_i)\Delta_i\right|\right| \\
 &\leq& \frac{1}{p}\sum_{j=1}^p\sum_{i=1}^n|\wh{W}_j^Tx_i-W_j(0)^Tx_i||\Delta_i| \\
@@ -474,5 +474,5 @@ where $\sum_{i=1}^n\|x_i\|^2\lesssim nd$ is by Lemma \ref{lem:chi-squared}. By L
 $$\inf_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(\wh{W}_j^Tx_i)\Delta_i\right|\gtrsim 1,$$
 as long as $\frac{n^{3/2}\log p}{\sqrt{p}}$ is sufficiently small. By (\ref{eq:Gk-spec}), we also have
 $$\sup_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(\wh{W}_j^Tx_i)\Delta_i\right|^2\lesssim n.$$
-Therefore, Condition B holds with $\overline{\lambda}^2\asymp n$ and $\underline{\lambda}\asymp 1$. Apply Theorem \ref{thm:main-improved}, and we have $\wt{\beta}=\wh{\beta}$ with high probability as desired.
+Therefore, Condition $B$ holds with $\overline{\lambda}^2\asymp n$ and $\underline{\lambda}\asymp 1$. Apply Theorem \ref{thm:main-improved}, and we have $\wt{\beta}=\wh{\beta}$ with high probability as desired.
 \end{proof}
