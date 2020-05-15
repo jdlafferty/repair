@@ -36,8 +36,8 @@ The roughly equal spacing of the curves agrees with the theory, which indicates 
 \begin{figure}[ht]
   \begin{center}
     \begin{tabular}{cc}
-      \includegraphics[width=.47\textwidth]{fig/plot-linear-100} &
-      \includegraphics[width=.47\textwidth]{fig/plot-linear-100-adj}\\[-10pt]
+      \includegraphics[width=.47\textwidth]{figures/fig3a} &
+      \includegraphics[width=.47\textwidth]{figures/fig3b}\\[-10pt]
     \end{tabular}
     \caption{Model repair for underdetermined linear models $y=X^T\theta + w$ with $p>n$. The left plot shows the empirical probability of successful model repair for $n=100$ with the model dimension $p$
     varying as $p/n = 200 /j^2$, for $j=1,\ldots, 7$. Each point is an average over 500 random trials. The covariates are sampled as $N(0,1)$ and the corruption distribution is $Q=N(1,1)$. The right plot shows the repair probablity as a function
@@ -45,8 +45,8 @@ The roughly equal spacing of the curves agrees with the theory, which indicates 
     \label{fig:exp1}
     \vskip10pt
     \begin{tabular}{cc}
-      \includegraphics[width=.47\textwidth]{fig/plot-linear-total-50} &
-      \includegraphics[width=.47\textwidth]{fig/plot-linear-sum-50}\\[-10pt]
+      \includegraphics[width=.47\textwidth]{figures/fig4a} &
+      \includegraphics[width=.47\textwidth]{figures/fig4b}\\[-10pt]
     \end{tabular}
   \end{center}
 \caption{Left: Empirical probability of successful model repair for $n=50$ with the model dimension $p$
@@ -59,7 +59,7 @@ varying as $p/n = 200 /j^2$. Right: Per-coefficient probability of successful re
   \begin{center}
     \begin{tabular}{c}
       $n=50$ and $p=500$ fixed, varying mean $\mu$\\
-      \includegraphics[width=.55\textwidth]{fig/plot-linear-mean-shift-50}
+      \includegraphics[width=.55\textwidth]{figures/fig5}
     \end{tabular}
   \end{center}
 \caption{Model repair for linear models with design entries $X_{i,j}\sim N(\mu, 1)$,
@@ -107,8 +107,8 @@ and $d=\lceil p/2\rceil$. The recovery success curves for gradient descent are s
   \begin{center}
     \begin{tabular}{cc}
       {\scriptsize $n=50$} & {\scriptsize $n=100$} \\
-      \includegraphics[width=.47\textwidth]{fig/plot-rf-50} &
-      \includegraphics[width=.47\textwidth]{fig/plot-rf-100}\\[-10pt]
+      \includegraphics[width=.47\textwidth]{figures/fig6a} &
+      \includegraphics[width=.47\textwidth]{figures/fig6b}\\[-10pt]
     \end{tabular}
   \end{center}
 \caption{Model repair for random feature models $y=\psi(XW)\theta + w$ with $p>n$, where $\psi(\cdot) = \tanh(\cdot)$
@@ -138,9 +138,9 @@ average squared errors $(\tilde W_{ij} - \hat W_{ij})^2$ and $(\tilde \beta_j - 
   \begin{center}
     \vskip15pt
     \begin{tabular}{ccc}
-    \hskip-6pt\includegraphics[width=.32\textwidth]{fig/ann-tanh-retrain-n=50-trials=100} &
-    \hskip-6pt\includegraphics[width=.32\textwidth]{fig/ann-tanh-retrain=F-n=50-trials=100-W_error} &
-    \hskip-6pt\includegraphics[width=.32\textwidth]{fig/ann-tanh-retrain=F-n=50-trials=100-beta_error}
+    \hskip-6pt\includegraphics[width=.32\textwidth]{figures/fig7a} &
+    \hskip-6pt\includegraphics[width=.32\textwidth]{figures/fig7b} &
+    \hskip-6pt\includegraphics[width=.32\textwidth]{figures/fig7c}
 
     \end{tabular}
   \end{center}
