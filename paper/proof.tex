@@ -7,7 +7,7 @@
 
 \subsection{Technical Lemmas}
 
-We present a few technical lemmas that will be used in the proofs. The first lemma is Hoeffding's inequality
+We present a few technical lemmas that will be used in the proofs. The first lemma is Hoeffding's inequality.
 \begin{lemma}[\cite{hoeffding1963probability}]\label{lem:hoeffding}
 Consider independent random variables $X_1,...,X_n$ that satisfy $X_i\in[a_i,b_i]$ for all $i\in[n]$. Then, for any $t>0$,
 $$\mathbb{P}\left(\left|\sum_{i=1}^n(X_i-\mathbb{E}X_i)\right|>t\right) \leq 2\exp\left(-\frac{2t^2}{\sum_{i=1}^n(b_i-a_i)^2}\right).$$
@@ -26,7 +26,7 @@ $$\mathbb{P}\left(|f(Z)-\mathbb{E}f(Z)|>t\right)\leq 2\exp\left(-\frac{t^2}{2L^2
 where $Z\sim N(0,I_k)$.
 \end{lemma}
 
-Finally, we present two lemmas on the concentration of norms and inner products of multivariate Gaussian.
+Finally, we present two lemmas on the concentration of norms and inner products of multivariate Gaussians.
 \begin{lemma}[\cite{laurent2000adaptive}]\label{lem:chi-squared}
 For any $t>0$, we have
 \begin{eqnarray*}
@@ -50,11 +50,11 @@ By Lemma \ref{lem:chi-squared}, we have
 &\leq 2e^{-t},
 \end{align*}
 and
-\begin{eqnarray*}
-&& \mathbb{P}\left(\|Y_1\|\|Y_2\| -k \leq -2\sqrt{tk}-2t\right) \\
-&\leq& \mathbb{P}\left(\|Y_1\|^2 \leq k -2\sqrt{tk}\right) + \mathbb{P}\left(\|Y_2\|^2 \leq k -2\sqrt{tk}\right) \\
-&\leq& 2e^{-t}.
-\end{eqnarray*}
+\begin{align*}
+\mathbb{P}\Bigl(\|Y_1\|\|Y_2\| -k \leq & -2\sqrt{tk}-2t\Bigr)\\
+&\leq \mathbb{P}\left(\|Y_1\|^2 \leq k -2\sqrt{tk}\right) + \mathbb{P}\left(\|Y_2\|^2 \leq k -2\sqrt{tk}\right) \\
+&\leq 2e^{-t}.
+\end{align*}
 Summing up the two bounds above, we obtain the first conclusion. For the second conclusion, note that
 $$\mathbb{P}\left(Y_1^TY_2 \geq x\right)\leq e^{-\lambda x}\mathbb{E}e^{\lambda Y_1^TY_2}=\exp\left(-\lambda x-\frac{k}{2}\log(1-\lambda^2)\right)\leq \exp\left(-\lambda x+\frac{k}{2}\lambda^2\right),$$
 for any $x>0$ and $\lambda\in (0,1)$. Optimize over $\lambda\in (0,1)$, and we obtain $\mathbb{P}\left(Y_1^TY_2>x\right)\leq e^{-\frac{1}{2}\left(\frac{x^2}{k}\wedge x\right)}$. Take $x=\sqrt{2kt}+2t$, and then we obtain the bound
@@ -80,7 +80,7 @@ We use the notation $G_m(\Delta)=\frac{1}{m}\sum_{i=1}^m[(|a_i^T\Delta-z_i|-|z_i
 \end{eqnarray*}
 where the last line is due to the condition (\ref{eq:l2-upper-A}). Thus,
 $$\left|G_m(\Delta)\right| \leq \left|G_m(\Delta')\right| + 2\overline{\lambda}\zeta.$$
-Taking supremum over both sides of the inequality, we obtain
+Taking the supremum over both sides of the inequality, we obtain
 \begin{equation}
 \sup_{\|\Delta\|\leq t}|G_m(\Delta)| \leq \max_{\Delta\in\mathcal{N}_{t,\zeta}}\left|G_m(\Delta)\right| + 2\overline{\lambda}\zeta. \label{eq:disc-not-good}
 \end{equation}
@@ -144,7 +144,7 @@ where the last inequality is by (\ref{eq:l1-upper-A}). Together with (\ref{eq:ba
 \end{equation}
 Since the condition (\ref{eq:l2-upper-A}) continues to hold with $A$ replaced by $\wt{A}$, we can apply Lemma \ref{lem:EP} and obtain that
 $$\sup_{\|u-u^*\|= t}|L_m(u)-L(u)| \lesssim t\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)},$$
-with high probability. Under the conditions of the theorem, we know that $\frac{t\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}}{\underline{\lambda}(1-\epsilon)t}$ is sufficiently small, and thus by (\ref{eq:larger-t-prob}), $\|\wh{u}-u^*\|<t$ with high probability. Since $t$ s arbitrary, we must have $\wh{u}=u^*$.
+with high probability. Under the conditions of the theorem, we know that $\frac{t\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}}{\underline{\lambda}(1-\epsilon)t}$ is sufficiently small, and thus by (\ref{eq:larger-t-prob}), $\|\wh{u}-u^*\|<t$ with high probability. Since $t$ is arbitrary, we must have $\wh{u}=u^*$.
 \end{proof}
 
 \begin{proof}[Proof of Theorem \ref{thm:robust-reg-b}]
@@ -183,9 +183,9 @@ and we will analyze the second term on the right hand side of the inequality abo
 \left|\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta| - \sqrt{\frac{2}{\pi}} \right| &\leq& \left|\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta'| - \sqrt{\frac{2}{\pi}} \right|  + \zeta\sup_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta| \\
 &\leq& \left|\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta'| - \sqrt{\frac{2}{\pi}} \right| + \zeta\sup_{\|\Delta\|=1}\left|\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta| - \sqrt{\frac{2}{\pi}} \right| + \zeta\sqrt{\frac{2}{\pi}}.
 \end{eqnarray*}
-Taking supremum on both sides of the inequality, with some arrangements, we obtain
+Taking the supremum on both sides of the inequality, with some rearrangement, we obtain
 $$\sup_{\|\Delta\|=1}\left|\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta| - \sqrt{\frac{2}{\pi}} \right|\leq (1-\zeta)^{-1}\max_{\Delta\in\mathcal{N}_{\zeta}}\left|\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta| - \sqrt{\frac{2}{\pi}} \right| + \frac{\zeta}{1-\zeta}\sqrt{\frac{2}{\pi}}.$$
-Set $\zeta=1/3$, and we then have
+Setting $\zeta=1/3$, we then have
 $$\inf_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta| \geq (2\pi)^{-1} - \frac{3}{2}\max_{\Delta\in\mathcal{N}_{1/3}}\left|\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta| - \sqrt{\frac{2}{\pi}} \right|.$$
 Lemma \ref{lem:talagrand} together with a union bound argument leads to
 $$\mathbb{P}\left(\max_{\Delta\in\mathcal{N}_{1/3}}\left|\frac{1}{p}\sum_{j=1}^p|a_j^T\Delta| - \sqrt{\frac{2}{\pi}} \right|>t\right)\leq 2\exp\left(n\log(7)-\frac{pt^2}{2}\right),$$
@@ -263,12 +263,11 @@ and we can conclude that
 \begin{equation}
 \inf_{\|\Delta\|=1, \max_{1\leq i\leq n}|\Delta_i|\geq\delta_0}\mathbb{E}f(W,X,\Delta) \gtrsim 1.\label{appeq:l1-1-3}
 \end{equation}
-
-In the end, we combine the two cases (\ref{appeq:l1-1-2}) and (\ref{appeq:l1-1-3}),  and we obtain the conclusion that
+Combining the two cases (\ref{appeq:l1-1-2}) and (\ref{appeq:l1-1-3}),  we obtain the conclusion that
 $$\inf_{\|\Delta\|=1}\mathbb{E}f(W,X,\Delta)\gtrsim 1.$$
 
 
-\paragraph{Analysis of (\ref{eq:ep-f-relu}).} We shorthand the conditional expectation operator $\mathbb{E}(\cdot|X)$ by $\mathbb{E}^X$. Let $\wt{W}$ be an independent copy of $W$, and we first bound the moment generating function via a standard symmetrization argument. For any $\lambda>0$,
+\paragraph{Analysis of (\ref{eq:ep-f-relu}).} We now denote the conditional expectation operator $\mathbb{E}(\cdot|X)$ by $\mathbb{E}^X$. Letting $\wt{W}$ be an independent copy of $W$, we first bound the moment generating function via a standard symmetrization argument. For any $\lambda>0$,
 \begin{eqnarray}
 \nonumber && \mathbb{E}^X\exp\left(\lambda \sup_{\|\Delta\|=1}\left|f(W,X,\Delta)-\mathbb{E}^Xf(W,X,\Delta)\right|\right) \\
 \nonumber &\leq& \mathbb{E}^X\exp\left(\lambda \mathbb{E}^{X,W}\sup_{\|\Delta\|=1}\left|f(W,X,\Delta)-f(\wt{W},X,\Delta)\right|\right) \\
@@ -276,7 +275,7 @@ $$\inf_{\|\Delta\|=1}\mathbb{E}f(W,X,\Delta)\gtrsim 1.$$
 \nonumber &=& \mathbb{E}^X\exp\left(\lambda\sup_{\|\Delta\|=1}\left|\frac{1}{p}\sum_{j=1}^p\epsilon_j\left(\left|\sum_{i=1}^n\psi(W_j^Tx_i)\Delta_i\right|-\left|\sum_{i=1}^n\psi(\wt{W}_j^Tx_i)\Delta_i\right|\right)\right|\right) \\
 \label{eq:mgf-b-relu} &\leq& \mathbb{E}^X\exp\left(2\lambda\sup_{\|\Delta\|=1}\left|\frac{1}{p}\sum_{j=1}^p\epsilon_j\left|\sum_{i=1}^n\psi(W_j^Tx_i)\Delta_i\right|\right|\right),
 \end{eqnarray}
-where $\epsilon_1,...,\epsilon_p$ are independent Rademacher random variables. Let us adopt the notation that
+where $\epsilon_1,...,\epsilon_p$ are independent Rademacher random variables. Let us adopt the notation
 $$F(\epsilon,W,X,\Delta)=\frac{1}{p}\sum_{j=1}^p\epsilon_j\left|\sum_{i=1}^n\psi(W_j^Tx_i)\Delta_i\right|.$$
 We use a discretization argument. For the Euclidean sphere $S^{n-1}=\{\Delta\in\mathbb{R}^n: \|\Delta\|=1\}$, there exists a subset $\mathcal{N}\subset S^{n-1}$, such that for any $\Delta\in S^{n-1}$, there exists a $\Delta'\in\mathcal{N}$ that satisfies $\|\Delta-\Delta'\|\leq 1/2$, and we also have the bound $\log|\mathcal{N}|\leq 2n$. See, for example, Lemma 5.2 of \cite{vershynin2010introduction}.
 For any $\Delta\in S^{n-1}$ and the corresponding $\Delta'\in\mathcal{N}$ that satisfies $\|\Delta-\Delta'\|\leq 1/2$, we have
@@ -289,30 +288,30 @@ $$\sup_{\|\Delta\|=1}|F(\epsilon,W,X,\Delta)|\leq 2\max_{\Delta\in\mathcal{N}}|F
 Define $\bar{F}(\epsilon,X,\Delta)=\mathbb{E}^{\epsilon,X}F(\epsilon,W,X,\Delta)$, and then
 $$\max_{\Delta\in\mathcal{N}}|F(\epsilon,W,X,\Delta)|\leq \max_{\Delta\in\mathcal{N}}|F(\epsilon,W,X,\Delta)-\bar{F}(\epsilon,X,\Delta)|+\max_{\Delta\in\mathcal{N}}|\bar{F}(\epsilon,X,\Delta)|.$$
 In view of (\ref{eq:mgf-b-relu}), we obtain the bound
-\begin{eqnarray}
-\nonumber && \mathbb{E}^X\exp\left(\lambda \sup_{\|\Delta\|=1}\left|f(W,X,\Delta)-\mathbb{E}^Xf(W,X,\Delta)\right|\right) \\
-\nonumber &\leq& \mathbb{E}^X\exp\left(4\lambda \max_{\Delta\in\mathcal{N}}|F(\epsilon,W,X,\Delta)-\bar{F}(\epsilon,X,\Delta)|+4\lambda \max_{\Delta\in\mathcal{N}}|\bar{F}(\epsilon,X,\Delta)|\right) \\
-\label{eq:tala-mgf1-relu} &\leq& \frac{1}{2}\sum_{\Delta\in\mathcal{N}} \mathbb{E}^{X}\exp\left(4\lambda|F(\epsilon,W,X,\Delta)-\bar{F}(\epsilon,X,\Delta)|\right) \\
-\label{eq:tala-mgf2-relu} && + \frac{1}{2}\sum_{\Delta\in\mathcal{N}} \mathbb{E}^{X}\exp\left(4\lambda |\bar{F}(\epsilon,X,\Delta)|\right).
-\end{eqnarray}
+\begin{align}
+\nonumber \mathbb{E}^X\exp\Bigl(\lambda & \sup_{\|\Delta\|=1}\Bigl|f(W,X,\Delta)-\mathbb{E}^Xf(W,X,\Delta)\Bigr|\Bigr) \\
+\nonumber &\leq \mathbb{E}^X\exp\left(4\lambda \max_{\Delta\in\mathcal{N}}|F(\epsilon,W,X,\Delta)-\bar{F}(\epsilon,X,\Delta)|+4\lambda \max_{\Delta\in\mathcal{N}}|\bar{F}(\epsilon,X,\Delta)|\right) \\
+\label{eq:tala-mgf1-relu} &\leq \frac{1}{2}\sum_{\Delta\in\mathcal{N}} \mathbb{E}^{X}\exp\left(4\lambda|F(\epsilon,W,X,\Delta)-\bar{F}(\epsilon,X,\Delta)|\right) \\
+\label{eq:tala-mgf2-relu} & \qquad + \frac{1}{2}\sum_{\Delta\in\mathcal{N}} \mathbb{E}^{X}\exp\left(4\lambda |\bar{F}(\epsilon,X,\Delta)|\right).
+\end{align}
 We will bound the two terms above on the event $E=\left\{\sum_{i=1}^n\|x_i\|^2\leq 3nd\right\}$. For any $W,\wt{W}$, we have
-\begin{eqnarray*}
-\left|F(\epsilon,W,X,\Delta)-F(\epsilon,\wt{W},X,\Delta)\right| &\leq& \frac{1}{p}\sum_{j=1}^p\sum_{i=1}^n\left|({\psi}(W_j^Tx_i)-{\psi}(\wt{W}_j^Tx_i))\Delta_i\right| \\
-&\leq& \frac{1}{p}\sum_{j=1}^p\sum_{i=1}^n|(W_j-\wt{W}_j)^Tx_i||\Delta_i| \\
-&\leq& \frac{1}{p}\sum_{j=1}^p\sum_{i=1}^n\|W_j-\wt{W}_j\|\|x_i\||\Delta_i| \\
-&\leq& \frac{1}{\sqrt{p}}\sqrt{\sum_{j=1}^p\|W_j-\wt{W}_j\|^2}\sqrt{\sum_{i=1}^n\|x_i\|^2} \\
-&\leq& \sqrt{\frac{3n}{p}}\sqrt{\sum_{j=1}^p\|\sqrt{d}W_j-\sqrt{d}\wt{W}_j\|^2},
-\end{eqnarray*}
+\begin{align*}
+\left|F(\epsilon,W,X,\Delta)-F(\epsilon,\wt{W},X,\Delta)\right| &\leq \frac{1}{p}\sum_{j=1}^p\sum_{i=1}^n\left|({\psi}(W_j^Tx_i)-{\psi}(\wt{W}_j^Tx_i))\Delta_i\right| \\
+&\leq \frac{1}{p}\sum_{j=1}^p\sum_{i=1}^n|(W_j-\wt{W}_j)^Tx_i||\Delta_i| \\
+&\leq \frac{1}{p}\sum_{j=1}^p\sum_{i=1}^n\|W_j-\wt{W}_j\|\|x_i\||\Delta_i| \\
+&\leq \frac{1}{\sqrt{p}}\sqrt{\sum_{j=1}^p\|W_j-\wt{W}_j\|^2}\sqrt{\sum_{i=1}^n\|x_i\|^2} \\
+&\leq \sqrt{\frac{3n}{p}}\sqrt{\sum_{j=1}^p\|\sqrt{d}W_j-\sqrt{d}\wt{W}_j\|^2},
+\end{align*}
 where the last inequality holds under the event $E$. By Lemma \ref{lem:talagrand}, we have for any $X$ such that $E$ holds,
 $$\mathbb{P}\left(|F(\epsilon,W,X,\Delta)-\bar{F}(\epsilon,X,\Delta)|>t\big|X\right)\leq 2\exp\left(-\frac{pt^2}{6n}\right),$$
 for any $t>0$. The sub-Gaussian tail implies a bound for the moment generating function. By Lemma 5.5 of \cite{vershynin2010introduction}, we have
 $$\mathbb{E}^{X}\exp\left(4\lambda|F(\epsilon,W,X,\Delta)-\bar{F}(\epsilon,X,\Delta)|\right) \leq \exp\left(C_1\frac{n}{p}\lambda^2\right),$$
 for some constant $C_1>0$. To bound the moment generating function of $\bar{F}(\epsilon,X,\Delta)$, we note that
-\begin{eqnarray*}
-|\bar{F}(\epsilon,X,\Delta)|\ &\leq& \left|\frac{1}{p}\sum_{j=1}^p\epsilon_j\right|\mathbb{E}^X\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right| \\
-&\leq& \left|\frac{1}{p}\sum_{j=1}^p\epsilon_j\right|\sqrt{\sum_{i=1}^n\mathbb{E}^X|\psi(W^Tx_i)|^2} \\
-&\leq& \left|\frac{1}{p}\sum_{j=1}^p\epsilon_j\right|\sqrt{\sum_{i=1}^n\|x_i\|^2/d} \leq \sqrt{3n}\left|\frac{1}{p}\sum_{j=1}^p\epsilon_j\right|,
-\end{eqnarray*}
+\begin{align*}
+|\bar{F}(\epsilon,X,\Delta)|\ &\leq \left|\frac{1}{p}\sum_{j=1}^p\epsilon_j\right|\mathbb{E}^X\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right| \\
+&\leq \left|\frac{1}{p}\sum_{j=1}^p\epsilon_j\right|\sqrt{\sum_{i=1}^n\mathbb{E}^X|\psi(W^Tx_i)|^2} \\
+&\leq \left|\frac{1}{p}\sum_{j=1}^p\epsilon_j\right|\sqrt{\sum_{i=1}^n\|x_i\|^2/d} \leq \sqrt{3n}\left|\frac{1}{p}\sum_{j=1}^p\epsilon_j\right|,
+\end{align*}
 where the last inequality holds under the event $E$. With an application of Hoeffding-type inequality (Lemma 5.9 of \cite{vershynin2010introduction}), we have
 $$\mathbb{E}^{X}\exp\left(4\lambda |\bar{F}(\epsilon,X,\Delta)|\right)\leq \mathbb{E}\exp\left(4\lambda\sqrt{3n}\left|\frac{1}{p}\sum_{j=1}^p\epsilon_j\right|\right)\leq \exp\left(C_1\frac{n}{p}\lambda^2\right).$$
 Note that we can use the same constant $C_1$ by making its value sufficiently large. Plug the two moment generating function bounds into (\ref{eq:tala-mgf1-relu}) and (\ref{eq:tala-mgf2-relu}), and we obtain the bound
@@ -541,12 +540,12 @@ $$\sum_{i\neq l}\left(\frac{\bar{x}_i^T\bar{x}_l}{d}\mathbb{E}\left(\psi'(W^T\ba
 with high probability.
 
 For (\ref{eq:H-tilde-2}), we note that
-\begin{eqnarray*}
-&& \mathbb{E}\left(\psi'(W^T{x}_i)\psi'(W^T{x}_l)-\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\right) \\
-&\leq& \mathbb{E}\left(|\psi'(W^T{x}_i)-\psi'(W^T\bar{x}_i)|\big|X\right) + \mathbb{E}\left(|\psi'(W^T{x}_l)-\psi'(W^T\bar{x}_l)|\big|X\right) \\
-&\leq& 2\mathbb{E}\left(|W^T(x_i-\bar{x}_i)|\big|X\right) + 2\mathbb{E}\left(|W^T(x_l-\bar{x}_l)|\big|X\right) \\
-&=& 2\left|\frac{\|x_i\|}{\sqrt{d}}-1\right| + 2\left|\frac{\|x_l\|}{\sqrt{d}}-1\right|,
-\end{eqnarray*}
+\begin{align*}
+ \mathbb{E}\Bigl(\psi'(W^T{x}_i)\psi'(W^T{x}_l)&-\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\Bigr) \\
+&\leq \mathbb{E}\left(|\psi'(W^T{x}_i)-\psi'(W^T\bar{x}_i)|\big|X\right) + \mathbb{E}\left(|\psi'(W^T{x}_l)-\psi'(W^T\bar{x}_l)|\big|X\right) \\
+&\leq 2\mathbb{E}\left(|W^T(x_i-\bar{x}_i)|\big|X\right) + 2\mathbb{E}\left(|W^T(x_l-\bar{x}_l)|\big|X\right) \\
+&= 2\left|\frac{\|x_i\|}{\sqrt{d}}-1\right| + 2\left|\frac{\|x_l\|}{\sqrt{d}}-1\right|,
+\end{align*}
 where we have used $\sup_x|\psi'(x)|\leq 1$ and $\sup_x|\psi''(x)|\leq 2$ in the above inequalities. Therefore, the contribution of (\ref{eq:H-tilde-2}) in terms of squared Frobenius norm is bounded by
 \begin{eqnarray*}
 && \sum_{i\neq l}\left|\frac{x_i^Tx_l}{d}\right|^2\left(2\left|\frac{\|x_i\|}{\sqrt{d}}-1\right| + 2\left|\frac{\|x_l\|}{\sqrt{d}}-1\right|\right)^2 \\
@@ -637,7 +636,7 @@ Hence, (\ref{eq:iter-parameter-beta}) holds for $t=k+1$, and Claim A is true.
 \end{eqnarray*}
 where we have used (\ref{eq:r1e1}), (\ref{eq:r1e3}) and (\ref{eq:r1e7}) in the above inequalities. Thus, Claim C is true.
 
-\paragraph{Proof of Claim D.} 
+\paragraph{Proof of Claim D.}
 We first analyze $u(k+1)-u(k)$. For each $i\in[n]$, we have
 \begin{eqnarray*}
 && u_i(k+1) - u_i(k) \\
@@ -654,7 +653,7 @@ H_{il}(k) &=& \frac{x_i^Tx_l}{d}\frac{1}{p}\sum_{j=1}^p\beta_j(k+1)^2\psi'(W_j(k
 \end{eqnarray*}
 and
 $$r_i(k)=\frac{1}{2\sqrt{p}}\sum_{j=1}^p\beta_j(k+1)|(W_j(k+1)-W_j(k))^Tx_i|^2\psi''(\xi_{ijk}).$$
-Note that $\xi_{ijk}$ is some random variable whose value is between $W_j(k)^Tx_i$ and $W_j(k+1)^Tx_i$. 
+Note that $\xi_{ijk}$ is some random variable whose value is between $W_j(k)^Tx_i$ and $W_j(k+1)^Tx_i$.
 The above iteration formula can be summarized in a vector form as
 \begin{equation}
 u(k+1)-u(k)=\gamma(H(k)+G(k))(y-u(k))+r(k). \label{eq:iter-u-arctan}
@@ -731,9 +730,3 @@ Together with the bound (\ref{eq:main-inner}), we have
 $$\|y-u(k+1)\|^2 \leq \left(1-\frac{\gamma}{8}\right)\|y-u(k)\|^2\leq \left(1-\frac{\gamma}{8}\right)^{k+1}\|y-u(0)\|^2,$$
 and thus Claim D is true. The proof is complete.
 \end{proof}
-
-
-
-
-
-

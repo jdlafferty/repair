@@ -2,7 +2,7 @@
 
 
 
-\section{Results with hyperbolic tangent activation}
+\section{Results with ReLU activation}
 
 
 \subsection{Repair of random feature model and neural nets} \label{app:results}
@@ -52,7 +52,7 @@ When $\epsilon\sqrt{n}$ is sufficiently small, the conditions of Theorem \ref{th
 
 \subsection{Proofs of Lemma \ref{lem:design-rf-relu} and Corollary \ref{cor:repair-rf-relu}}
 
-We first state the proof of Lemma \ref{lem:design-rf-relu}. 
+We first state the proof of Lemma \ref{lem:design-rf-relu}.
 The conclusion of Condition $A$ is obvious by
 $$\sum_{i=1}^n\mathbb{E}\left(\frac{1}{p}\sum_{j=1}^pc_j\psi(W_j^Tx_i)\right)^2\leq \sum_{i=1}^n\frac{1}{p}\sum_{j=1}^p\mathbb{E}|W_j^Tx_i|^2= n,$$
 and Markov's inequality. To check Condition $B$, we prove (\ref{eq:l1-upper-A}) and (\ref{eq:l2-upper-A}) separately.
@@ -346,7 +346,7 @@ The last conclusion (\ref{eq:last-added-ref}) follows a similar argument in the 
 
 Now we are ready to prove Theorem \ref{thm:nn-grad-relu}.
 \begin{proof}[Proof of Theorem \ref{thm:nn-grad-relu}]
-The proof is similar to that of Theorem \ref{thm:nn-grad}, and we will omit repeated arguments. We will use the high-probability inequalities (\ref{eq:r1e1})-(\ref{eq:r1e9}). Then, it suffices to establish Claims A, B, C and D in the proof of Theorem \ref{thm:nn-grad}. Since Claims A and C follow the same argument, we only need to check Claims B and D. Given the similarity of Claims B and D, we only present the proof of Claim D. 
+The proof is similar to that of Theorem \ref{thm:nn-grad}, and we will omit repeated arguments. We will use the high-probability inequalities (\ref{eq:r1e1})-(\ref{eq:r1e9}). Then, it suffices to establish Claims A, B, C and D in the proof of Theorem \ref{thm:nn-grad}. Since Claims A and C follow the same argument, we only need to check Claims B and D. Given the similarity of Claims B and D, we only present the proof of Claim D.
 We have
 \begin{equation}
 u(k+1)-u(k)=\gamma(H(k)+G(k))(y-u(k))+r(k), \label{eq:iter-u-relu}
@@ -363,7 +363,7 @@ r_i(k) &=& \frac{1}{\sqrt{p}}\sum_{j=1}^p\beta_j(k+1)\left(\psi(W_j(k+1)^Tx_i)-\
 \end{eqnarray*}
 
 
-With the same argument, the bound (\ref{eq:x-japan}) still holds. 
+With the same argument, the bound (\ref{eq:x-japan}) still holds.
 By Lemma \ref{lem:lim-G-relu} and the fact that $G(k)$ is positive semi-definite, we have
 \begin{equation}
 0 \leq \lambda_{\min}(G(k)) \leq \lambda_{\max}(G(k)) \lesssim n. \label{eq:Gk-spec}
@@ -474,5 +474,5 @@ where $\sum_{i=1}^n\|x_i\|^2\lesssim nd$ is by Lemma \ref{lem:chi-squared}. By L
 $$\inf_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(\wh{W}_j^Tx_i)\Delta_i\right|\gtrsim 1,$$
 as long as $\frac{n^{3/2}\log p}{\sqrt{p}}$ is sufficiently small. By (\ref{eq:Gk-spec}), we also have
 $$\sup_{\|\Delta\|=1}\frac{1}{p}\sum_{j=1}^p\left|\sum_{i=1}^n\psi(\wh{W}_j^Tx_i)\Delta_i\right|^2\lesssim n.$$
-Therefore, Condition $B$ holds with $\overline{\lambda}^2\asymp n$ and $\underline{\lambda}\asymp 1$. Apply Theorem \ref{thm:main-improved}, and we have $\wt{\beta}=\wh{\beta}$ with high probability as desired.
+Therefore, Condition $B$ holds with $\overline{\lambda}^2\asymp n$ and $\underline{\lambda}\asymp 1$. Applying Theorem \ref{thm:main-improved}, we have $\wt{\beta}=\wh{\beta}$ with high probability, as desired.
 \end{proof}
