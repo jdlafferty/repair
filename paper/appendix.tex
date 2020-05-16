@@ -95,12 +95,12 @@ Now we consider the case $\left|\sum_{i=1}^n\Delta_i\right|< 7$. A lower bound f
 \left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right| \geq \left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right| - 7h(W) = \left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right| - \frac{7}{\sqrt{2\pi}}\|W\|. \label{eq:seven}
 \end{equation}
 Thus,
-\begin{eqnarray}
-\nonumber \mathbb{E}f(W,X,\Delta) &\geq& \mathbb{E}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\mathbb{I}\left\{\left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\geq 6, 1/2\leq \|W\|^2\leq 2\right\}\right) \\
-\nonumber &\geq& \mathbb{P}\left(\left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\geq 6, 1/2\leq \|W\|^2\leq 2\right) \\
-\nonumber &=& \mathbb{P}\left(\left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\geq 6\Big|1/2\leq \|W\|^2\leq 2\right)\mathbb{P}\left(1/2\leq \|W\|^2\leq 2\right) \\
-\nonumber &\geq& \mathbb{P}\left(\left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\geq 6\Big|1/2\leq \|W\|^2\leq 2\right)\left(1-2\exp(-d/16)\right),
-\end{eqnarray}
+\begin{eqnarray*}
+ \mathbb{E}f(W,X,\Delta) &\geq& \mathbb{E}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\mathbb{I}\left\{\left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\geq 6, 1/2\leq \|W\|^2\leq 2\right\}\right) \\
+ &\geq& \mathbb{P}\left(\left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\geq 6, 1/2\leq \|W\|^2\leq 2\right) \\
+ &=& \mathbb{P}\left(\left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\geq 6\Big|1/2\leq \|W\|^2\leq 2\right)\mathbb{P}\left(1/2\leq \|W\|^2\leq 2\right) \\
+ &\geq& \mathbb{P}\left(\left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\geq 6\Big|1/2\leq \|W\|^2\leq 2\right)\left(1-2\exp(-d/16)\right),
+\end{eqnarray*}
 where the last inequality is by Lemma \ref{lem:chi-squared}. By direct calculation, we have
 \begin{equation}
 \Var\left(\bar{\psi}(W^Tx)|W\right)=\|W\|^2\Var(\max(0,W^Tx/\|W\|)|W)=\|W\|^2\frac{1-\pi^{-1}}{2}, \label{eq:cond-var-X-W}
@@ -108,13 +108,13 @@ where the last inequality is by Lemma \ref{lem:chi-squared}. By direct calculati
 and
 $$\mathbb{E}\left(|\bar{\psi}(W^Tx)|^3|W\right) \leq 3\mathbb{E}\left(|\psi(W^Tx)|^3|W\right)+3|h(W)|^3 \leq \frac{3}{2}\|W\|^3.$$
 Therefore, by Lemma \ref{lem:stein}, we have
-\begin{eqnarray}
-\nonumber && \mathbb{P}\left(\left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\geq 6\Big|1/2\leq \|W\|^2\leq 2\right) \\
-\nonumber &\geq& \mathbb{P}\left(\frac{\left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right|}{\|W\|\sqrt{\frac{1-\pi^{-1}}{2}}}\geq 21\Bigg|1/2\leq \|W\|^2\leq 2\right) \\
-\nonumber &\geq& \mathbb{P}\left(N(0,1)>21\right) - \sup_{1/2\leq \|W\|^2\leq 2} 2\sqrt{3\sum_{i=1}^n|\Delta_i|^3\frac{\mathbb{E}\left(|\bar{\psi}(W^Tx_i)|^3|W\right)}{\|W\|^3\left(\frac{1-\pi^{-1}}{2}\right)^{3/2}}} \\
-\nonumber &\geq& \mathbb{P}\left(N(0,1)>21\right) - 10\sqrt{\sum_{i=1}^n|\Delta_i|^3} \\
-\nonumber &\geq& \mathbb{P}\left(N(0,1)>21\right) - 10\max_{1\leq i\leq n}|\Delta_i|^{3/2}.
-\end{eqnarray}
+\begin{eqnarray*}
+ && \mathbb{P}\left(\left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right|\geq 6\Big|1/2\leq \|W\|^2\leq 2\right) \\
+ &\geq& \mathbb{P}\left(\frac{\left|\sum_{i=1}^n\bar{\psi}(W^Tx_i)\Delta_i\right|}{\|W\|\sqrt{\frac{1-\pi^{-1}}{2}}}\geq 21\Bigg|1/2\leq \|W\|^2\leq 2\right) \\
+ &\geq& \mathbb{P}\left(N(0,1)>21\right) - \sup_{1/2\leq \|W\|^2\leq 2} 2\sqrt{3\sum_{i=1}^n|\Delta_i|^3\frac{\mathbb{E}\left(|\bar{\psi}(W^Tx_i)|^3|W\right)}{\|W\|^3\left(\frac{1-\pi^{-1}}{2}\right)^{3/2}}} \\
+ &\geq& \mathbb{P}\left(N(0,1)>21\right) - 10\sqrt{\sum_{i=1}^n|\Delta_i|^3} \\
+ &\geq& \mathbb{P}\left(N(0,1)>21\right) - 10\max_{1\leq i\leq n}|\Delta_i|^{3/2}.
+\end{eqnarray*}
 Hence, when $\max_{1\leq i\leq n}|\Delta_i|^{3/2}\leq \delta_0^{3/2}:=\mathbb{P}\left(N(0,1)>21\right)/20$ and $\left|\sum_{i=1}^n\Delta_i\right|< 7$, we can lower bound $\mathbb{E}f(W,X,\Delta)$ by an absolute constant, and we conclude that
 \begin{equation}
 \inf_{\|\Delta\|=1,|\sum_{i=1}^n\Delta_i|\leq 7, \max_{1\leq i\leq n}|\Delta_i|\leq\delta_0}\mathbb{E}f(W,X,\Delta) \gtrsim 1.\label{eq:l1-1-2-relu}

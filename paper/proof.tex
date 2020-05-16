@@ -4,6 +4,7 @@
 
 \section{Proofs}
 \label{sec:proof}
+\overfullrule=1mm
 
 \subsection{Technical Lemmas}
 
@@ -45,7 +46,7 @@ Consider independent $Y_1,Y_2\sim N(0,I_k)$. For any $t>0$, we have
 \begin{proof}
 By Lemma \ref{lem:chi-squared}, we have
 \begin{align*}
-\mathbb{P}\left(\|Y_1\|\|Y_2\| -k \geq 2\sqrt{tk}+2t\right)
+\mathbb{P}\bigl(\|Y_1\|\|Y_2\| -k \geq & 2\sqrt{tk}+2t\bigr) \\
 &\leq \mathbb{P}\left(\|Y_1\|^2 \geq k +2\sqrt{tk}+2t\right) + \mathbb{P}\left(\|Y_2\|^2 \geq k +2\sqrt{tk}+2t\right) \\
 &\leq 2e^{-t},
 \end{align*}
@@ -215,13 +216,13 @@ We then have
 We will analyze the three terms above separately.
 
 \paragraph{Analysis of (\ref{eq:exp-f-inf-relu}).} For any $\Delta$ such that $\|\Delta\|=1$, we have
-\begin{eqnarray}
-\nonumber \mathbb{E}f(W,X,\Delta) &=& \mathbb{E}\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right| \\
-\nonumber &\geq& \mathbb{E}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\mathbb{I}\left\{\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1, 1/2\leq \|W\|^2\leq 2\right\}\right) \\
-\nonumber &\geq& \mathbb{P}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1, 1/2\leq \|W\|^2\leq 2\right) \\
-\nonumber &=& \mathbb{P}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1\Big|1/2\leq \|W\|^2\leq 2\right)\mathbb{P}\left(1/2\leq \|W\|^2\leq 2\right) \\
+\begin{eqnarray*}
+\mathbb{E}f(W,X,\Delta) &=& \mathbb{E}\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right| \\
+ &\geq& \mathbb{E}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\mathbb{I}\left\{\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1, 1/2\leq \|W\|^2\leq 2\right\}\right) \\
+ &\geq& \mathbb{P}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1, 1/2\leq \|W\|^2\leq 2\right) \\
+ &=& \mathbb{P}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1\Big|1/2\leq \|W\|^2\leq 2\right)\mathbb{P}\left(1/2\leq \|W\|^2\leq 2\right) \\
 \nonumber &\geq& \mathbb{P}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1\Big|1/2\leq \|W\|^2\leq 2\right)\left(1-2\exp(-d/16)\right),
-\end{eqnarray}
+\end{eqnarray*}
 where the last inequality is by Lemma \ref{lem:chi-squared}. It is easy to see that $$\Var\left(\psi(W^Tx)|W\right)\leq \mathbb{E}(|\psi(W^Tx)|^2|W)\leq 1.$$
 Moreover, for any $W$ such that $1/2\leq \|W\|^2\leq 2$,
 $$\Var\left(\psi(W^Tx)|W\right)= \mathbb{E}(|\psi(W^Tx)|^2|W) \geq \frac{1}{5}\mathbb{P}\left(|W^Tx|>1/2|W\right)\geq \frac{1}{5}\mathbb{P}(|N(0,1)|\geq 1/\sqrt{2}),$$
@@ -229,13 +230,13 @@ which is at least $1/20$. In summary, we have
 $$1/20 \leq \Var\left(\psi(W^Tx)|W\right) \leq 1,$$
 for any $W$ such that $1/2\leq \|W\|^2\leq 2$.
 By Lemma \ref{lem:stein}, we have
-\begin{eqnarray}
-\nonumber && \mathbb{P}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1\Big|1/2\leq \|W\|^2\leq 2\right) \\
-\nonumber &\geq& \mathbb{P}\left(\frac{\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|}{\sqrt{\Var\left(\psi(W^Tx)|W\right)}}\geq \sqrt{20}\Bigg|1/2\leq \|W\|^2\leq 2\right) \\
-\nonumber &\geq& \mathbb{P}\left(N(0,1)>\sqrt{20}\right) - \sup_{1/2\leq \|W\|^2\leq 2} 2\sqrt{3\sum_{i=1}^n|\Delta_i|^3\frac{\mathbb{E}\left(|\psi(W^Tx_i)|^3|W\right)}{\left(\Var\left(\psi(W^Tx)|W\right)\right)^{3/2}}} \\
-\nonumber &\geq& \mathbb{P}\left(N(0,1)>\sqrt{20}\right) - 35\sqrt{\sum_{i=1}^n|\Delta_i|^3} \\
-\nonumber &\geq& \mathbb{P}\left(N(0,1)>\sqrt{20}\right) - 35\max_{1\leq i\leq n}|\Delta_i|^{3/2}.
-\end{eqnarray}
+\begin{eqnarray*}
+ && \mathbb{P}\left(\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|\geq 1\Big|1/2\leq \|W\|^2\leq 2\right) \\
+ &\geq& \mathbb{P}\left(\frac{\left|\sum_{i=1}^n\psi(W^Tx_i)\Delta_i\right|}{\sqrt{\Var\left(\psi(W^Tx)|W\right)}}\geq \sqrt{20}\Bigg|1/2\leq \|W\|^2\leq 2\right) \\
+ &\geq& \mathbb{P}\left(N(0,1)>\sqrt{20}\right) - \sup_{1/2\leq \|W\|^2\leq 2} 2\sqrt{3\sum_{i=1}^n|\Delta_i|^3\frac{\mathbb{E}\left(|\psi(W^Tx_i)|^3|W\right)}{\left(\Var\left(\psi(W^Tx)|W\right)\right)^{3/2}}} \\
+ &\geq& \mathbb{P}\left(N(0,1)>\sqrt{20}\right) - 35\sqrt{\sum_{i=1}^n|\Delta_i|^3} \\
+ &\geq& \mathbb{P}\left(N(0,1)>\sqrt{20}\right) - 35\max_{1\leq i\leq n}|\Delta_i|^{3/2}.
+\end{eqnarray*}
 Hence, when $\max_{1\leq i\leq n}|\Delta_i|^{3/2}\leq \delta_0^{3/2}:=\mathbb{P}\left(N(0,1)>\sqrt{20}\right)/70$, we can lower bound the expectation $\mathbb{E}f(W,X,\Delta)$ by an absolute constant, and we conclude that
 \begin{equation}
 \inf_{\|\Delta\|=1, \max_{1\leq i\leq n}|\Delta_i|\leq\delta_0}\mathbb{E}f(W,X,\Delta) \gtrsim 1.\label{appeq:l1-1-2}
