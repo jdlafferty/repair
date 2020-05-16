@@ -5,9 +5,9 @@
 \section{Discussion}
 \label{sec:discuss}
 
-In this paper we introduced the problem of model repair, related it to traditional robust estimation, and established a series of results showing the theoretical performance of a repair algorithm that is based on median regression. The specific models treated include linear models and families of neural networks trained using gradient descent. The experimental results largely validate the theory, quantifying how model repair requires over-parameterization in the model and redundancy in the estimator.
+In this paper we introduced the problem of model repair, related it to robust estimation, and established a series of results showing the theoretical performance of a repair algorithm that is based on median regression. The specific models treated include linear models and families of neural networks trained using gradient descent. The experimental results largely validate the theory, quantifying how model repair requires over-parameterization in the model and redundancy in the estimator.
 
-This work suggests several directions to explore in future research.  A natural problem is to establish lower bounds for  model repair. In particular, our results show the level of over-parameterization sufficient for repair algorithms based on median regression. What level is required if the algorithm is not specified? Answering this question might exploit the rich literature on depth functions and multivariate generalizations of the median, together with minimax analysis for estimation and testing under the classical Huber model \citep{chen2018robust,diakonikolas,diakonikolas:2017}. In a different direction, \cite{gao2018robust} introduces a connection between these optimizations and certain learning algorithms for adversarial neural networks called $f$-GANs, giving a variational characterization of robust estimation that could lead to new algorithmic procedures for model repair.
+This work suggests several directions to explore in future research.  A natural problem is to establish lower bounds for  model repair. In particular, our results show the level of over-parameterization sufficient for repair algorithms based on $\ell_1$ optimization. What level is required if the algorithm is not specified? Answering this question might exploit the rich literature on depth functions and multivariate generalizations of the median, together with minimax analysis for estimation and testing under the classical Huber model \citep{chen2018robust,diakonikolas,diakonikolas:2017}. In a different direction, \cite{gao2018robust} introduces a connection between these optimizations and certain learning algorithms for adversarial neural networks called $f$-GANs, giving a variational characterization of robust estimation that could lead to new algorithmic procedures for model repair.
 
 
 The repair problem also could be formulated in other ways.  For example,
@@ -33,10 +33,10 @@ Another natural direction to explore is repair for other families of statistical
 %$$ \E \| \tilde\theta - \theta\|^2 \lesssim \left(\frac{1}{n} + \epsilon \log (1/\epsilon) \right)^{\frac{1}{1+2\alpha}}.$$
 %The question of optimality of this procedure could be studied.
 It would also be interesting
-to explore other sequence models, including isotonic and other shape-constrained models. For example, consider the piecewise constant signals with $k$ pieces,
+to explore sequence models such as isotonic and shape-constrained regression. For example, consider the piecewise constant signals with $k$ pieces,
 $$\Theta_k  = \{\theta : \mbox{$\theta_i = \mu_j$ for $i\in (a_{j-1}, a_j]$ for
 some $0=a_0 \leq a_1\leq \cdots \leq a_k=n$}\}.$$
-Adaptivity of the least--squares estimator to the number of ``pieces'' $k$  has been well-established
+Adaptivity of the least--squares estimator to $k$ has been well-established
 \citep{chatterjee2015risk,Chat14,bellec}; but
 the redundancy in the sequence could also be exploited in model repair. If an initial estimator $\hat \theta$ is
 corrupted to $\eta = \hat\theta + z$, a natural repair procedure is
@@ -51,4 +51,4 @@ it becomes necessary to estimate the models in a distributed manner, and erasure
 communicating parameters across nodes, or after the trained model has been embedded in an application.
 Instead of running the repair program on a central hub,
 which would require sharing data and potentially compromising privacy, the linear program
-might also be distributed \citep{hong12}. Finally, drawing an analogy to brain plasticity and repair after trauma such as stroke, if a spatially localized part of the parameter space is permanently corrupted, the repair problem needs to be reformulated to allow ``rewiring'' the parameters to obtain a model whose predictions are close to those of the original model, possibly through specialized training. With appropriate formalization, these and other extensions might allow statistical analysis.
+might also be distributed \citep{hong12}. Finally, drawing an analogy to brain plasticity and repair after trauma, if a spatially localized part of a multilayer network is permanently corrupted, the repair problem needs to be reformulated to allow ``rewiring'' the parameters to obtain a model whose predictions are close to those of the original model, possibly through specialized training. With appropriate formalization, these and other extensions might permit statistical analysis.
