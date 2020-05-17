@@ -156,7 +156,7 @@ Thus, in the framework of Theorem \ref{thm:robust-reg-b}, we can view $\eta-\bet
 &\lesssim& \frac{R_1}{p^{1/2}}\|y-u(0)\|\sqrt{\sum_{i=1}^n\|x_i\|^2} \\
 &\lesssim& \frac{n^2\log p}{p},
 \end{eqnarray*}
-where the last inequality is by $\sum_{i=1}^n\|x_i\|^2\lesssim nd$ due to a standard chi-squared bound (Lemma \ref{lem:chi-squared}), and $\|u(0)\|^2\lesssim n$ is due to Markov's inequality and $\mathbb{E}|u_i(0)|^2 = \mathbb{E}\Var(u_i(0)|X) \leq 1$. By Theorem \ref{thm:robust-reg-b} and Lemma \ref{lem:lim-G}, we have $\frac{1}{p}\|\wt{\beta}-\wh{\beta}\|^2 \lesssim \frac{n^3\log p}{p}$, which is the desired conclusion.
+where the last inequality is by $\sum_{i=1}^n\|x_i\|^2\lesssim nd$ due to a standard chi-squared bound (Lemma \ref{lem:chi-squared}), and $\|u(0)\|^2\lesssim n$ is due to Markov's inequality and the inequality $\mathbb{E}|u_i(0)|^2 = \mathbb{E}\Var(u_i(0)|X) \leq 1$. By Theorem \ref{thm:robust-reg-b} and Lemma \ref{lem:lim-G}, we have $\frac{1}{p}\|\wt{\beta}-\wh{\beta}\|^2 \lesssim \frac{n^3\log p}{p}$, which is the desired conclusion.
 \end{proof}
 
 \begin{proof}[Proof of Theorem \ref{thm:repair-nn-2}]

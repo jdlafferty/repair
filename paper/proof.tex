@@ -2,9 +2,9 @@
 
 \appendix
 
+%\overfullrule=.1em
 \section{Proofs}
 \label{sec:proof}
-\overfullrule=1mm
 
 \subsection{Technical Lemmas}
 
@@ -225,7 +225,10 @@ We will analyze the three terms above separately.
 \end{eqnarray*}
 where the last inequality is by Lemma \ref{lem:chi-squared}. It is easy to see that $$\Var\left(\psi(W^Tx)|W\right)\leq \mathbb{E}(|\psi(W^Tx)|^2|W)\leq 1.$$
 Moreover, for any $W$ such that $1/2\leq \|W\|^2\leq 2$,
-$$\Var\left(\psi(W^Tx)|W\right)= \mathbb{E}(|\psi(W^Tx)|^2|W) \geq \frac{1}{5}\mathbb{P}\left(|W^Tx|>1/2|W\right)\geq \frac{1}{5}\mathbb{P}(|N(0,1)|\geq 1/\sqrt{2}),$$
+\begin{align*}
+\Var\left(\psi(W^Tx)|W\right)= \mathbb{E}(|\psi(W^Tx)|^2|W) &\geq \frac{1}{5}\mathbb{P}\left(|W^Tx|>1/2|W\right)\\
+&\geq \frac{1}{5}\mathbb{P}(|N(0,1)|\geq 1/\sqrt{2}),
+\end{align*}
 which is at least $1/20$. In summary, we have
 $$1/20 \leq \Var\left(\psi(W^Tx)|W\right) \leq 1,$$
 for any $W$ such that $1/2\leq \|W\|^2\leq 2$.
@@ -456,7 +459,9 @@ Since
 $$\sum_{i\neq l}\mathbb{E}\left(\frac{\|x_i\|}{\sqrt{d}}-1\right)^2\mathbb{E}\left(\frac{\|x_l\|}{\sqrt{d}}-1\right)^2\lesssim \frac{n^2}{d^2},$$
 we can conclude that (\ref{eq:G-tilde-4}) is bounded by $O\left(\frac{n^2}{d^2}\right)$ with high probability by Markov's inequality.
 
-Combining the analyses of (\ref{eq:G-tilde-1}), (\ref{eq:G-tilde-2}), (\ref{eq:G-tilde-3}) and (\ref{eq:G-tilde-4}), we conclude that $\sum_{i\neq l}(\wt{G}_{il}-\bar{G}_{il})^2\lesssim \frac{n^2}{d^2}$ with high probability. Together with (\ref{eq:G-G-tilde}) and (\ref{eq:G-diag}), we obtain the desired bound for $\opnorm{G-\bar{G}}$.
+Combining the analyses of (\ref{eq:G-tilde-1}), (\ref{eq:G-tilde-2}), (\ref{eq:G-tilde-3}) and (\ref{eq:G-tilde-4}), we conclude that
+$$\sum_{i\neq l}(\wt{G}_{il}-\bar{G}_{il})^2\lesssim \frac{n^2}{d^2}$$
+with high probability. Together with (\ref{eq:G-G-tilde}) and (\ref{eq:G-diag}), we obtain the desired bound for $\opnorm{G-\bar{G}}$.
 For the last conclusion, since $\opnorm{G-\bar{G}}$ is sufficiently small, it is sufficient to show $1\lesssim\lambda_{\min}(\bar{G})\leq\lambda_{\max}(\bar{G})\lesssim 1$. The bound $1\lesssim\lambda_{\min}(\bar{G})$ is a direct consequence of the definition of $\bar{G}$. To upper bound $\lambda_{\max}(\bar{G})$, we have
 \begin{eqnarray*}
 \lambda_{\max}(\bar{G}) &\lesssim& 1 + \max_{\|v\|=1}\sum_{i=1}^n\sum_{l=1}^nv_iv_l\frac{x_i^Tx_l}{\|x_i\|\|x_l\|} \\
@@ -529,7 +534,9 @@ Now we analyze the off-diagonal entries. Recall the notation $\bar{x}_i=\frac{\s
 \label{eq:H-tilde-2} && + \frac{x_i^Tx_l}{d}\mathbb{E}\left(\psi'(W^T{x}_i)\psi'(W^T{x}_l)-\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\right) \\
 \label{eq:H-tilde-3} && + \left(\frac{\|x_i\|\|x_l\|}{d}-1\right)\frac{\bar{x}_i^T\bar{x}_l}{d}\mathbb{E}\left(\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\right).
 \end{eqnarray}
-For the first term on the right hand side of (\ref{eq:H-tilde-1}), we observe that $\frac{\bar{x}_i^T\bar{x}_l}{d}\mathbb{E}\left(\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\right)$ is a function of $\frac{\bar{x}_i^T\bar{x}_l}{d}$, and thus we can write
+For the first term on the right hand side of (\ref{eq:H-tilde-1}), we observe that
+$$\frac{\bar{x}_i^T\bar{x}_l}{d}\mathbb{E}\left(\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\right)$$
+is a function of $\frac{\bar{x}_i^T\bar{x}_l}{d}$, and thus we can write
 $$\frac{\bar{x}_i^T\bar{x}_l}{d}\mathbb{E}\left(\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\right)=f\left(\frac{\bar{x}_i^T\bar{x}_l}{d}\right),$$
 where
 $$f(\rho)=\begin{cases}
@@ -542,7 +549,7 @@ with high probability.
 
 For (\ref{eq:H-tilde-2}), we note that
 \begin{align*}
- \mathbb{E}\Bigl(\psi'(W^T{x}_i)\psi'(W^T{x}_l)&-\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\Bigr) \\
+ \mathbb{E}\Bigl(&\psi'(W^T{x}_i)\psi'(W^T{x}_l)-\psi'(W^T\bar{x}_i)\psi'(W^T\bar{x}_l)\big|X\Bigr) \\
 &\leq \mathbb{E}\left(|\psi'(W^T{x}_i)-\psi'(W^T\bar{x}_i)|\big|X\right) + \mathbb{E}\left(|\psi'(W^T{x}_l)-\psi'(W^T\bar{x}_l)|\big|X\right) \\
 &\leq 2\mathbb{E}\left(|W^T(x_i-\bar{x}_i)|\big|X\right) + 2\mathbb{E}\left(|W^T(x_l-\bar{x}_l)|\big|X\right) \\
 &= 2\left|\frac{\|x_i\|}{\sqrt{d}}-1\right| + 2\left|\frac{\|x_l\|}{\sqrt{d}}-1\right|,
