@@ -1,0 +1,149 @@
+\documentclass[aos,preprint,pdftex]{imsart}
+
+%% Packages
+\RequirePackage{amsthm,amsmath,amsfonts,amssymb}
+\RequirePackage[numbers]{natbib}
+%\RequirePackage[authoryear]{natbib} %% uncomment this for author-year bibliography
+\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+\RequirePackage{graphicx}
+\usepackage[ruled, vlined, lined, commentsnumbered]{algorithm2e}
+
+\startlocaldefs
+\numberwithin{equation}{section}
+%\theoremstyle{plain}
+\newtheorem{axiom}{Axiom}
+\newtheorem{claim}[axiom]{Claim}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{remark}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem*{fact}{Fact}
+\theoremstyle{remark}
+\newtheorem{example}{Example}[section]
+\newtheorem{remark}{Remark}[section]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Please put your definitions here:        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newtheorem*{thm1}{Claim A}
+\newtheorem*{thm2}{Claim B}
+\newtheorem*{thm3}{Claim C}
+\newtheorem*{thm4}{Claim D}
+\def\conditionA{Condition $A$}
+\def\conditionAp{Condition $\tilde A$}
+\def\conditionB{Condition $B$}
+\newtheorem*{con0}{\conditionA}
+\newtheorem*{con1}{\conditionAp}
+\newtheorem*{con2}{\conditionB}
+
+\def\given{\,|\,}
+\def\P{\mathbb{P}}
+\def\E{\mathbb{E}}
+\def\reals{\mathbb{R}}
+%\def\argmin{\mathop{\text{arg\,min}}}
+\def\ones{\mathds{1}}
+\def\indicator{}
+\let\hat\widehat
+\let\what\widehat
+\let\tilde\widetilde
+\def\Var{\textsf{Var}}
+
+\newcommand{\argmin}{\mathop{\rm argmin}}
+\newcommand{\ess}{\mathop{\rm ess}}
+\newcommand{\argmax}{\mathop{\rm argmax}}
+\newcommand{\lnorm}[2]{\|{#1} \|_{{#2}}}
+\newcommand{\indc}[1]{{\mathbf{1}_{\left\{{#1}\right\}}}}
+%\newcommand{\norm}[1]{\|{#1} \|}
+\newcommand{\norm}[1]{\left\|{#1} \right\|}
+\newcommand{\hf}{{1/2}}
+\newcommand{\wh}{\widehat}
+\newcommand{\wt}{\widetilde}
+\newcommand{\Norm}[1]{\|{#1} \|}
+\newcommand{\Fnorm}[1]{\lnorm{#1}{\rm F}}
+\newcommand{\fnorm}[1]{\|#1\|_{\rm F}}
+\newcommand{\opnorm}[1]{\|#1\|_{\rm op}}
+\newcommand{\nnorm}[1]{\|#1\|_{\rm *}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\Expect}{\mathbb{E}}
+\newcommand{\Span}{{\rm span}}
+\newcommand{\rank}{\mathop{\sf rank}}
+\newcommand{\sgn}{\mathop{\rm sign}}
+\newcommand{\rt}{\mathop{\sf root}}
+\newcommand{\R}{\mathop{\sf R}}
+\newcommand{\Tr}{\mathop{\sf Tr}}
+\newcommand{\diag}{\mathop{\text{diag}}}
+\newcommand{\supp}{{\rm supp}}
+\newcommand{\iprod}[2]{\left \langle #1, #2 \right\rangle}
+\newcommand{\pth}[1]{\left( #1 \right)}
+\newcommand{\qth}[1]{\left[ #1 \right]}
+\newcommand{\sth}[1]{\left\{ #1 \right\}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\floor}[1]{{\left\lfloor {#1} \right \rfloor}}
+\newcommand{\TV}{{\sf TV}}
+\newcommand{\blue}{\color{blue}}
+\newcommand{\nb}[1]{\texttt{\blue[#1]}}
+
+\endlocaldefs
+
+\begin{document}
+
+\begin{frontmatter}
+\title{Model Repair: Robust Recovery of Over-Parameterized Statistical Models}
+%\title{A sample article title with some additional note\thanksref{t1}}
+\runtitle{Model Repair}
+%\thankstext{T1}{A sample additional note to the title.}
+
+\begin{aug}
+\author[A]{\fnms{Chao} \snm{Gao}\ead[label=e1]{chao.gao@uchicago.edu}},
+\and
+\author[B]{\fnms{John} \snm{Lafferty}\ead[label=e2]{john.lafferty@yale.edu}}
+\address[A]{Department of Statistics,
+University of Chicago,
+\printead{e1}}
+\address[B]{Department of Statistics and Data Science,
+Yale University,
+\printead{e2}}
+\end{aug}
+
+\input{../abstract}
+
+\begin{keyword}[class=MSC2010]
+\kwd[Primary ]{00X00}
+\kwd{00X00}
+\kwd[; secondary ]{00X00}
+\end{keyword}
+
+\begin{keyword}
+\kwd{First keyword}
+\kwd{second keyword}
+\end{keyword}
+
+\end{frontmatter}
+
+\overfullrule=.1em
+
+
+\input{../intro}
+\input{../overview}
+\input{../regression}
+\input{../linear}
+\input{../neural}
+\input{../experiments}
+\input{../discuss}
+\input{../acknowledge}
+
+
+%% if your bibliography is in bibtex format, uncomment commands:
+\bibliographystyle{imsart-nameyear} % Style BST file (imsart-number.bst or imsart-nameyear.bst)
+\bibliography{../repair}
+
+\clearpage
+
+\input{../proof}
+\input{../appendix}
+
+
+
+\end{document}
