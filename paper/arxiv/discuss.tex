@@ -1,0 +1,54 @@
+% !TEX root = ./repair.tex
+
+\def\ones{{\mathds{1}}}
+
+\section{Discussion}
+\label{sec:discuss}
+
+In this paper we introduced the problem of model repair, related it to robust estimation, and established a series of results showing the theoretical performance of a repair algorithm that is based on median regression. The specific models treated include linear models and families of neural networks trained using gradient descent. The experimental results largely validate the theory, quantifying how model repair requires over-parameterization in the model and redundancy in the estimator.
+
+This work suggests several directions to explore in future research.  A natural problem is to establish lower bounds for  model repair. In particular, our results show the level of over-parameterization sufficient for repair algorithms based on $\ell_1$ optimization. What level is required if the algorithm is not specified? Answering this question might exploit the rich literature on depth functions and multivariate generalizations of the median, together with minimax analysis for estimation and testing under the classical Huber model \citep{chen2018robust,diakonikolas,diakonikolas:2017}. In a different direction, \cite{gao2018robust} introduces a connection between these optimizations and certain learning algorithms for adversarial neural networks called $f$-GANs, giving a variational characterization of robust estimation that could lead to new algorithmic procedures for model repair.
+
+
+The repair problem also could be formulated in other ways.  For example,
+the corruption model could be modified, allowing a dependence between $z$ and $X$;
+a simple form of this dependence would be $\eta_j \given X \sim (1-\epsilon) \delta_{\hat\theta_j} + \epsilon Q_j$.
+What if the repair algorithm does not have access to the original training inputs $x_1,\ldots, x_n$?
+If a new unlabeled dataset $x'_1,\ldots, x'_{m}$ is available for which $\text{span}(x_1,\ldots,x_n) \subset \text{span}(x'_1,\ldots,x'_{m})$, the results proven here will carry over. One could consider other formulations that make different assumptions on the information that is available.
+
+It can be expected that the results for neural networks with a single layer established in the current paper
+can be extended to multiple layers, based on results for multilayer networks that extend the analysis of gradient descent
+of \cite{du2018gradient}, including \cite{zhuli} and \cite{dulee}. It would be interesting to
+consider model repair for other architectures and estimation algorithms, including convolutional networks
+and deep generative networks \citep{goodfellow2014generative,nvp,glow}.
+
+Another natural direction to explore is repair for other families of statistical models, where over-parameterization and redundancy may take different forms. For instance, in classical Gaussian sequence models for orthonormal bases, additional coefficients could provide insurance against corrupted estimates.
+%Concretely,
+%consider $X_i \sim N(\theta_i, n^{-1})$ independently for all $i\in [n]$, where the signal
+%$\theta$ belongs to a Sobolev ellipsoid of smoothness $\alpha$. A (non-adaptive) rate-optimal
+%estimator is $\hat\theta_i = X_i$ for all $i\leq k_\alpha \equiv n^{\frac{1}{2\alpha+1}}$ and $\hat\theta_i = 0$ for $i$ %larger than $k_\alpha$.
+%Suppose that the estimate is then corrupted by an adversary to
+%$\eta = (\eta_1, \eta_2, \ldots)$, where up to $\epsilon n$ coefficients are changed according to an unknown distribution, %with $\eta_i \given \hat\theta_i \sim (1-\epsilon ) \delta_{\hat\theta_i} + \epsilon Q_i$
+%independently for all $i$. Consider a hard thresholding estimator $\tilde\theta_i = \eta_i \ones(|\eta_i| \leq \lambda)$ for %$i \leq m$ and $\tilde \theta_i = 0$ for $i > m$.  By analyzing the bias, variance, and approximation error of this estimator %it can be shown that $m$ and $\lambda$ can be chosen to guarantee that
+%$$ \E \| \tilde\theta - \theta\|^2 \lesssim \left(\frac{1}{n} + \epsilon \log (1/\epsilon) \right)^{\frac{1}{1+2\alpha}}.$$
+%The question of optimality of this procedure could be studied.
+It would also be interesting
+to explore sequence models such as isotonic and shape-constrained regression. For example, consider the piecewise constant signals with $k$ pieces,
+$$\Theta_k  = \{\theta : \mbox{$\theta_i = \mu_j$ for $i\in (a_{j-1}, a_j]$ for
+some $0=a_0 \leq a_1\leq \cdots \leq a_k=n$}\}.$$
+Adaptivity of the least--squares estimator to $k$ has been well-established
+\citep{chatterjee2015risk,Chat14,bellec}; but
+the redundancy in the sequence could also be exploited in model repair. If an initial estimator $\hat \theta$ is
+corrupted to $\eta = \hat\theta + z$, a natural repair procedure is
+$$\tilde \theta_i = \text{mode}(\{\eta_{i-h},\ldots,\eta_{i+h}\})$$
+with $h$ acting as a bandwidth parameter. We conjecture that
+$\inf_h \E\|\tilde\eta -\theta\|^2 = O(k \log (n/k))$. In this setting,
+the piecewise constant signal acts as a simple repetition code, with majority vote
+serving as a natural decoding procedure.
+
+Returning to some of the motivation mentioned in the introduction, when training increasingly large neural networks
+it becomes necessary to estimate the models in a distributed manner, and erasures and errors may occur when
+communicating parameters across nodes, or after the trained model has been embedded in an application.
+Instead of running the repair program on a central hub,
+which would require sharing data and potentially compromising privacy, the linear program
+might also be distributed \citep{hong12}. Finally, drawing an analogy to brain plasticity and repair after trauma, if a spatially localized part of a multilayer network is permanently corrupted, the repair problem needs to be reformulated to allow ``rewiring'' the parameters to obtain a model whose predictions are close to those of the original model, possibly through specialized training. With appropriate formalization, these and other extensions might permit statistical analysis.

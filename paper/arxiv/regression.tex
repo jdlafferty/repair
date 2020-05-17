@@ -1,0 +1,116 @@
+% !TEX root = ./repair.tex
+
+\section{Key lemma: Robust regression with uncorrupted design}
+\label{sec:regression}
+
+Consider a regression model $\eta=Au^*+z\in\mathbb{R}^m$, where $A^T=(a_1,a_2,...,a_m)^T\in\mathbb{R}^{m\times k}$ is a design matrix and $u^*\in\mathbb{R}^k$ is a vector of regression coefficients to be recovered. We consider a random design setting, and the distribution of $A$ will be specified later. For the noise vector $z\in\mathbb{R}^m$, we assume it is independent of the design matrix $A$, and
+\begin{equation}
+z_i\sim (1-\epsilon)\delta_0 + \epsilon Q_i, \label{eq:noise-add-con}
+\end{equation}
+independently for all $i\in[m]$. In other words, a fraction $\epsilon$ of the components $\eta_i$ are contaminated by
+additive noise $z_i$ that is drawn from an arbitrary and unknown distribution. To robustly recover $u^*$, we propose the estimator
+$$\wh{u}=\argmin_{u\in\mathbb{R}^k}\|\eta-Au\|_1.$$
+The estimator $\hat u$ can be computed using a standard linear programming.
+In order that $\wh{u}$ successfully recovers the true regression coefficients $u^*$, we need to impose the following conditions on the design matrix $A$.
+
+
+\begin{con0}
+There exists some $\sigma^2$, such that for any fixed (not random) $c_1,...,c_m$ satisfying $\max_i|c_i|\leq 1$,
+\begin{equation}
+  \left\|\frac{1}{m}\sum_{i=1}^mc_ia_i\right\|^2\leq \frac{\sigma^2k}{m},
+\end{equation}
+with high probability.
+\end{con0}
+
+\begin{con2}
+There exist $\underline{\lambda}$ and $\overline{\lambda}$, such that
+\begin{eqnarray}
+\label{eq:l1-upper-A} \inf_{\|\Delta\|=1}\frac{1}{m}\sum_{i=1}^m|a_i^T\Delta| &\geq& \underline{\lambda}, \\
+\label{eq:l2-upper-A} \sup_{\|\Delta\|=1}\frac{1}{m}\sum_{i=1}^m|a_i^T\Delta|^2 &\leq& \overline{\lambda}^2,
+\end{eqnarray}
+with high probability.
+\end{con2}
+
+
+\begin{thm}\label{thm:main-improved}
+Assume the design matrix $A$ satisfies \conditionA{} and \conditionB. Then if
+\begin{equation}
+\frac{\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}+\epsilon\sigma\sqrt{\frac{k}{m}}}{\underline{\lambda}(1-\epsilon)}
+\end{equation}
+is sufficiently small, we have $\wh{u}=u^*$ with high probability.
+\end{thm}
+
+\begin{proof}
+Define $L_m(u)=\frac{1}{m}\sum_{i=1}^m(|a_i^T(u^*-u)+z_i|-|z_i|)$, and $L(u)=\mathbb{E}(L_m(u) \given A)$.
+%If $\|\wh{u}-u^*\|\geq t$,
+Letting $t\geq 0$ be arbitrary, we must have $\inf_{\|u-u^*\|\geq t}L_m(u)\leq L_m(u^*)=0$. By the convexity of $L_m(u)$, this leads to $\inf_{\|u-u^*\|= t}L_m(u)\leq 0$, and thus
+\begin{align*}
+\inf_{\|u-u^*\|=t}L(u) &\leq \inf_{\|u-u^*\|=t}L_m(u) + \sup_{\|u-u^*\|=t} \left(L(u) - L_m(u)\right) \\
+& \leq \sup_{\|u-u^*\|=t}|L_m(u)-L(u)|.
+\end{align*}
+Introducing the notation $f_i(x)=\mathbb{E}_{z_i\sim Q_i}(|x+z_i|-|z_i|)$ and $Q_i(x)=Q_i(z_i\leq x)$,
+it is easy to see that $f_i(0)=0$ and $f'_i(x)=1-2Q_i(-x)$. Observe that we can write
+\begin{equation}
+L(u)=(1-\epsilon)\frac{1}{m}\sum_{i=1}^m|a_i^T(u-u^*)| + \epsilon\frac{1}{m}\sum_{i=1}^mf_i(a_i^T(u^*-u)). \label{eq:L-decomp}
+\end{equation}
+For any $u$ such that $\|u-u^*\|=t$, the first term of (\ref{eq:L-decomp}) can be lower bounded by
+$$(1-\epsilon)\frac{1}{m}\sum_{i=1}^m|a_i^T(u-u^*)| \geq \underline{\lambda}(1-\epsilon)t,$$
+by \conditionB. To analyze the second term of (\ref{eq:L-decomp}), we note that $f_i$ is a convex function, and therefore
+for any $u$ such that $\|u-u^*\|=t$,
+\begin{eqnarray*}
+\epsilon\frac{1}{m}\sum_{i=1}^mf_i(a_i^T(u^*-u)) &\geq& \epsilon\frac{1}{m}\sum_{i=1}^mf_i(0) + \epsilon\frac{1}{m}\sum_{i=1}^mf_i'(0)a_i^T(u^*-u) \\
+&=& \epsilon\frac{1}{m}\sum_{i=1}^m\left(1-2Q_i(0)\right)a_i^T(u^*-u) \\
+&\geq& -\epsilon t\left\|\frac{1}{m}\sum_{i=1}^m\left(1-2Q_i(0)\right)a_i\right\| \\
+&\geq& -\epsilon t\sigma\sqrt{\frac{k}{m}},
+\end{eqnarray*}
+where the first inequality uses Cauchy-Schwarz, and the second inequality uses \conditionA.
+By \conditionB{} and an empirical process result proved as Lemma \ref{lem:EP} in Appendix \ref{sec:pf-robust-reg}, we have
+\begin{equation}
+\sup_{\|u-u^*\|= t}|L_m(u)-L(u)| \lesssim t\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}, \label{eq:upper-EP}
+\end{equation}
+with high probability.
+Therefore, we have shown that $\|\wh{u}-u^*\|\geq t$ implies
+$$\underline{\lambda}(1-\epsilon)t - \epsilon t\sigma\sqrt{\frac{k}{m}} \lesssim t\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)},$$
+which is impossible when $\frac{\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}+\epsilon\sigma\sqrt{\frac{k}{m}}}{\underline{\lambda}(1-\epsilon)}$ is sufficiently small, and thus $\|\wh{u}-u^*\|< t$ with high probability. Since $t$ is arbitrary, we must have $\wh{u}=u^*$.
+\end{proof}
+
+The theorem gives a sufficient condition for the exact recovery of the regression coefficients. When both $(\sigma+\overline{\lambda})/\underline{\lambda}$ and $1-\epsilon$ are constants, the condition becomes that $k/m$ is sufficiently small.
+
+A notable feature of this theorem is that it allows for $\epsilon \rightarrow 1$; that is, an arbitrarily large fraction of the components of the response $Au^*$ can be corrupted. This is in contrast to robust regression where both the response and design are contaminated. To be specific, consider independent observations $(a_i,\eta_i)\sim (1-\epsilon)P_{u^*}+\epsilon Q_i$, where the probability distribution $P_{u^*}$ encodes the linear model $\eta_i=a_i^Tu_i$, and for each $i\in[m]$, there is probability $\epsilon$ that the pair $(a_i,\eta_i)$ is drawn from some arbitrary distribution $Q_i$. In this setting, consistent or exact recovery of the regression coefficient is only possible when $\epsilon<c$ for some small constant $c>0$ \citep{gao2020}. The reason Theorem \ref{thm:main-improved} allows $\epsilon\rightarrow 1$ is that there is no contamination for the design matrix $A$. 
+
+%We note here previous work by that has also observed the possibility $\epsilon\to 1$ in a regression setting with corrupted response using $\ell_1$ minimization, although this literature has primarily focused on the case of sparse $u^*$ \citep{wright,nguyen1,nguyen2}. The work of \cite{bhatia} establishes consistency of an iterative hard thresholding method.
+
+Another distinguishing feature of Theorem \ref{thm:main-improved} is that there is no assumption imposed on the contamination distribution $Q_i$, even though the median regression procedure apparently requires the noise to be symmetric around zero. To understand this phenomenon, consider a population objective function
+$$\ell(u)=\mathbb{E}|\eta - a^Tu|,$$
+where $\eta=a^Tu^*+z$, and the expectation is over both $a$ and $z$. In order for the minimizer of $\ell(u)$ to recover $u^*$ in the population, a criterion usually called Fisher consistency, it is required that $\nabla\ell(u^*)=0$. Under the assumption that $a$ and $z$ are independent, this gives
+\begin{equation}
+\nabla\ell(u^*)=\mathbb{E}[\sgn(z)a]=\mathbb{E}\sgn(z)\mathbb{E}a=0. \label{eq:pop-insight}
+\end{equation}
+This means we should be able to achieve consistency without any assumption on the noise variable $z$ as long as we assume $\mathbb{E}a_i=0$.
+
+But \conditionA{} can be viewed as a general assumption that covers $\mathbb{E}a_i=0$ as a special case. As a concrete example, let us suppose the design matrix $A$ has $m$ uncorrelated rows and its entries all have mean zero and variance at most one. Then,
+$$\mathbb{E}\left\|\frac{1}{m}\sum_{i=1}^mc_ia_i\right\|^2=\sum_{j=1}^k\mathbb{E}\left(\frac{1}{m}\sum_{i=1}^mc_ia_{ij}\right)^2=\sum_{j=1}^k\frac{1}{m^2}\sum_{i=1}^mc_i^2\mathbb{E}a_{ij}^2\leq \frac{k}{m},$$
+and thus \conditionA{} holds with some constant $\sigma^2$, by an additional argument using Markov's inequality.
+
+More generally, \conditionA{} also allows a design matrix with entries whose means are not necessarily zero. This will in general lead to a term $\sigma^2$ that may not be of constant order. However, since the condition of Theorem \ref{thm:main-improved} involves an additional $\epsilon$ factor in front of $\sigma$, the robust estimator $\wh{u}$ can still recover $u^*$ as long as the contamination proportion is vanishing at an appropriate rate. As an important application, the result of Theorem \ref{thm:main-improved} also applies to design matrices with an intercept.
+
+We also introduce an alternative of \conditionA. By (\ref{eq:pop-insight}), we observe that Fisher consistency also follows if $\mathbb{E}\sgn(z_i)=0$. However, this does not mean that we have to assume the distribution of $z_i$ is symmetric. It turns out we only need the distribution of $a_i$ to be symmetric by applying a symmetrization argument.
+Note that with the help of independent Rademacher random variables $\delta_i\sim\text{Uniform}\{\pm 1\}$, we can write the data generating process as $\delta_i\eta_i=\delta_ia_i^Tu^*+\delta_iz_i$. With this new representation, we can also view $\delta_i\eta_i$, $\delta_ia_i$ and $\delta_iz_i$ as the response, covariate, and noise. Now the noise $\delta_iz_i$ is symmetric around zero, and it can be shown that $\delta_ia_i$ and $\delta_iz_i$ are still independent as long as the distribution of $a_i$ is symmetric. Since for any $u\in\mathbb{R}^k$,
+$$\sum_{i=1}^m|\delta_i\eta_i- \delta_ia_i^Tu|=\sum_{i=1}^m|\eta_i-a_i^Tu|,$$
+we obtain an equivalent median regression after symmetrization.
+This alternative condition is stated as follows.
+
+
+\begin{con1}
+Given i.i.d. Rademacher random variables $\delta_1,...,\delta_m$, the distribution of
+$$\wt{A}^T=(\delta_1a_1,\delta_2a_2,...,\delta_ma_m)^T$$
+is identical to that of $A^T$.
+\end{con1}
+
+\begin{thm}\label{thm:robust-reg}
+Assume the design matrix $A$ satisfies \conditionAp{} and \conditionB. Then if $$\frac{\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}}{\underline{\lambda}(1-\epsilon)}$$
+is sufficiently small, we have $\wh{u}=u^*$ with high probability.
+\end{thm}
+
+To close this section, we note that the problem of robust regression with uncorrupted design is also recognized as outlier-robust regression in the literature.
+This problem has been studied previously by \cite{tsakonas2014convergence,wright,nguyen1,nguyen2,karmalkar2018compressed}. In particular, \cite{bhatia} proposed a hard-thresholding algorithm that consistently recovers the regression coefficients as long as $\epsilon$ is below some small constant. The recent work \cite{suggala2019adaptive} has established consistent recovery while allowing $\epsilon\rightarrow 1$. Compared with their algorithm, our method based on $\ell_1$ minimization is much simpler. Moreover, we allow $\epsilon=1-\Theta\left(\sqrt{\frac{k}{m}\log\left(\frac{em}{k}\right)}\right)$, compared with the requirement $\epsilon\leq 1-\Theta\left(\frac{1}{\log\log m}\right)$ in \cite{suggala2019adaptive}.

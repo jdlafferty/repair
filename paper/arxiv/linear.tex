@@ -1,0 +1,48 @@
+% !TEX root = ./repair.tex
+
+
+
+\section{Repair of linear and random feature models}
+\label{sec:linear}
+
+Consider a linear model with $X\in\mathbb{R}^{n\times p}$ being the design matrix and $y\in\mathbb{R}^n$ being a vector of response values. We assume that each entry of the design matrix is i.i.d. $N(0,1)$ and do not impose any assumption on the response $y$. A machine learning algorithm learns a linear model $X\wh{\theta}$ with some $\wh{\theta}\in\mathbb{R}^{p}$. The vector $\wh{\theta}$ is either computed via the formula (\ref{eq:min-norm-solution}) or through a gradient-based algorithm with the objective (\ref{eq:gen-obj}) initialized from $0$. Either case implies $\wh{\theta}$ belongs to the row space of $X$. Suppose we observe a contaminated version of $\wh{\theta}$ through $
+\eta=\wh{\theta}+z$, where $z$ is independent of $\wh{\theta}$ and $z_j\sim (1-\epsilon)\delta_0+\epsilon Q_j$ independently for all $j\in[p]$. We then propose to recover $\wh{\theta}$ via
+$$\wt{u}=\argmin_{u\in\mathbb{R}^n}\|\eta-X^Tu\|_1,$$
+and define the repaired model as $\wt{\theta}=X^T\wt{u}$. This turns out to be the same robust regression problem studied in Section \ref{sec:regression}, and thus we only need to check the design matrix $A=X^T$ satisfies \conditionA{} and \conditionB.
+\begin{lemma}\label{lem:design-linear}
+Assume $n/p$ is sufficiently small. Then, \conditionA{} and \conditionB{} hold for $A=X^T$, $m=p$ and $k=n$ with some constants $\sigma^2$, $\underline{\lambda}$ and $\overline{\lambda}$.
+\end{lemma}
+Combine Lemma \ref{lem:design-linear} and Theorem \ref{thm:main-improved}, and we obtain the following guarantee for model repair.
+\begin{corollary}\label{cor:repair-linear}
+Assume $\frac{\sqrt{\frac{n}{p}}\log\left(\frac{ep}{n}\right)}{1-\epsilon}$ is sufficiently small. We then have $\wt{\theta}=\wh{\theta}$ with high probability.
+\end{corollary}
+
+We note that compared with the robust regression setting, the roles of the sample size and dimension are switched in model repair. Corollary \ref{cor:repair-linear} requires that the linear model to be overparametrized in the sense of $p\gg n(1-\epsilon)^2$ (with logarithmic factors ignored) in order that repair is successful. 
+
+Besides an overparametrized model, we also require that the estimator $\wh{\theta}$ lies in the row space of the design matrix $X$, so that the redundancy of a overparametrized model is preserved in the estimator.
+\begin{remark}
+To understand the requirement on the estimator $\wh{\theta}$, let us consider a simple toy example. We assume that $X$ has $p$ identical columns, which is clearly an overparametrized model. Consider two estimators:
+\begin{eqnarray*}
+\wh{\theta}_{\sf min-norm} &\in& \argmin\left\{\|\theta\|: y=X\theta\right\}, \\
+\wh{\theta}_{\sf sparse} &\in& \argmin\left\{\|\theta\|_0: y=X\theta\right\}.
+\end{eqnarray*}
+It is clear that $\wh{\theta}_{\sf min-norm}$ has identical entries and $\wh{\theta}_{\sf sparse}$ has one nonzero entry. Since the contamination will change an $\epsilon$-proportion of the entries, $\wh{\theta}_{\sf sparse}$ cannot be repaired if its only nonzero entry is changed. On the other hand, $\wh{\theta}_{\sf min-norm}$ is resilient to the contamination, and its redundant structure leads to consistent model repair. It is known that gradient based algorithms lead to implicit $\ell_2$ norm regularizations \citep{neyshabur2014search}, which then explains the result of Corollary \ref{cor:repair-linear}.
+\end{remark}
+
+
+We also study a random feature model with design $\{\psi(W_j^Tx_i)\}_{i\in[n],j\in[p]}$, where $x_i\sim N(0,I_d)$ and $W_j\sim N(0,d^{-1}I_d)$ independently for all $i\in[n]$ and $j\in[p]$. We choose the nonlinear activation function to be $\psi(t)=\tanh(t)=\frac{e^t-e^{-t}}{e^t+e^{-t}}$, the hyperbolic tangent unit. The design matrix can thus be written as $\wt{X}=\psi(XW)\in\mathbb{R}^{n\times p}$ with $X\in\mathbb{R}^{n\times d}$ and $W\in\mathbb{R}^{d\times p}$. This is an important model, and its asymptotic risk behavior under overparametrization has recently been studied by \cite{mei2019generalization}. We show that the design matrix $\wt{X}^T=\psi(W^TX^T)$ satisfies \conditionA{} and \conditionB{} so that model repair is possible.
+
+\begin{lemma}\label{lem:design-rf}
+Assume $n/p^2$ and $n/d$ are sufficiently small. Then, \conditionA{} and \conditionB{} hold for $A=\wt{X}^T$, $m=p$ and $k=n$ with some constants  $\sigma^2$, $\underline{\lambda}$ and $\overline{\lambda}$.
+\end{lemma}
+
+
+Now consider a model $\wh{\theta}$ that lies in the row space of $\wt{X}$. We observe a contaminated version $\eta=\wh{\theta}+z$.
+We can then compute the procedure $\wt{u}=\argmin_{u\in\mathbb{R}^n}\|\eta-\wt{X}^Tu\|_1$ and use $\wt{\theta}=\wt{X}^T\wt{u}$ for model repair.
+
+\begin{corollary}\label{cor:repair-rf}
+Assume $\frac{\sqrt{\frac{n}{p}}\log\left(\frac{ep}{n}\right)}{1-\epsilon}$, $n/p^2$ and $n/d$ are sufficiently small. We then have $\wt{\theta}=\wh{\theta}$ with high probability.
+\end{corollary}
+
+%Since $\psi(t)\geq 0$ for all $t\in\mathbb{R}$, the design matrix $\psi(W^TX^T)$ clearly does not have zero mean, which leads to a strong condition on the contamination proportion $\epsilon$. In comparison, other choices of activation functions can lead to weaker conditions. For example, random feature model with hyperbolic tangent activation can be repaired with $\epsilon\rightarrow 1$. The results are stated in Appendix \ref{app:results}.
+The results in this section are stated for the hyperbolic tangent nonlinear activation. They can be extended to other activation functions. In practice, the most popular choice is the rectified linear unit (ReLU) $\psi(t)=\max(0,t)$. The results for ReLU will be given in the appendix.
