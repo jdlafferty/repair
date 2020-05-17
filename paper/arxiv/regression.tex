@@ -10,7 +10,7 @@ z_i\sim (1-\epsilon)\delta_0 + \epsilon Q_i, \label{eq:noise-add-con}
 independently for all $i\in[m]$. In other words, a fraction $\epsilon$ of the components $\eta_i$ are contaminated by
 additive noise $z_i$ that is drawn from an arbitrary and unknown distribution. To robustly recover $u^*$, we propose the estimator
 $$\wh{u}=\argmin_{u\in\mathbb{R}^k}\|\eta-Au\|_1.$$
-The estimator $\hat u$ can be computed using a standard linear programming.
+The estimator $\hat u$ can be computed using standard linear programming.
 In order that $\wh{u}$ successfully recovers the true regression coefficients $u^*$, we need to impose the following conditions on the design matrix $A$.
 
 
@@ -76,7 +76,7 @@ which is impossible when $\frac{\overline{\lambda}\sqrt{\frac{k}{m}\log\left(\fr
 
 The theorem gives a sufficient condition for the exact recovery of the regression coefficients. When both $(\sigma+\overline{\lambda})/\underline{\lambda}$ and $1-\epsilon$ are constants, the condition becomes that $k/m$ is sufficiently small.
 
-A notable feature of this theorem is that it allows for $\epsilon \rightarrow 1$; that is, an arbitrarily large fraction of the components of the response $Au^*$ can be corrupted. This is in contrast to robust regression where both the response and design are contaminated. To be specific, consider independent observations $(a_i,\eta_i)\sim (1-\epsilon)P_{u^*}+\epsilon Q_i$, where the probability distribution $P_{u^*}$ encodes the linear model $\eta_i=a_i^Tu_i$, and for each $i\in[m]$, there is probability $\epsilon$ that the pair $(a_i,\eta_i)$ is drawn from some arbitrary distribution $Q_i$. In this setting, consistent or exact recovery of the regression coefficient is only possible when $\epsilon<c$ for some small constant $c>0$ \citep{gao2020}. The reason Theorem \ref{thm:main-improved} allows $\epsilon\rightarrow 1$ is that there is no contamination for the design matrix $A$. 
+A notable feature of this theorem is that it allows for $\epsilon \rightarrow 1$; that is, an arbitrarily large fraction of the components of the response $Au^*$ can be corrupted. This is in contrast to robust regression where both the response and design are contaminated. To be specific, consider independent observations $(a_i,\eta_i)\sim (1-\epsilon)P_{u^*}+\epsilon Q_i$, where the probability distribution $P_{u^*}$ encodes the linear model $\eta_i=a_i^Tu_i$, and for each $i\in[m]$, there is probability $\epsilon$ that the pair $(a_i,\eta_i)$ is drawn from some arbitrary distribution $Q_i$. In this setting, consistent or exact recovery of the regression coefficient is only possible when $\epsilon<c$ for some small constant $c>0$ \citep{gao2020}. The reason Theorem \ref{thm:main-improved} allows $\epsilon\rightarrow 1$ is that there is no contamination for the design matrix $A$.
 
 %We note here previous work by that has also observed the possibility $\epsilon\to 1$ in a regression setting with corrupted response using $\ell_1$ minimization, although this literature has primarily focused on the case of sparse $u^*$ \citep{wright,nguyen1,nguyen2}. The work of \cite{bhatia} establishes consistency of an iterative hard thresholding method.
 
